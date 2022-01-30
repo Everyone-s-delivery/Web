@@ -2,10 +2,7 @@ import { routerReducer, RouterState } from 'react-router-redux';
 import { History } from 'history';
 import { combineReducers } from 'redux';
 
-import {
-  listingReducer,
-  ListingReducerType,
-} from '../redux/listing/listingReducer';
+import { listingReducer, ListingReducerType } from '../redux/listing/listingReducer';
 import {
   authenticationReducer,
   AuthenticationReducerType,

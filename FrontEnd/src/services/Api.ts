@@ -13,12 +13,7 @@ export const loginRoute = `/signin`;
 export const signupRoute = `/signup`;
 export const listingRoute = `/api/sale_listings`;
 
-export const createApiCall = async ({
-  method = 'GET',
-  url = '',
-  data = {},
-  auth = false,
-}) => {
+export const createApiCall = async ({ method = 'GET', url = '', data = {}, auth = false }) => {
   const headers: any = {
     'Content-Type': 'application/json',
   };

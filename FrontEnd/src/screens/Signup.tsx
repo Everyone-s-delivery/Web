@@ -58,12 +58,7 @@ const SignupScreen = () => {
         <Typography component="h1" variant="h5">
           회원가입
         </Typography>
-        <Box
-          component="form"
-          noValidate
-          onSubmit={formik.handleSubmit}
-          sx={{ mt: 3 }}
-        >
+        <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -88,9 +83,7 @@ const SignupScreen = () => {
                 name="nickName"
                 value={formik.values.nickName}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.nickName && Boolean(formik.errors.nickName)
-                }
+                error={formik.touched.nickName && Boolean(formik.errors.nickName)}
                 helperText={formik.touched.nickName && formik.errors.nickName}
               />
             </Grid>
@@ -105,9 +98,7 @@ const SignupScreen = () => {
                 autoComplete="new-password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
+                error={formik.touched.password && Boolean(formik.errors.password)}
                 helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
@@ -127,12 +118,7 @@ const SignupScreen = () => {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             회원가입
           </Button>
           <Grid container justifyContent="flex-end">

@@ -11,10 +11,7 @@ const { persistor, store } = configureStore();
 function ReduxRoot() {
   return (
     <Provider store={store}>
-      <PersistGate
-        loading={<Typography>Loading...</Typography>}
-        persistor={persistor}
-      >
+      <PersistGate loading={<Typography>Loading...</Typography>} persistor={persistor}>
         <App />
       </PersistGate>
     </Provider>

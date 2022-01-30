@@ -14,40 +14,28 @@ const defaultState: AuthenticationReducerType = {
   token: '',
 };
 
-export const authenticationReducer = createReducer<AuthenticationReducerType>(
-  defaultState,
-  {
-    [ActionType.LOGIN_USER](
-      state: AuthenticationReducerType,
-      action: Action<LoginData>
-    ) {
-      return {
-        ...state,
-        loading: true,
-      };
-    },
+export const authenticationReducer = createReducer<AuthenticationReducerType>(defaultState, {
+  [ActionType.LOGIN_USER](state: AuthenticationReducerType, action: Action<LoginData>) {
+    return {
+      ...state,
+      loading: true,
+    };
+  },
 
-    [ActionType.LOGIN_USER_ERROR](
-      state: AuthenticationReducerType,
-      action: Action<number>
-    ) {
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-      };
-    },
+  [ActionType.LOGIN_USER_ERROR](state: AuthenticationReducerType, action: Action<number>) {
+    return {
+      ...state,
+      loading: false,
+      error: action.payload,
+    };
+  },
 
-    [ActionType.LOGIN_USER_SUCCESS](
-      state: AuthenticationReducerType,
-      action: Action<number>
-    ) {
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        token: action.payload,
-      };
-    },
-  }
-);
+  [ActionType.LOGIN_USER_SUCCESS](state: AuthenticationReducerType, action: Action<number>) {
+    return {
+      ...state,
+      loading: false,
+      error: null,
+      token: action.payload,
+    };
+  },
+});

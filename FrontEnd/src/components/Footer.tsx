@@ -4,13 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 const Footer = () => {
   return (
     <footer>
-      <Navbar
-        fixed="bottom"
-        bg="dark"
-        variant="dark"
-        expand="lg"
-        collapseOnSelect
-      >
+      <Navbar fixed="bottom" bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>모두의배달</Navbar.Brand>

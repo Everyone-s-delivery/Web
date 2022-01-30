@@ -38,7 +38,7 @@ const LoginScreen = () => {
 
   const dispatch = useDispatch();
 
-const validationSchema = () => {
+  const validationSchema = () => {
     return Yup.object().shape({
       email: Yup.string()
         .email('유효한 이메일 형식을 입력하세요')
@@ -90,12 +90,7 @@ const validationSchema = () => {
         <Typography component="h1" variant="h5">
           로그인
         </Typography>
-        <Box
-          component="form"
-          onSubmit={formik.handleSubmit}
-          noValidate
-          sx={{ mt: 1 }}
-        >
+        <Box component="form" onSubmit={formik.handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required

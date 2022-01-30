@@ -15,20 +15,14 @@ const defaultState: ListingReducerType = {
 };
 
 export const listingReducer = createReducer<ListingReducerType>(defaultState, {
-  [ActionType.LISTING_REQUEST](
-    state: ListingReducerType,
-    action: Action<Listing[]>
-  ) {
+  [ActionType.LISTING_REQUEST](state: ListingReducerType, action: Action<Listing[]>) {
     return {
       ...state,
       loading: true,
     };
   },
 
-  [ActionType.LISTING_REQUEST_ERROR](
-    state: ListingReducerType,
-    action: Action<any>
-  ) {
+  [ActionType.LISTING_REQUEST_ERROR](state: ListingReducerType, action: Action<any>) {
     return {
       ...state,
       loading: false,
@@ -36,10 +30,7 @@ export const listingReducer = createReducer<ListingReducerType>(defaultState, {
     };
   },
 
-  [ActionType.LISTING_REQUEST_SUCCESS](
-    state: ListingReducerType,
-    action: Action<Listing[]>
-  ) {
+  [ActionType.LISTING_REQUEST_SUCCESS](state: ListingReducerType, action: Action<Listing[]>) {
     return {
       ...state,
       loading: false,

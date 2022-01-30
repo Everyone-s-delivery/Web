@@ -24,9 +24,7 @@ const history = createBrowserHistory();
 
 const dev = process.env.NODE_ENV === 'development';
 
-let middleware = dev
-  ? applyMiddleware(logger, sagaMiddleware)
-  : applyMiddleware(sagaMiddleware);
+let middleware = dev ? applyMiddleware(logger, sagaMiddleware) : applyMiddleware(sagaMiddleware);
 
 if (dev) {
   middleware = composeWithDevTools(middleware);

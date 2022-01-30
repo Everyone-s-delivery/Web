@@ -32,10 +32,7 @@ export const signupReducer = createReducer<SignupReducerType>(defaultState, {
     };
   },
 
-  [ActionType.SIGNUP_SUCCESS](
-    state: SignupReducerType,
-    action: Action<string>
-  ) {
+  [ActionType.SIGNUP_SUCCESS](state: SignupReducerType, action: Action<string>) {
     return {
       ...state,
       loading: false,

@@ -2,11 +2,7 @@ import React from 'react';
 
 import { COLOR } from '../../constants';
 
-const LoginIcon = ({
-  width = '32px',
-  height = '32px',
-  color = COLOR.BLACK,
-}: IconProps) => {
+const LoginIcon = ({ width = '32px', height = '32px', color = COLOR.BLACK }: IconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
