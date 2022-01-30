@@ -14,7 +14,7 @@ const KakaoLogin = () => {
     <a href={requestUri}>
       <KakaoLoginButton>
         <KakaoIcon />
-        <span>카카오 로그인</span>
+        카카오 로그인
       </KakaoLoginButton>
     </a>
   );
