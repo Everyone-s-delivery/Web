@@ -10,7 +10,6 @@
     "@mui/icons-material": "^5.3.0",
     "@mui/material": "^5.3.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
-    "@svgr/webpack": "^5.5.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/node": "^16.11.21",
     "@types/react": "^17.0.38",
@@ -36,7 +35,6 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-webpack-plugin": "^3.1.1",
-    "file-loader": "^6.2.0",
     "formik": "^2.2.9",
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
@@ -76,6 +74,7 @@
     "snowpack": "^3.8.8",
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
+    "styled-components": "^5.3.3",
     "tailwindcss": "^3.0.2",
     "terser-webpack-plugin": "^5.2.5",
     "typescript": "^4.5.4",
@@ -114,19 +113,23 @@
     "@snowpack/plugin-babel": "^2.1.7",
     "@snowpack/plugin-dotenv": "^2.2.0",
     "@snowpack/plugin-typescript": "^1.2.1",
+    "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.4.0",
     "@types/react-redux": "^7.1.22",
     "@types/react-router-redux": "^5.0.21",
     "@types/redux-logger": "^3.0.9",
+    "@types/styled-components": "^5.1.21",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.28.0"
+    "eslint-plugin-react": "^7.28.0",
+    "file-loader": "^6.2.0",
+    "styled-normalize": "^8.0.7"
   },
   "jest": {
     "roots": [
@@ -184,5 +187,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "resolutions": {
+    "styled-components": "^5"
   }
 }
