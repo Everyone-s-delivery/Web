@@ -38,7 +38,7 @@ const LoginScreen = () => {
 
   const dispatch = useDispatch();
 
-  const validationSchema = () => {
+const validationSchema = () => {
     return Yup.object().shape({
       email: Yup.string()
         .email('유효한 이메일 형식을 입력하세요')

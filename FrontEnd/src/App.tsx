@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Footer from './components/Footer';
-import LoginScreen from './screens/LoginScreen';
+import LoginScreen from './screens/LoginScreen/LoginScreen';
 import SignupScreen from './screens/Signup';
 import withRoot from './withRoot';
 
