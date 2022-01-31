@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import Logo from 'src/assets/logo';
 import { SignupData } from 'src/model/model';
 import { signupAction } from 'src/redux/signup/signupActions';
 
@@ -52,12 +53,7 @@ const SignupScreen = () => {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          회원가입
-        </Typography>
+        <Logo width="300px" height="150px" />
         <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
