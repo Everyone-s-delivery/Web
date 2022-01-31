@@ -7,10 +7,6 @@ export const customScrollbarCSS = (scrollbarColor: string) => css`
   text-shadow: 0 0 ${({ theme }) => theme.color.textColor};
   transition: color 0.8s;
 
-  :hover {
-    color: ${scrollbarColor};
-  }
-
   ::-webkit-scrollbar {
     width: 20px;
   }
