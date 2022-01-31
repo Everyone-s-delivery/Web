@@ -32,17 +32,17 @@ public class SignController {
 //		return ResponseUtils.out(signService.signin(email,password));
 //	}
 
-	@ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
-	@PostMapping(value = "/signin")
-	public ResponseEntity signin(@Valid @RequestBody @ApiParam(value = "회원 한 명의 로그인 정보를 갖는 객체", required = true) LoginUserDto loginUserDto) {
-		return ResponseUtils.out(signService.signin(loginUserDto.getEmail(),loginUserDto.getPassword()));
-	}
-
-	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
-	@PostMapping(value = "/signup")
-	public ResponseEntity  signup(@Valid @RequestBody @ApiParam(value = "회원 한 명의 정보를 갖는 객체", required = true) CreateUserDto createUserDto) {
-		return ResponseUtils.out(signService.signup(createUserDto));
-	}
+//	@ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
+//	@PostMapping(value = "/signin")
+//	public ResponseEntity signin(@Valid @RequestBody @ApiParam(value = "회원 한 명의 로그인 정보를 갖는 객체", required = true) LoginUserDto loginUserDto) {
+//		return ResponseUtils.out(signService.signin(loginUserDto.getEmail(),loginUserDto.getPassword()));
+//	}
+//
+//	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
+//	@PostMapping(value = "/signup")
+//	public ResponseEntity  signup(@Valid @RequestBody @ApiParam(value = "회원 한 명의 정보를 갖는 객체", required = true) CreateUserDto createUserDto) {
+//		return ResponseUtils.out(signService.signup(createUserDto));
+//	}
 
 
 
