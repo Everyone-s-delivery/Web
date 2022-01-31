@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -21,6 +17,8 @@ import { ScrollPageWrapper } from 'src/components/@styled/layout';
 import KakaoLogin from 'src/components/SocialLogin/KakaoLogin';
 import { LoginData } from 'src/model/model';
 import { loginUserAction } from 'src/redux/authentication/authenticationActions';
+import { Container } from './LoginScreen.style';
+
 type State = {
   email: string;
   password: string;
@@ -71,13 +69,11 @@ const LoginScreen = () => {
       loading: true,
     }));
 
-    // TODO: props를 통해 action과 dispatch를 받아서 처리하려고 connect를 추가한 건데
-    // router v6 버전 문제 있음. 일단 임시적으로 useDispatch를 씀
     dispatch(loginUserAction({ email, password }));
   };
   return (
     <ScrollPageWrapper>
-      <Container maxWidth="xs">
+      <Container>
         <Box
           sx={{
             marginTop: 8,
