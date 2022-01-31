@@ -7,8 +7,6 @@ import Footer from './components/Footer';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
 import SignupScreen from './screens/Signup/Signup';
 
-import './App.css';
-
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
