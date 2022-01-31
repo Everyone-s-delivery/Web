@@ -18,12 +18,6 @@ import java.util.Base64;
 		@PropertySource(value = "classpath:application.properties")
 )
 public class DatabaseConfig {
-	
-//	@Bean
-//	@ConfigurationProperties(prefix = "spring.datasource")
-//	public DataSource dataSource() {
-//		return DataSourceBuilder.create().build();
-//	}
 
 	@Value("${spring.datasource.jdbcUrl}")
 	private String jdbcUrl;
@@ -51,6 +45,11 @@ public class DatabaseConfig {
 				.build();
 	}
 
+	/***
+	 * AWS Secrets manager에서 DB 접속정보 가져오기
+	 * 접근 정보는 환경변수로 등록해야 합니다.
+	 * @return
+	 */
 	private String getSecret(){
 		String secretName = "arn:aws:secretsmanager:ap-northeast-2:031874049859:secret:everyone-s-delivery-mysql-database-1-N0hRWJ";
 		String region = "ap-northeast-2";
@@ -97,13 +96,11 @@ public class DatabaseConfig {
 		// Depending on whether the secret is a string or binary, one of these fields will be populated.
 		if (getSecretValueResult.getSecretString() != null) {
 			secret = getSecretValueResult.getSecretString();
-			System.out.println(secret);
 			return secret;
 		}
 		else {
 			decodedBinarySecret = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
 			return decodedBinarySecret;
 		}
-
 	}
 }
