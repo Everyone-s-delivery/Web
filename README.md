@@ -3,7 +3,7 @@
 </p>
 <div align="center">
 
-  💻 손쉬운 배달료 더치페이 서비스, <br>
-  🖋 [모두의배달](https://everyone-s-delivery.com)
-
+  💻 손쉬운 배달료 더치페이 서비스, <br><br>
+  🖋 [모두의배달](https://everyone-s-delivery.com)  <br>  <br>
+  🖋 [notion 문서](https://www.notion.so/30c3b978485a47ed97b49939e8d044c4)
 </div>

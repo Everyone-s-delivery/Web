@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyle, theme } from './App.style';
 import Footer from './components/Footer';
 import LoginScreen from './screens/LoginScreen/LoginScreen';
-import SignupScreen from './screens/Signup';
+import SignupScreen from './screens/Signup/Signup';
 
 import './App.css';
 
