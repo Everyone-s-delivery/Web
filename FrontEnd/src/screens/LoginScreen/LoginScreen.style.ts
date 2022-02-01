@@ -10,5 +10,5 @@ export const Container = styled(Page)`
   padding-top: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.color.darkerSecondaryColor};
+  background-color: ${({ theme }) => theme.color.appBackgroundColor};
 `;
