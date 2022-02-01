@@ -1,7 +1,7 @@
 const REQUEST_URL = {
   LOGIN: '/signin',
   SIGNUP: '/signup',
-  LIST: '/list',
+  POSTS: '/posts',
 };
 
 export default REQUEST_URL;
