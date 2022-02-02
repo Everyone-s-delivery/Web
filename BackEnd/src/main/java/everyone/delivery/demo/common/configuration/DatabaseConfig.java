@@ -48,6 +48,8 @@ public class DatabaseConfig {
 	/***
 	 * AWS Secrets manager에서 DB 접속정보 가져오기
 	 * 접근 정보는 환경변수로 등록해야 합니다.
+	 * 		1. 로컬 환경 => 인텔리제이의 환경변수로 등록
+	 * 	    2. 배포 환경 => github repo secrets으로 등록된 것을 workflow에서 읽어서 환경변수로 등록후 빌드 시 환경변수로 등록
 	 * @return
 	 */
 	private String getSecret(){
