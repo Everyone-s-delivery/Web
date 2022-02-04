@@ -1,4 +1,4 @@
-package everyone.delivery.demo.security;
+package everyone.delivery.demo.security.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import everyone.delivery.demo.security.user.dtos.CreateUserDto;

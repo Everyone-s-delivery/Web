@@ -1,7 +1,8 @@
-package everyone.delivery.demo.security;
+package everyone.delivery.demo.security.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import everyone.delivery.demo.security.user.dtos.CreateUserDto;
+import everyone.delivery.demo.security.dtos.CreateUserTESTDto;
+import everyone.delivery.demo.security.dtos.LoginUserTESTDto;
 import everyone.delivery.demo.security.user.dtos.LoginUserDto;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -42,15 +43,15 @@ public class SignControllerTest {
 	 * **/
 	@BeforeAll
 	void init() throws Exception {
-		CreateUserDto createUserDto = CreateUserDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e")
+		CreateUserTESTDto createUserTESTDto = CreateUserTESTDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e")
 				.nickName(UUID.randomUUID().toString())
 				.address(UUID.randomUUID().toString())
 				.build();
-		String jsonUserNormal = objectMapper.writeValueAsString(createUserDto);
+		String jsonUserNormal = objectMapper.writeValueAsString(createUserTESTDto);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/signup")
 				.content(jsonUserNormal)
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk());
@@ -61,12 +62,12 @@ public class SignControllerTest {
 	 **/
 	@Test
 	public void signinSucessTest() throws Exception{
-		LoginUserDto loginUserDto = LoginUserDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e").build();
-		String jsonUserLogin = objectMapper.writeValueAsString(loginUserDto);
+		LoginUserTESTDto loginUserTESTDto = LoginUserTESTDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e").build();
+		String jsonUserLogin = objectMapper.writeValueAsString(loginUserTESTDto);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/signin")
 				.content(jsonUserLogin)
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andDo(print());
@@ -78,7 +79,7 @@ public class SignControllerTest {
 	@Test
 	public void signinNoRequestBodyFailTest() throws Exception{
 		mockMvc.perform(MockMvcRequestBuilders.post("/signin")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andDo(print());
 	}
@@ -88,12 +89,15 @@ public class SignControllerTest {
 	 **/
 	@Test
 	public void signinEmailFailTest() throws Exception{
+		LoginUserTESTDto loginUserTESTDto = LoginUserTESTDto.builder().email("xxxxx@gmail.com").password("Rnjs@123456789").build();
+		String jsonUserLogin = objectMapper.writeValueAsString(loginUserTESTDto);
+
 		mockMvc.perform(MockMvcRequestBuilders.post("/signin")
-				.content("email=xxxxx@gmail.com&password=Rnjs@123456789")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.content(jsonUserLogin)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isUnauthorized())
-				.andExpect(jsonPath("$.msg").value("login fail, check email"))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errorMessage").value("요청 오류 입니다.(의미상 오류: api 스팩은 맞지만 논리상 안맞는 요청)"))
 				.andDo(print());
 	}
 
@@ -102,14 +106,15 @@ public class SignControllerTest {
 	 **/
 	@Test
 	public void signinPassowrdFailTest() throws Exception {
-
+		LoginUserTESTDto loginUserTESTDto = LoginUserTESTDto.builder().email("userTest1111@gmail.com").password("Rnjs@123456789").build();
+		String jsonUserLogin = objectMapper.writeValueAsString(loginUserTESTDto);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/signin")
-				.content("email=gshgsh0831@gmail.com&password=Rnjs@zzz")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.content(jsonUserLogin)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isUnauthorized())
-				.andExpect(jsonPath("$.msg").value("login fail, check password"))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errorMessage").value("올바른 비밀번호가 아닙니다. 비밀번호를 확인해 주세요."))
 				.andDo(print());
 	}
 
@@ -119,9 +124,15 @@ public class SignControllerTest {
 	 **/
 	@Test
 	public void signupSucessTest() throws Exception {
+		CreateUserTESTDto createUserTESTDto = CreateUserTESTDto.builder().email("gshgsh1111@gmail.com").password("Rnjs@123456789")
+				.nickName(UUID.randomUUID().toString())
+				.address(UUID.randomUUID().toString())
+				.build();
+		String jsonUserNormal = objectMapper.writeValueAsString(createUserTESTDto);
+
 		mockMvc.perform(MockMvcRequestBuilders.post("/signup")
-				.content("email=gshgsh1111@gmail.com&password=Rnjs@123456789")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.content(jsonUserNormal)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andDo(print());
@@ -132,19 +143,25 @@ public class SignControllerTest {
 	 **/
 	@Test
 	public void signupFailTest() throws Exception{
+		CreateUserTESTDto createUserTESTDto = CreateUserTESTDto.builder().email("email=gshgsh2222@gmail.com").password("Rnjs@123456789")
+				.nickName(UUID.randomUUID().toString())
+				.address(UUID.randomUUID().toString())
+				.build();
+		String jsonUserNormal = objectMapper.writeValueAsString(createUserTESTDto);
+
 		mockMvc.perform(MockMvcRequestBuilders.post("/signup")
-				.content("email=gshgsh2222@gmail.com&password=Rnjs@123456789")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.content(jsonUserNormal)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andDo(print());
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/signup")
-				.content("email=gshgsh2222@gmail.com&password=Rnjs@123456789")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.content(jsonUserNormal)
+				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isUnauthorized())
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.errorMessage").value("요청 오류 입니다.(형식상 오류: api 스팩에 안맞는 요청)"))
 				.andDo(print());
 	}
-
 }
