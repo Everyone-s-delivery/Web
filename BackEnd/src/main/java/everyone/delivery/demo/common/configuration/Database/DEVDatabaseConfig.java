@@ -1,4 +1,4 @@
-package everyone.delivery.demo.common.configuration;
+package everyone.delivery.demo.common.configuration.Database;
 
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;

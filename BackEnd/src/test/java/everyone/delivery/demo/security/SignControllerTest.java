@@ -54,8 +54,6 @@ public class SignControllerTest {
 				.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk());
-
-
 	}
 
 	/**
