@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/signup",
 						"/JWTException/**",
 						"/actuator",
+						"/actuator/**",
 						"/img/*",
 						"/h2-console",
 						"/h2-console/**",
