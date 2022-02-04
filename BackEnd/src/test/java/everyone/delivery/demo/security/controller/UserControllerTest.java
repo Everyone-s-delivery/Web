@@ -21,9 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * spring controller test 참고: https://tech.devgd.com/12 spring boot + test용 h2
- * db사용 + mybatis 참고:
- * https://atoz-develop.tistory.com/entry/Spring-Boot-MyBatis-%EC%84%A4%EC%A0%95-%EB%B0%A9%EB%B2%95
- * https://re-coder.tistory.com/5
  **/
 @SpringBootTest
 @AutoConfigureMockMvc
