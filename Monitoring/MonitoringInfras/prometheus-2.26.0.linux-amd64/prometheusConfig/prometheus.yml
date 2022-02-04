@@ -1,0 +1,104 @@
+global:
+  scrape_interval: 15s 
+  evaluation_interval: 15s 
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - localhost:9876
+rule_files:
+  # - "./prometheusRules/ko/windowServerRules.yml"
+  # - "./prometheusRules/ko/commonRules.yml"
+  # - "./prometheusRules/ko/springBootRule.yml"
+  # - "./prometheusRules/ko/postgresRule.yml"
+  # - "./prometheusRules/ko/mysqlRules.yml"
+  # - "./prometheusRules/ko/mssqlRules.yml"
+  # - "./prometheusRules/ko/linuxServerRules.yml"
+  # - "./prometheusRules/en/windowServerRules.yml"
+  # - "./prometheusRules/en/commonRules.yml"
+  # - "./prometheusRules/en/springBootRule.yml"
+  # - "./prometheusRules/en/postgresRule.yml"
+  # - "./prometheusRules/en/mysqlRules.yml"
+  # - "./prometheusRules/en/mssqlRules.yml"
+  # - "./prometheusRules/en/linuxServerRules.yml"
+
+  
+scrape_configs:
+  - job_name: 'WINDOWS'
+    relabel_configs:
+    - source_labels: ["job"]
+      target_label: "task"
+    - source_labels: ["instanceName"]
+      target_label: "job"
+    static_configs:
+      - targets: ["192.168.200.106:9800"]
+        labels:
+          "instanceName": "WINDOWS OS DRM AP1"
+
+  - job_name: 'MSSQL'
+    relabel_configs:
+    - source_labels: ["job"]
+      target_label: "task"
+    - source_labels: ["instanceName"]
+      target_label: "job"
+    static_configs:
+      - targets: ["192.168.200.111:9800"]
+        labels:
+          "instanceName": "MSSQL OS DRM DB"
+  - job_name: 'MYSQL'
+    relabel_configs:
+    - source_labels: ["job"]
+      target_label: "task"
+    - source_labels: ["instanceName"]
+      target_label: "job"
+    static_configs:
+      - targets: ["192.168.21.76:9999"]
+        labels:
+          "instanceName": "MYSQL Test1"
+      - targets: ["192.168.100.168:9999"]
+        labels:
+          "instanceName": "MYSQL Test2"		  
+  - job_name: 'LINUX'
+    relabel_configs:
+    - source_labels: ["job"]
+      target_label: "task"
+    - source_labels: ["instanceName"]
+      target_label: "job"
+    static_configs:
+      - targets: ["192.168.100.168:9100","192.168.100.168:9256"]
+        labels:
+          "instanceName": "Linux OS Test"
+  - job_name: 'POSTGRES'
+    relabel_configs:
+    - source_labels: ["job"]
+      target_label: "task"
+    - source_labels: ["instanceName"]
+      target_label: "job"
+    static_configs:
+      - targets: ["192.168.100.168:9187"]
+        labels:
+          "instanceName": "POSTGRES Test"
+  - job_name: 'WAS'
+    relabel_configs:
+    - source_labels: ["job"]
+      target_label: "task"
+    - source_labels: ["instanceName"]
+      target_label: "job"
+    static_configs:
+      - targets: ["192.168.100.168:9099"]
+        labels:
+          "instanceName": "WAS Flas"
+          "__metrics_path__": "/flas/actuator/prometheus"
+      - targets: ["192.168.200.106:9090"]
+        labels:
+          "instanceName": "WAS Fxm"
+          "__metrics_path__": "/fast/sapi/metrics"     
+      - targets: ["192.168.200.106:8080"]
+        labels:
+          "instanceName": "WAS Fed"
+          "__metrics_path__": "/fed5/sapi/metrics"  
+      - targets: ["192.168.200.106:8081"]
+        labels:
+          "instanceName": "WAS Film"
+          "__metrics_path__": "/fut/sapi/metrics" 		  
