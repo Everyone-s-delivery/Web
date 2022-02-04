@@ -17,8 +17,8 @@ import java.util.Base64;
 @PropertySources(
 		@PropertySource(value = "classpath:application.properties")
 )
-public class DatabaseConfig {
-
+@Profile("dev")
+public class DEVDatabaseConfig {
 	@Value("${spring.datasource.jdbcUrl}")
 	private String jdbcUrl;
 
@@ -31,6 +31,7 @@ public class DatabaseConfig {
 	@Bean
 	@Primary
 	public DataSource customDataSource() {
+
 		String secret = getSecret();
 		JSONObject jsonObject = new JSONObject(secret);
 		String userName = jsonObject.getString("username");
