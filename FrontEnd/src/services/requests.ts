@@ -69,5 +69,8 @@ const API = {
   signup: <T>(data: T) => {
     return request({ method: 'POST', url: REQUEST_URL.SIGNUP, data });
   },
+  posts: <T>(): Promise<T> => {
+    return request({ method: 'GET', url: REQUEST_URL.POSTS });
+  },
 };
 export default API;
