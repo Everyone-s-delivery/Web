@@ -1,9 +1,11 @@
 package everyone.delivery.demo.security.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import everyone.delivery.demo.security.dtos.CreateUserTESTDto;
 import everyone.delivery.demo.security.user.dtos.CreateUserDto;
-import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import org.json.simple.JSONObject;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -43,51 +47,68 @@ public class UserControllerTest {
 	@BeforeAll
 	void initAll() throws Exception {
 		// 정상 요청
-		CreateUserDto createUserDto = CreateUserDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e")
+		CreateUserTESTDto createUserTESTDto = CreateUserTESTDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e")
 				.nickName("nickName1")
+				.address(UUID.randomUUID().toString())
 				.build();
-		jsonUserNormal = objectMapper.writeValueAsString(createUserDto);
+		jsonUserNormal = objectMapper.writeValueAsString(createUserTESTDto);
 
-		createUserDto = CreateUserDto.builder().password("Rnjs@1q2w3e").build();
-		jsonUserEmailNull = objectMapper.writeValueAsString(createUserDto);
+		createUserTESTDto = CreateUserTESTDto.builder().password("Rnjs@1q2w3e").build();
+		jsonUserEmailNull = objectMapper.writeValueAsString(createUserTESTDto);
 
-		createUserDto = CreateUserDto.builder().email("userTest1111@gmail.com").build();
-		jsonUserPasswordNull = objectMapper.writeValueAsString(createUserDto);
+		createUserTESTDto = CreateUserTESTDto.builder().email("userTest1111@gmail.com").build();
+		jsonUserPasswordNull = objectMapper.writeValueAsString(createUserTESTDto);
 
-		createUserDto = CreateUserDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e").build();
-		jsonUserRoleNull = objectMapper.writeValueAsString(createUserDto);
+		createUserTESTDto = CreateUserTESTDto.builder().email("userTest1111@gmail.com").password("Rnjs@1q2w3e").build();
+		jsonUserRoleNull = objectMapper.writeValueAsString(createUserTESTDto);
 
 		// 회원가입
-		mockMvc.perform(MockMvcRequestBuilders.post("/signup").content("email=admin@1234.com&password=Rnjs@123456789")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)).andExpect(status().isOk());
+		createUserTESTDto = CreateUserTESTDto.builder().email("admin@admin.com").password("Rnjs@123456789")
+				.nickName(UUID.randomUUID().toString())
+				.address(UUID.randomUUID().toString())
+				.build();
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/signup").content(objectMapper.writeValueAsString(createUserTESTDto))
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+
 		// 로그인
 		MvcResult mvcResult = mockMvc
-				.perform(MockMvcRequestBuilders.post("/signin").content("email=admin@1234.com&password=Rnjs@123456789")
-						.contentType(MediaType.APPLICATION_FORM_URLENCODED))
+				.perform(MockMvcRequestBuilders.post("/signin").content(objectMapper.writeValueAsString(createUserTESTDto))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andReturn();
 		testAdminToken = getJWTToken(mvcResult.getResponse().getContentAsString());
 
 		// 회원가입
+		createUserTESTDto = CreateUserTESTDto.builder().email("userTest0831@gmail.com").password("Rnjs@123456789")
+				.nickName(UUID.randomUUID().toString())
+				.address(UUID.randomUUID().toString())
+				.build();
 		mockMvc.perform(
-				MockMvcRequestBuilders.post("/signup").content("email=userTest0831@gmail.com&password=Rnjs@123456789")
-						.contentType(MediaType.APPLICATION_FORM_URLENCODED))
+				MockMvcRequestBuilders.post("/signup").content(objectMapper.writeValueAsString(createUserTESTDto))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
+
 		// 로그인
 		mvcResult = mockMvc.perform(
-				MockMvcRequestBuilders.post("/signin").content("email=userTest0831@gmail.com&password=Rnjs@123456789")
-						.contentType(MediaType.APPLICATION_FORM_URLENCODED))
+				MockMvcRequestBuilders.post("/signin").content(objectMapper.writeValueAsString(createUserTESTDto))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andReturn();
 		testUserToken = getJWTToken(mvcResult.getResponse().getContentAsString());
 
 		// 회원가입
+		createUserTESTDto = CreateUserTESTDto.builder().email("userTest123123@gmail.com").password("Rnjs@123456789")
+				.nickName(UUID.randomUUID().toString())
+				.address(UUID.randomUUID().toString())
+				.build();
 		mockMvc.perform(
-				MockMvcRequestBuilders.post("/signup").content("email=userTest123123@gmail.com&password=Rnjs@123456789")
-						.contentType(MediaType.APPLICATION_FORM_URLENCODED))
+				MockMvcRequestBuilders.post("/signup").content(objectMapper.writeValueAsString(createUserTESTDto))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 		// 로그인
 		mvcResult = mockMvc.perform(
-				MockMvcRequestBuilders.post("/signin").content("email=userTest123123@gmail.com&password=Rnjs@123456789")
-						.contentType(MediaType.APPLICATION_FORM_URLENCODED))
+				MockMvcRequestBuilders.post("/signin").content(objectMapper.writeValueAsString(createUserTESTDto))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andReturn();
 	}
 
@@ -108,44 +129,24 @@ public class UserControllerTest {
 		// 정상 요청
 		mockMvc.perform(MockMvcRequestBuilders.get("/users/2").header("X-AUTH-TOKEN", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(content().contentType("application/json;charset=UTF-8")).andDo(print())
-				.andExpect(jsonPath("$.data.userId").value("2"));
+				.andExpect(content().contentType("application/json")).andDo(print())
+				.andExpect(jsonPath("$.userId").value("2"));
 
 		// 음수 값을 같는 게시글 번호로 요청
 		mockMvc.perform(MockMvcRequestBuilders.get("/users/-1").header("X-AUTH-TOKEN", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
-				.andExpect(content().contentType("application/json;charset=UTF-8"))
-				.andExpect(jsonPath("$.msg").value("userId cannot be minus."));
+				.andExpect(content().contentType("application/json"))
+				.andExpect(jsonPath("$.errorCode").value("BAD_REQUEST"));
 
 		// 없는 게시글 번호로 요청
 		mockMvc.perform(MockMvcRequestBuilders.get("/users/99999").header("X-AUTH-TOKEN", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
-				.andExpect(content().contentType("application/json;charset=UTF-8"))
-				.andExpect(jsonPath("$.msg").value("There is no corresponding information for userId."));
+				.andExpect(content().contentType("application/json"))
+				.andExpect(jsonPath("$.errorCode").value("INVALID_DATA"));
 
-		// 없는 게시글 번호로 요청
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/99999").header("X-AUTH-TOKEN", testUserToken)
+		// 사용자 토큰으로 요청
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/2").header("X-AUTH-TOKEN", testUserToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().is3xxRedirection()).andDo(print());
-	}
-
-	@Test
-	public void saveTest() throws Exception {
-		// 정상 요청
-		mockMvc.perform(MockMvcRequestBuilders.post("/users").header("X-AUTH-TOKEN", testAdminToken)
-				.content(jsonUserNormal).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andDo(print());
-
-		// 이상 요청 => email이 null일때
-		mockMvc.perform(MockMvcRequestBuilders.post("/users").header("X-AUTH-TOKEN", testAdminToken)
-				.content(jsonUserEmailNull).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().string("{\"success\":false,\"code\":-1,\"msg\":\"Not enough user data.\"}"));
-
-		// 이상 요청 => password가 null일때
-		mockMvc.perform(MockMvcRequestBuilders.post("/users").header("X-AUTH-TOKEN", testAdminToken)
-				.content(jsonUserPasswordNull).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
-				.andExpect(content().string("{\"success\":false,\"code\":-1,\"msg\":\"Not enough user data.\"}"));
 	}
 
 	@Test
@@ -154,21 +155,18 @@ public class UserControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders.put("/users/3").header("X-AUTH-TOKEN", testAdminToken)
 				.content(jsonUserNormal).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string("{\"success\":true,\"code\":0,\"msg\":\"성공하였습니디.\",\"data\":3}"))
 				.andDo(print());
 
 		// 이상 요청 => user path로 음수를 넘긴 경우
 		mockMvc.perform(MockMvcRequestBuilders.put("/users/-11").header("X-AUTH-TOKEN", testAdminToken)
 				.content(jsonUserNormal).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest())
-				.andExpect(content().string("{\"success\":false,\"code\":-1,\"msg\":\"userId cannot be minus.\"}"))
 				.andDo(print());
 
 		// 이상 요청 => user path로 없는 게시글 번호를 넘긴 경우
 		mockMvc.perform(MockMvcRequestBuilders.put("/users/9999").header("X-AUTH-TOKEN", testAdminToken)
 				.content(jsonUserNormal).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isBadRequest()).andExpect(content().string(
-						"{\"success\":false,\"code\":-1,\"msg\":\"There is no corresponding information for userId.\"}"));
+				.andExpect(status().isBadRequest());
 	}
 	
 	@Test
@@ -179,13 +177,12 @@ public class UserControllerTest {
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete("/users/3").header("X-AUTH-TOKEN", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-				.andExpect(content().string("{\"success\":true,\"code\":0,\"msg\":\"성공하였습니디.\",\"data\":3}"));
+				.andExpect(content().string("3"));
 	}
 
 	private String getJWTToken(String response) throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONObject jsonObj = (JSONObject)parser.parse(response);
-		jsonObj = (JSONObject) jsonObj.get("data");
 		return (String) jsonObj.get("token");
 	}
 
