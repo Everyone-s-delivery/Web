@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @SequenceGenerator(name = "postTable_SEQ_GENERATOR", sequenceName = "postTable_SEQ", initialValue = 1, allocationSize = 1)
 @Entity
 @Table(name = "postTable")
@@ -43,7 +45,7 @@ public class PostEntity {
     @ElementCollection
     private List<String> addresses;
 
-    @OneToMany
+    @OneToMany(fetch = LAZY, cascade = CascadeType.ALL) // postEntity에 딸려있는 comment는 postEntity에 전파된다.
     @JoinColumn(name="post_id")
     private List<PostCommentEntity> comments;
 
