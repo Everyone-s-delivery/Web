@@ -28,10 +28,14 @@ public class PostCommentDto {
     @NotNull(message = "Not enough comment data. commenterId cannot be null.")
     private Long commenterId;
 
+    //TODO: 이 부분 입력시에는 빼고 commenterId로만 대체 가능?
     @NotNull(message = "Not enough comment data. commenterEmail cannot be null.")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
     private String commenterEmail;
 
+    //TODO: 이 부분 입력시에는 빼고 commenterId로만 대체 가능?
     @NotNull(message = "Not enough comment data. commenterNickName cannot be null.")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
     private String commenterNickName;
 
     @NotNull(message = "Not enough comment data. postId cannot be null.")

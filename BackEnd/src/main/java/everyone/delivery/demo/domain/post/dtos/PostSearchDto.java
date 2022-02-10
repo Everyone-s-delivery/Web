@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 
 /***
  * 글 검색 조건
@@ -17,10 +16,10 @@ import org.springframework.data.domain.PageRequest;
  * 페이징
  *      > offset & limit
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
 public class PostSearchDto {
 
 
