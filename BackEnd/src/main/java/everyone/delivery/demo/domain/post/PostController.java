@@ -24,12 +24,14 @@ public class PostController {
 
     private final PostService postService;
 
+
+
     @GetMapping("")
     @ApiOperation(value = "글 리스트 조회", notes = "글 리스트를 조회할 수 있습니다.")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
-    public ResponseEntity getById(){
+    public ResponseEntity getAllList(){
         return ResponseUtils.out(postService.getList());
     }
 

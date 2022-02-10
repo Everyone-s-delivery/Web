@@ -12,6 +12,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static javax.persistence.FetchType.LAZY;
+
 @SequenceGenerator(name = "postCommentTable_SEQ_GENERATOR", sequenceName = "postCommentTable_SEQ", initialValue = 1, allocationSize = 1)
 @Entity
 @Table(name = "postCommentTable")
@@ -30,7 +32,7 @@ public class PostCommentEntity {
     @JoinColumn(name="user_id")
     private UserEntity commenter;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id")
     private PostEntity post;
 
