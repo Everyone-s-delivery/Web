@@ -2,10 +2,9 @@ import { call, fork, put, takeLatest } from 'redux-saga/effects';
 
 import { ActionType } from 'src/model/model';
 import { usePostsQuery } from 'src/services/queries/posts';
-import { createApiCall, listingRoute, MethodType } from '../../services/Api';
 
 // login
-function* getListingSaga(): Generator<any> {
+function* getPostsSaga(): Generator<any> {
   try {
     const response: any = yield call(usePostsQuery);
     if (response.status === 'ok') {
@@ -20,8 +19,8 @@ function* getListingSaga(): Generator<any> {
     yield put({ type: ActionType.LISTING_REQUEST_ERROR, payload: error });
   }
 }
-function* onLoginSubmitWatcher() {
-  yield takeLatest(ActionType.LISTING_REQUEST as any, getListingSaga);
+function* onGetPostsWatcher() {
+  yield takeLatest(ActionType.LISTING_REQUEST as any, getPostsSaga);
 }
 
-export default [fork(onLoginSubmitWatcher)];
+export default [fork(onGetPostsWatcher)];

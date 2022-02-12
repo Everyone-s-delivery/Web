@@ -1,28 +1,28 @@
 import { Action, ActionType, Listing } from 'src/model/model';
 import createReducer from '../createReducer';
 
-export interface ListingReducerType {
-  list: Listing[];
+export interface PostsReducerType {
+  posts: Listing[];
   loading: boolean;
   error?: string;
   nextpage: string;
 }
-const defaultState: ListingReducerType = {
-  list: [],
+const defaultState: PostsReducerType = {
+  posts: [],
   loading: false,
   error: undefined,
   nextpage: '',
 };
 
-export const listingReducer = createReducer<ListingReducerType>(defaultState, {
-  [ActionType.LISTING_REQUEST](state: ListingReducerType, action: Action<Listing[]>) {
+export const listingReducer = createReducer<PostsReducerType>(defaultState, {
+  [ActionType.LISTING_REQUEST](state: PostsReducerType, action: Action<Listing[]>) {
     return {
       ...state,
       loading: true,
     };
   },
 
-  [ActionType.LISTING_REQUEST_ERROR](state: ListingReducerType, action: Action<any>) {
+  [ActionType.LISTING_REQUEST_ERROR](state: PostsReducerType, action: Action<any>) {
     return {
       ...state,
       loading: false,
@@ -30,7 +30,7 @@ export const listingReducer = createReducer<ListingReducerType>(defaultState, {
     };
   },
 
-  [ActionType.LISTING_REQUEST_SUCCESS](state: ListingReducerType, action: Action<Listing[]>) {
+  [ActionType.LISTING_REQUEST_SUCCESS](state: PostsReducerType, action: Action<Listing[]>) {
     return {
       ...state,
       loading: false,
