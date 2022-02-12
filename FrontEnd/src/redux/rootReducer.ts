@@ -15,11 +15,11 @@ export interface RootState {
   signup: SignupReducerType;
   routerReducer: RouterState;
 }
+const rootReducer = combineReducers({
+  listing: listingReducer,
+  loginForm: authenticationReducer,
+  signup: signupReducer,
+  routerReducer,
+});
 
-export default (history: History) =>
-  combineReducers({
-    listing: listingReducer,
-    loginForm: authenticationReducer,
-    signup: signupReducer,
-    routerReducer,
-  });
+export default rootReducer;
