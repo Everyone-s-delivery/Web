@@ -13,15 +13,15 @@ const defaultState: PostsReducerType = {
   error: undefined,
 };
 
-export const listingReducer = createReducer<PostsReducerType>(defaultState, {
-  [ActionType.LISTING_REQUEST](state: PostsReducerType, action: Action<Listing[]>) {
+export const postsReducer = createReducer<PostsReducerType>(defaultState, {
+  [ActionType.POSTS_REQUEST](state: PostsReducerType, action: Action<Listing[]>) {
     return {
       ...state,
       loading: true,
     };
   },
 
-  [ActionType.LISTING_REQUEST_ERROR](state: PostsReducerType, action: Action<any>) {
+  [ActionType.POSTS_REQUEST_ERROR](state: PostsReducerType, action: Action<any>) {
     return {
       ...state,
       loading: false,
@@ -29,7 +29,7 @@ export const listingReducer = createReducer<PostsReducerType>(defaultState, {
     };
   },
 
-  [ActionType.LISTING_REQUEST_SUCCESS](state: PostsReducerType, action: Action<Listing[]>) {
+  [ActionType.POSTS_REQUEST_SUCCESS](state: PostsReducerType, action: Action<Listing[]>) {
     return {
       ...state,
       loading: false,

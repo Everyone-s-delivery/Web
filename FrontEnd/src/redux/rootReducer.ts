@@ -6,7 +6,7 @@ import {
   authenticationReducer,
   AuthenticationReducerType,
 } from './authentication/authenticationReducer';
-import { listingReducer, PostsReducerType } from './posts/postsReducer';
+import { postsReducer, PostsReducerType } from './posts/postsReducer';
 import { signupReducer, SignupReducerType } from './signup/signupReducer';
 
 export interface RootState {
@@ -16,7 +16,7 @@ export interface RootState {
   routerReducer: RouterState;
 }
 const rootReducer = combineReducers({
-  posts: listingReducer,
+  posts: postsReducer,
   loginForm: authenticationReducer,
   signup: signupReducer,
   routerReducer,

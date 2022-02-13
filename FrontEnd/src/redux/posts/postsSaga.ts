@@ -2,7 +2,6 @@ import { ActionType } from '@src/model/model';
 import { usePostsQuery } from '@src/services/queries/posts';
 import { call, fork, put, takeLatest } from 'redux-saga/effects';
 
-// login
 function* getPostsSaga(): Generator<any> {
   try {
     const response: any = yield call(usePostsQuery);
