@@ -1,6 +1,6 @@
+import { LAYOUT, PAGE_WIDTH } from '@src/constants';
 import styled, { css } from 'styled-components';
 
-import { LAYOUT, PAGE_WIDTH } from 'src/constants';
 import { fadeIn } from './keyframes';
 import { setDesktopMediaQuery, setLaptopMediaQuery, setTabletMediaQuery } from './mediaQueries';
 import { customScrollbarCSS } from './scrollbar';

@@ -1,20 +1,16 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import Logo from '@src/assets/logo';
+import { SignupData } from '@src/model/model';
+import { signupAction } from '@src/redux/signup/signupActions';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-import Logo from 'src/assets/logo';
-import { SignupData } from 'src/model/model';
-import { signupAction } from 'src/redux/signup/signupActions';
 
 const SignupScreen = () => {
   const dispatch = useDispatch();

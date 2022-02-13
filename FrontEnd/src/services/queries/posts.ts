@@ -1,8 +1,8 @@
 import { useInfiniteQuery } from 'react-query';
+import { ErrorResponse, Post } from '@src/@types';
+import { QUERY } from '@src/constants/queries';
 import { AxiosError } from 'axios';
 
-import { ErrorResponse, Post } from 'src/@types';
-import { QUERY } from 'src/constants/queries';
 import API from '../requests';
 
 export const usePostsQuery = () => {

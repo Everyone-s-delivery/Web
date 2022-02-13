@@ -1,7 +1,6 @@
+import { ActionType } from '@src/model/model';
+import { usePostsQuery } from '@src/services/queries/posts';
 import { call, fork, put, takeLatest } from 'redux-saga/effects';
-
-import { ActionType } from 'src/model/model';
-import { usePostsQuery } from 'src/services/queries/posts';
 
 // login
 function* getPostsSaga(): Generator<any> {
