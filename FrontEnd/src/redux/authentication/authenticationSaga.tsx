@@ -12,11 +12,15 @@ function* loginSaga({ payload }: { payload: LoginData }): Generator<any> {
       url: loginRoute,
       data: payload,
     });
-    if (response.status === 'ok') {
-      setCookie('token', response.data.token);
+    if (response.token && response.userId) {
+      setCookie('token', response.token);
+
       yield put({
         type: ActionType.LOGIN_USER_SUCCESS,
-        payload: response.data.authToken.token,
+        payload: {
+          token: response.token,
+          userId: response.userId,
+        },
       });
     } else {
       yield put({ type: ActionType.LOGIN_USER_ERROR, payload: 'error' });

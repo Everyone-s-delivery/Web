@@ -1,11 +1,10 @@
-import { Action, ActionType, LoginData } from '@src/model/model';
+import { Action, ActionType, LoginData, LoginSuccess } from '@src/model/model';
 
 import createReducer from '../createReducer';
 
-export interface AuthenticationReducerType extends LoginData {
+export interface AuthenticationReducerType extends LoginData, LoginSuccess {
   loading: boolean;
   error?: string;
-  token: string;
 }
 const defaultState: AuthenticationReducerType = {
   email: '',
@@ -13,6 +12,7 @@ const defaultState: AuthenticationReducerType = {
   loading: false,
   error: undefined,
   token: '',
+  userId: '',
 };
 
 export const authenticationReducer = createReducer<AuthenticationReducerType>(defaultState, {
@@ -31,12 +31,13 @@ export const authenticationReducer = createReducer<AuthenticationReducerType>(de
     };
   },
 
-  [ActionType.LOGIN_USER_SUCCESS](state: AuthenticationReducerType, action: Action<number>) {
+  [ActionType.LOGIN_USER_SUCCESS](state: AuthenticationReducerType, action: Action<LoginSuccess>) {
     return {
       ...state,
       loading: false,
       error: null,
-      token: action.payload,
+      token: action.payload.token,
+      userId: action.payload.userId,
     };
   },
 });
