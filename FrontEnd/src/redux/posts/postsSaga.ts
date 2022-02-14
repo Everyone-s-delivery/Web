@@ -7,18 +7,18 @@ function* getPostsSaga(): Generator<any> {
     const response: any = yield call(usePostsQuery);
     if (response.status === 'ok') {
       yield put({
-        type: ActionType.LISTING_REQUEST_SUCCESS,
+        type: ActionType.POSTS_REQUEST_SUCCESS,
         payload: response,
       });
     } else {
-      yield put({ type: ActionType.LISTING_REQUEST_ERROR, payload: response.status });
+      yield put({ type: ActionType.POSTS_REQUEST_ERROR, payload: response.status });
     }
   } catch (error) {
-    yield put({ type: ActionType.LISTING_REQUEST_ERROR, payload: error });
+    yield put({ type: ActionType.POSTS_REQUEST_ERROR, payload: error });
   }
 }
 function* onGetPostsWatcher() {
-  yield takeLatest(ActionType.LISTING_REQUEST as any, getPostsSaga);
+  yield takeLatest(ActionType.POSTS_REQUEST as any, getPostsSaga);
 }
 
 export default [fork(onGetPostsWatcher)];
