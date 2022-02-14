@@ -8,15 +8,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
+import Logo from '@src/assets/logo';
+import { LoginIcon } from '@src/components/@Icons';
+import { ScrollPageWrapper } from '@src/components/@styled/layout';
+import KakaoLogin from '@src/components/SocialLogin/KakaoLogin';
+import { LoginData } from '@src/model/model';
+import { loginUserAction } from '@src/redux/authentication/authenticationActions';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import Logo from 'src/assets/logo';
-import { LoginIcon } from 'src/components/@Icons';
-import { ScrollPageWrapper } from 'src/components/@styled/layout';
-import KakaoLogin from 'src/components/SocialLogin/KakaoLogin';
-import { LoginData } from 'src/model/model';
-import { loginUserAction } from 'src/redux/authentication/authenticationActions';
 import { Container } from './LoginScreen.style';
 
 type State = {

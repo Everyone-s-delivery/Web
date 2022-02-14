@@ -1,4 +1,4 @@
-const COLOR = {
+export const COLOR = {
   WHITE: '#ffffff',
   BLACK: '#1a1a1a',
 
@@ -11,6 +11,7 @@ const COLOR = {
   YELLOW_700: '#d19900',
   YELLOW_800: '#b78700',
   YELLOW_900: '#9e7400',
+  KAKAO_LOGIN: '#fee500',
 
   PURPLE_100: '#d6d0ea',
   PURPLE_200: '#c3badb',
@@ -43,4 +44,17 @@ const COLOR = {
   GRAY_900: '#292929',
 };
 
-export default COLOR;
+export type ColorCode = 'black' | 'white' | 'kakao';
+
+export const getColorValueFromCode = (color: ColorCode): string => {
+  switch (color) {
+    case 'black':
+      return COLOR.BLACK;
+    case 'white':
+      return COLOR.WHITE;
+    case 'kakao':
+      return COLOR.KAKAO_LOGIN;
+    default:
+      return COLOR.BLACK;
+  }
+};

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { getListingAction } from 'src/redux/listing/listingActions';
+import { getListingAction } from 'src/redux/posts/postsActions';
 import { ScrollPageWrapper } from '../../components/@styled/layout';
 import { QUERY } from '../../constants/queries';
 import { Container, ContentWrapper } from './Posts.style';
@@ -13,12 +13,12 @@ const Posts = () => {
     <ScrollPageWrapper>
       <Container>
         <ContentWrapper>
-          <PostList
+          {/* <PostList
             users={results}
             isFetchingNextPage={isFetchingNextPage}
             onIntersect={handleIntersect}
             queryKey={[QUERY.GET_POSTS, { username }]}
-          />
+          /> */}
         </ContentWrapper>
       </Container>
     </ScrollPageWrapper>

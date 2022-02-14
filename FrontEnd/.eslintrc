@@ -36,7 +36,7 @@
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error"
     },
-    "ignorePatterns": ["*.config.js", "node_modules"],
+    "ignorePatterns": ["config2", "*.config.js", "node_modules"],
     // 참고 : https://github.com/lydell/eslint-plugin-simple-import-sort/issues/31
     "overrides": [
       {

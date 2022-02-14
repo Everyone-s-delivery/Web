@@ -30,7 +30,7 @@ if (dev) {
   middleware = composeWithDevTools(middleware);
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer(history));
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default () => {
   const store = createStore(persistedReducer, middleware);

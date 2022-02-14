@@ -1,6 +1,6 @@
 package everyone.delivery.demo.domain.post;
 
-import everyone.delivery.demo.domain.post.dtos.PostDto;
+import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
@@ -56,13 +56,13 @@ public class PostEntity {
     @LastModifiedDate
     private LocalDateTime updateDate;	//수정일자
 
-    public PostDto toDto(){
+    public PostDetailDto toDto(){
         List<PostCommentDto> postCommentDtos = new ArrayList<>();
         for(PostCommentEntity postCommentEntity: ListUtils.emptyIfNull(this.comments)){
             postCommentDtos.add(postCommentEntity.toDto());
         }
 
-        return PostDto.builder()
+        return PostDetailDto.builder()
                 .postId(this.postId)
                 .posterId(this.poster.getUserId())
                 .posterEmail(this.poster.getEmail())

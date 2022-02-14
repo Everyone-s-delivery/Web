@@ -1,6 +1,5 @@
+import { Page } from '@src/components/@styled/layout';
 import styled from 'styled-components';
-
-import { Page } from 'src/components/@styled/layout';
 
 export const Container = styled(Page)`
   display: flex;

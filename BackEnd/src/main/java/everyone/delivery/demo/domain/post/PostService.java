@@ -1,19 +1,20 @@
 package everyone.delivery.demo.domain.post;
 
 import everyone.delivery.demo.common.exception.ExceptionUtils;
-import everyone.delivery.demo.common.exception.LogicalRuntimeException;
-import everyone.delivery.demo.common.exception.error.CommonError;
 import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
-import everyone.delivery.demo.domain.post.dtos.PostDto;
+import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
+import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
 import everyone.delivery.demo.domain.post.dtos.UpdatePostDto;
+import everyone.delivery.demo.domain.post.repository.PostRepository;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.domain.postComment.PostCommentService;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
 import everyone.delivery.demo.security.user.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.ListUtils;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +37,9 @@ public class PostService {
      * 추후 검색조건 추가 필요
      * @return
      */
-    public List<PostDto> getList(){
+    public List<PostDetailDto> getList(){
         List<PostEntity> postEntities = postRepository.findAll();
-        List<PostDto> postDtos = new ArrayList<>();
+        List<PostDetailDto> postDtos = new ArrayList<>();
         for(PostEntity postEntity: postEntities){
             postDtos.add(postEntity.toDto());
         }
@@ -47,11 +48,27 @@ public class PostService {
 
     /***
      * 조회
+     * 검색조건과 페이징을 통한 post 조회
+     * @return
+     */
+    public List<PostDetailDto> getPagedList(PostSearchDto postSearchDto){
+        Slice<PostEntity> postEntitySlice = postRepository.getPagedList(postSearchDto);
+
+        List<PostDetailDto> postDtoList = new ArrayList<>();
+        for(PostEntity postEntity: ListUtils.emptyIfNull(postEntitySlice.getContent())){
+            postDtoList.add(postEntity.toDto());
+        }
+
+        return postDtoList;
+    }
+
+    /***
+     * 조회
      * postId에 해당하는 post 조회
      * @param postId
      * @return
      */
-    public PostDto getById(Long postId){
+    public PostDetailDto getById(Long postId){
         Optional<PostEntity> postEntityOp = postRepository.findById(postId);
         PostEntity postEntity = ExceptionUtils
                 .ifNullThrowElseReturnVal(postEntityOp,"postEntity is null. postId: {}",postId);
@@ -65,7 +82,7 @@ public class PostService {
      * @return
      */
     @Transactional
-    public PostDto create(CreatePostDto createPostDto){
+    public PostDetailDto create(CreatePostDto createPostDto){
         PostEntity postEntity = convertDTOToEntity(createPostDto);
         postEntity = postRepository.save(postEntity);
         return postEntity.toDto();
@@ -79,7 +96,7 @@ public class PostService {
      * @return
      */
     @Transactional
-    public PostDto update(Long postId, UpdatePostDto updatePostDto){
+    public PostDetailDto update(Long postId, UpdatePostDto updatePostDto){
         Optional<PostEntity> postEntityOp = postRepository.findById(postId);
         PostEntity postEntity = ExceptionUtils
                 .ifNullThrowElseReturnVal(postEntityOp, "postEntity is null. postId: {}", postId);
@@ -106,7 +123,7 @@ public class PostService {
     }
 
 
-    public PostEntity convertDTOToEntity(PostDto postDto){
+    public PostEntity convertDTOToEntity(PostDetailDto postDto){
         Optional<UserEntity> userEntityOp = userRepository.findByUserId(postDto.getPosterId());
         UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(userEntityOp);
         List<PostCommentDto> commentDtos = postDto.getComments();
