@@ -1,11 +1,8 @@
 import { routerReducer, RouterState } from 'react-router-redux';
-import { History } from 'history';
 import { combineReducers } from 'redux';
 
-import {
-  authenticationReducer,
-  AuthenticationReducerType,
-} from './authentication/authenticationReducer';
+import { AuthenticationReducerType } from './login/authenticationReducer';
+import { loginReducer } from './login/loginSlice';
 import { postsReducer, PostsReducerType } from './posts/postsReducer';
 import { signupReducer, SignupReducerType } from './signup/signupReducer';
 
@@ -17,7 +14,7 @@ export interface RootState {
 }
 const rootReducer = combineReducers({
   posts: postsReducer,
-  loginForm: authenticationReducer,
+  loginForm: loginReducer,
   signup: signupReducer,
   routerReducer,
 });

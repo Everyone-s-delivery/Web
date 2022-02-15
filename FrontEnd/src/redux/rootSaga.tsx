@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
 
-import authenticationSaga from './authentication/authenticationSaga';
+import authenticationSaga from './login/loginSaga';
 import PostsSagas from './posts/postsSaga';
 import signupSaga from './signup/signupSaga';
 

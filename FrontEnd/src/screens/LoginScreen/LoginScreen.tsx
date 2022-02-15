@@ -13,7 +13,7 @@ import { LoginIcon } from '@src/components/@Icons';
 import { ScrollPageWrapper } from '@src/components/@styled/layout';
 import KakaoLogin from '@src/components/SocialLogin/KakaoLogin';
 import { LoginData } from '@src/model/model';
-import { loginUserAction } from '@src/redux/authentication/authenticationActions';
+import { loginActions } from '@src/redux/login/loginSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -69,7 +69,7 @@ const LoginScreen = () => {
       loading: true,
     }));
 
-    dispatch(loginUserAction({ email, password }));
+    dispatch(loginActions.login({ email, password }));
   };
   return (
     <ScrollPageWrapper>
