@@ -38,7 +38,8 @@ public class SignService {
      */
     public TokenResult signin(String email, String password) {
         Optional<UserEntity> findUserEntityOp = userRepository.findByEmail(email);
-        UserEntity findUserEntity = ExceptionUtils.ifNullThrowElseReturnVal(findUserEntityOp,"login fail, check email. email: {}", email);
+        UserEntity findUserEntity = ExceptionUtils.ifNullThrowElseReturnVal(
+                UserError.INVALID_USER_ID, findUserEntityOp,"login fail, check email. email: {}", email);
 
         if (!passwordEncoder.matches(password, findUserEntity.getPassword())){
             log.error("login fail, check password. password: {}", password);
