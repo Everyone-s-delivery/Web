@@ -1,16 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LoginData, LoginSuccess } from '@src/model/model';
 
-export interface AuthenticationReducerType extends LoginData, LoginSuccess {
+export interface AuthenticationReducerType {
   loading: boolean;
-  error?: string;
+  payload?: string | LoginSuccess;
+  error: boolean;
 }
 const initialState: AuthenticationReducerType = {
-  email: '',
-  password: '',
   loading: false,
-  token: '',
-  userId: '',
+  error: false,
 };
 
 export const loginSlice = createSlice({
@@ -22,12 +20,15 @@ export const loginSlice = createSlice({
     },
     loginFailure: (state: AuthenticationReducerType, action: PayloadAction<string>) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = true;
+      state.payload = action.payload;
     },
     loginSuccess: (state: AuthenticationReducerType, action: PayloadAction<LoginSuccess>) => {
       state.loading = false;
-      state.token = action.payload.token;
-      state.userId = action.payload.userId;
+      state.payload = {
+        token: action.payload.token,
+        userId: action.payload.userId,
+      };
     },
   },
 });

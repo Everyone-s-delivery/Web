@@ -1,4 +1,4 @@
-import { ActionType, LoginData } from '@src/model/model';
+import { LoginData } from '@src/model/model';
 import { createApiCall, loginRoute, MethodType } from '@src/services/Api';
 import { call, fork, put, takeLatest } from 'redux-saga/effects';
 
