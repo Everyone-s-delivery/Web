@@ -78,5 +78,4 @@ public class SignService {
                 .address(basicUserDto.getAddress())
                 .roles(roles).build();
     }
-
 }
