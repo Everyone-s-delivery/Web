@@ -21,6 +21,18 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice(basePackages="everyone.delivery.demo")
 public class CommonControllerAdvice {
 
+    /***
+     * > 가장 상위의 예외 핸들러
+     *      > 하위 타입의 예외가 발생하면 여기가 아니라 그 하위 타입의 헨들러 메소드로 메핑된다는 가정 하에 구현
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> superExceptionHandler(Exception ex) {
+        log.error("Exception: ",  ex);
+        return ResponseUtils.out(CommonError.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(LogicalRuntimeException.class)
     public ResponseEntity<?> logicalRuntimeExceptionHandler(LogicalRuntimeException ex) {
         log.error("LogicalRuntimeException: ",  ex);
