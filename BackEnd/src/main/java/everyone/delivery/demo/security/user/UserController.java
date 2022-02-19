@@ -30,7 +30,7 @@ public class UserController {
 	 * @return
 	 * **/
 	@GetMapping("")
-	@ApiOperation(value = "사용자 목록 조회", notes = "전체 사용자 리스트를 반환합니다.")
+	@ApiOperation(value = "사용자 목록 조회", notes = "https://keen-derby-c16.notion.site/de5f0ef8401c4be9bba6c10331e171f2")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = false, dataType = "String", paramType = "header")
 	})
@@ -46,7 +46,7 @@ public class UserController {
 	 * **/
 	@GetMapping("/{userId}")
 	@ApiOperation(value = "사용자 상세 조회",
-	notes = "사용자 번호에 해당하는 상세 정보를 조회할 수 있습니다.")
+	notes = "https://keen-derby-c16.notion.site/7cae9a5156334737b109527d2dc22133")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header"),
 		@ApiImplicitParam(name = "userId",value = "사용자 번호(1 이상의 값)", example = "1" )
@@ -77,7 +77,7 @@ public class UserController {
 	 * **/
 	@PutMapping("/{userId}")
 	@ApiOperation(value = "기존 사용자 수정", 
-	notes = "기존 사용자를 수정합니다. 사용자 아이디는 path로 넘기고 나머지 정보를 json body로 넘겨야 합니다.")
+	notes = "https://keen-derby-c16.notion.site/180410d5424242c8aa08ddc11834040a")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header")
 	})
