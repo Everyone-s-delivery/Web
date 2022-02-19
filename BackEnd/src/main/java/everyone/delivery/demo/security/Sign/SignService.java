@@ -61,6 +61,8 @@ public class SignService {
         roles.add(UserRole.ROLE_RECRUITER);
         if(createUserDto.getEmail().equals("admin@admin.com"))
             roles.add(UserRole.ROLE_ADMIN);
+        if(createUserDto.getEmail().equals("admin1@admin1"))
+            roles.add(UserRole.ROLE_ADMIN);
 
         UserEntity userEntity = convertDTOToEntity(createUserDto,roles);
 
