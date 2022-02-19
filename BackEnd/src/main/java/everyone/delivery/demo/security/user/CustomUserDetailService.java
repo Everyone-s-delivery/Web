@@ -1,5 +1,6 @@
 package everyone.delivery.demo.security.user;
 import everyone.delivery.demo.common.exception.ExceptionUtils;
+import everyone.delivery.demo.common.exception.error.UserError;
 import everyone.delivery.demo.security.user.dtos.CreateUserDto;
 import everyone.delivery.demo.security.user.dtos.UpdateUserDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
@@ -47,7 +48,10 @@ public class CustomUserDetailService implements UserDetailsService {
 	public UserDto getById(Long userId) {
 		Optional<UserEntity> userEntityOp = userRepository.findByUserId(userId);
 		UserEntity userEntity = ExceptionUtils
-				.ifNullThrowElseReturnVal(userEntityOp, "There is no corresponding information for userId. userId: {}",userId);
+				.ifNullThrowElseReturnVal(
+						UserError.NOT_FOUND_USER,
+						userEntityOp,
+						"There is no corresponding information for userId. userId: {}",userId);
 
 		return convertEntityToDto(userEntity);
 	}
@@ -74,12 +78,18 @@ public class CustomUserDetailService implements UserDetailsService {
 	public UserDto update(Long userId, UpdateUserDto updateUserDto) {
 		Optional<UserEntity> userEntityOp = userRepository.findByUserId(userId);
 		UserEntity userEntity = ExceptionUtils
-				.ifNullThrowElseReturnVal(userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
+				.ifNullThrowElseReturnVal(UserError.NOT_FOUND_USER,
+						userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
 
-		userEntity.setEmail(updateUserDto.getEmail());
-		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-		userEntity.setNickName(updateUserDto.getNickName());
-		userEntity.setAddress(updateUserDto.getAddress());
+		if(updateUserDto.getEmail() != null)
+			userEntity.setEmail(updateUserDto.getEmail());
+		if(updateUserDto.getPassword() != null)
+			userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+		if(updateUserDto.getNickName() != null)
+			userEntity.setNickName(updateUserDto.getNickName());
+		if(updateUserDto.getAddress() != null)
+			userEntity.setAddress(updateUserDto.getAddress());
+
 		userEntity = userRepository.save(userEntity);
 		return userEntity.toDTO();
 	}

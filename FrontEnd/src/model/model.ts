@@ -40,6 +40,10 @@ export interface LoginData {
   email: string;
   password: string;
 }
+export interface LoginSuccess {
+  token: string;
+  userId: string;
+}
 export interface SignupData {
   email: string;
   nickName: string;

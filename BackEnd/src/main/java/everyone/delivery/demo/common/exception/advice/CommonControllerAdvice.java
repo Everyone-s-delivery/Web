@@ -21,8 +21,21 @@ import javax.validation.ConstraintViolationException;
 @RestControllerAdvice(basePackages="everyone.delivery.demo")
 public class CommonControllerAdvice {
 
+    /***
+     * > 가장 상위의 예외 핸들러
+     *      > 하위 타입의 예외가 발생하면 여기가 아니라 그 하위 타입의 헨들러 메소드로 메핑된다는 가정 하에 구현
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> superExceptionHandler(Exception ex) {
+        log.error("Exception: ",  ex);
+        return ResponseUtils.out(CommonError.INTERNAL_SERVER_ERROR);
+    }
+
     @ExceptionHandler(LogicalRuntimeException.class)
     public ResponseEntity<?> logicalRuntimeExceptionHandler(LogicalRuntimeException ex) {
+        log.error("LogicalRuntimeException: ",  ex);
         return ResponseUtils.out(ex.getRestError());
     }
 
@@ -33,7 +46,7 @@ public class CommonControllerAdvice {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<?> httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException ex) {
-        log.error("errorMsg: {}",ex.getMessage());
+        log.error("HttpMessageNotReadableException: ",  ex);
         return ResponseUtils.out(CommonError.BAD_REQUEST);
     }
 
@@ -44,7 +57,7 @@ public class CommonControllerAdvice {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<?> constraintViolationExceptionHandler(ConstraintViolationException ex) {
-        log.error("errorMsg: {}",ex.getMessage());
+        log.error("ConstraintViolationException: ",  ex);
         return ResponseUtils.out(CommonError.BAD_REQUEST);
     }
 
@@ -55,7 +68,7 @@ public class CommonControllerAdvice {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<?> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
-        log.error("errorMsg: {}",ex.getMessage());
+        log.error("MethodArgumentNotValidException: ",  ex);
 
         //TODO: 별도의 ConstraintValidator가 없을 경우 동작 방식 확인 필요
         try {
@@ -81,7 +94,7 @@ public class CommonControllerAdvice {
      */
     @ExceptionHandler(MissingServletRequestPartException.class)
     protected ResponseEntity<?> missingServletRequestPartExceptionHandler(MissingServletRequestPartException ex) {
-        log.error("errorMsg: {}",ex.getMessage());
+        log.error("MissingServletRequestPartException: ",  ex);
         return ResponseUtils.out(CommonError.BAD_REQUEST);
     }
 }
