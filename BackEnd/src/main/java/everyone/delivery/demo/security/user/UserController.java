@@ -93,7 +93,7 @@ public class UserController {
 	 * **/
 	@DeleteMapping("/{userId}")
 	@ApiOperation(value = "기존 사용자 삭제", 
-	notes = "기존 사용자를 삭제합니다. path로 삭제하고자 하는 사용자의 번호를 넘겨야 합니다.")
+	notes = "https://keen-derby-c16.notion.site/a28a3b684eec44c09176232ef7066b06")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header")
 	})
