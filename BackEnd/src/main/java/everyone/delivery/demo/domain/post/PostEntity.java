@@ -31,6 +31,10 @@ public class PostEntity {
     @GeneratedValue(strategy= GenerationType.SEQUENCE , generator="postTable_SEQ_GENERATOR")
     private Long postId;
 
+    /***
+     * > poster 에 해당하는 사용자가 삭제될 때 해당 comment 도 삭제되는게 맞나?
+     * > 우선 삭제되는 것으로 구현
+     */
     @ManyToOne
     @JoinColumn(name="user_id")
     private UserEntity poster;

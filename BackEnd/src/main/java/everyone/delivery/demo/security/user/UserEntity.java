@@ -1,6 +1,9 @@
 package everyone.delivery.demo.security.user;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import everyone.delivery.demo.domain.post.PostEntity;
+import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.security.user.dtos.UserDto;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -10,6 +13,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 
 @SequenceGenerator(name = "userTable_SEQ_GENERATOR", sequenceName = "userTable_SEQ", initialValue = 1, allocationSize = 1)
 @Entity
@@ -49,6 +54,19 @@ public class UserEntity {
 
     @LastModifiedDate
     private LocalDateTime updateDate;	//수정일자
+
+    /***
+     * > user Entity 에 post 와 postComment 관계를 넣은 이유
+     *      > user 가 지워질 때 함께 지워지게 하기 위함
+     *      > 우선 이 용도 말고는 해당 필드를 사용하지는 않을 예정임
+     */
+    @OneToMany(fetch = LAZY, cascade = CascadeType.ALL) // userEntity 에 딸려있는 post 는 userEntity 에 전파된다.
+    @JoinColumn(name="user_id")
+    private List<PostEntity> posts;
+
+    @OneToMany(fetch = LAZY, cascade = CascadeType.ALL) // userEntity 에 딸려있는 comment 는 userEntity 에 전파된다.
+    @JoinColumn(name="user_id")
+    private List<PostCommentEntity> comments;
 
     public UserDto toDTO(){
         return UserDto.builder()

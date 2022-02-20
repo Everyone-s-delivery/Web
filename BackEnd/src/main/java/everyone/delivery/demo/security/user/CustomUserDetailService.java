@@ -101,12 +101,12 @@ public class CustomUserDetailService implements UserDetailsService {
 	 * @return
 	 * **/
 	@Transactional
-	public Long delete(Long userId) {
+	public UserDto delete(Long userId) {
 		Optional<UserEntity> userEntityOp = userRepository.findByUserId(userId);
 		ExceptionUtils
 				.ifNullThrowElseReturnVal(userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
 		userRepository.deleteByUserId(userId);
-		return userId;
+		return userEntityOp.get().toDTO();
 	}
 
 
