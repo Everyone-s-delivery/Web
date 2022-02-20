@@ -15,7 +15,11 @@ import KakaoLogin from '@src/components/SocialLogin/KakaoLogin';
 import { LoginData } from '@src/model/model';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { loginUserAction } from '@src/redux/authentication/authenticationActions';
+=======
+import { loginActions } from '@src/redux/login/loginSlice';
+>>>>>>> dev
 =======
 import { loginActions } from '@src/redux/login/loginSlice';
 >>>>>>> dev

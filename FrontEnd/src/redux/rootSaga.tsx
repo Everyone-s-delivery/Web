@@ -2,7 +2,11 @@ import { all } from 'redux-saga/effects';
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import authenticationSaga from './authentication/authenticationSaga';
+=======
+import authenticationSaga from './login/loginSaga';
+>>>>>>> dev
 =======
 import authenticationSaga from './login/loginSaga';
 >>>>>>> dev

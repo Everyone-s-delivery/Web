@@ -104,7 +104,12 @@ public class CustomUserDetailService implements UserDetailsService {
 	public UserDto delete(Long userId) {
 		Optional<UserEntity> userEntityOp = userRepository.findByUserId(userId);
 		ExceptionUtils
+<<<<<<< HEAD
 				.ifNullThrowElseReturnVal(userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
+=======
+				.ifNullThrowElseReturnVal(UserError.NOT_FOUND_USER,
+						userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
+>>>>>>> dev
 		UserDto userDto = userEntityOp.get().toDTO();
 		userRepository.deleteByUserId(userId);
 		return userDto;
