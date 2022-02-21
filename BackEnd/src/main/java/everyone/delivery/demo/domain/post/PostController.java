@@ -89,7 +89,9 @@ public class PostController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
-    public ResponseEntity delete(@PathVariable @Min(value = 1, message = "postId cannot be minus.") Long postId) {
-        return ResponseUtils.out(postService.delete(postId));
+    public ResponseEntity delete(
+            @AuthenticationPrincipal UserDto tokenUserDto,
+            @PathVariable @Min(value = 1, message = "postId cannot be minus.") Long postId) {
+        return ResponseUtils.out(postService.delete(tokenUserDto, postId));
     }
 }

@@ -126,9 +126,16 @@ public class PostService {
      * @return
      */
     @Transactional
-    public Long delete(Long postId){
+    public Long delete(UserDto tokenUserDto, Long postId){
         Optional<PostEntity> postEntityOp = postRepository.findById(postId);
-        ExceptionUtils.ifNullThrowElseReturnVal(postEntityOp,"postEntity is null. postId: {}", postId);
+        ExceptionUtils.ifNullThrowElseReturnVal(PostError.NOT_FOUND_POST,
+                postEntityOp,"postEntity is null. postId: {}", postId);
+        if(!tokenUserDto.isAdmin() && postEntityOp.get().getPoster().getUserId() != tokenUserDto.getUserId()){
+            //관리자도 아니고, 작성한 사람도 아닌 경우
+            log.error("requested user is not the author. do not have permission to modify. tokenUserId: {}", tokenUserDto.getUserId());
+            throw new LogicalRuntimeException(PostError.NO_AUTHORITY_TO_MODIFY);
+        }
+
         postRepository.deleteById(postId);
         return postId;
     }
