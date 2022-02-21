@@ -1,6 +1,9 @@
 package everyone.delivery.demo.domain.post;
 
 import everyone.delivery.demo.common.exception.ExceptionUtils;
+import everyone.delivery.demo.common.exception.LogicalRuntimeException;
+import everyone.delivery.demo.common.exception.error.PostError;
+import everyone.delivery.demo.common.exception.error.UserError;
 import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
 import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
@@ -11,6 +14,7 @@ import everyone.delivery.demo.domain.postComment.PostCommentService;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
 import everyone.delivery.demo.security.user.UserRepository;
+import everyone.delivery.demo.security.user.dtos.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.ListUtils;
@@ -82,8 +86,8 @@ public class PostService {
      * @return
      */
     @Transactional
-    public PostDetailDto create(CreatePostDto createPostDto){
-        PostEntity postEntity = convertDTOToEntity(createPostDto);
+    public PostDetailDto create(Long tokenUserId, CreatePostDto createPostDto){
+        PostEntity postEntity = convertDTOToEntity(tokenUserId, createPostDto);
         postEntity = postRepository.save(postEntity);
         return postEntity.toDto();
     }
@@ -96,10 +100,17 @@ public class PostService {
      * @return
      */
     @Transactional
-    public PostDetailDto update(Long postId, UpdatePostDto updatePostDto){
+    public PostDetailDto update(UserDto tokenUserDto, Long postId, UpdatePostDto updatePostDto){
         Optional<PostEntity> postEntityOp = postRepository.findById(postId);
         PostEntity postEntity = ExceptionUtils
-                .ifNullThrowElseReturnVal(postEntityOp, "postEntity is null. postId: {}", postId);
+                .ifNullThrowElseReturnVal(PostError.NOT_FOUND_POST, postEntityOp, "postEntity is null. postId: {}", postId);
+
+        if(!tokenUserDto.isAdmin() && postEntityOp.get().getPoster().getUserId() != tokenUserDto.getUserId()){
+            //관리자도 아니고, 작성한 사람도 아닌 경우
+            log.error("requested user is not the author. do not have permission to modify. tokenUserId: {}", tokenUserDto.getUserId());
+            throw new LogicalRuntimeException(PostError.NO_AUTHORITY_TO_MODIFY);
+        }
+
         postEntity.setTitle(updatePostDto.getTitle());
         postEntity.setDescription(updatePostDto.getDescription());
         postEntity.setAddresses(updatePostDto.getAddresses());
@@ -144,9 +155,10 @@ public class PostService {
                 .build();
     }
 
-    public PostEntity convertDTOToEntity(CreatePostDto createPostDto){
-        Optional<UserEntity> userEntityOp = userRepository.findByUserId(createPostDto.getPosterId());
-        UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(userEntityOp);
+    public PostEntity convertDTOToEntity(Long tokenUserId, CreatePostDto createPostDto){
+        Optional<UserEntity> userEntityOp = userRepository.findByUserId(tokenUserId);
+        UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(
+                UserError.INVALID_USER_ID, userEntityOp,"invalid tokenUserId. tokenUserId: {}", tokenUserId);
 
         return PostEntity.builder()
                 .poster(userEntity)

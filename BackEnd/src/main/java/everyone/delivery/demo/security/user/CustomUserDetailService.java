@@ -68,8 +68,6 @@ public class CustomUserDetailService implements UserDetailsService {
 		return convertEntityToDto(userEntity);
 	}
 
-
-	
 	/**
 	 * {userId}에 해당하는 사용자 수정
 	 * @param updateUserDto
@@ -93,8 +91,7 @@ public class CustomUserDetailService implements UserDetailsService {
 		userEntity = userRepository.save(userEntity);
 		return userEntity.toDTO();
 	}
-	
-	
+
 	/**
 	 * {userId}에 해당하는 사용자 삭제
 	 * @param userId
@@ -111,14 +108,12 @@ public class CustomUserDetailService implements UserDetailsService {
 		return userDto;
 	}
 
-
     public UserDetails loadUserByUsername(String email) {
         Optional<UserEntity> userEntityOp = userRepository.findByEmail(email);
 		UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(userEntityOp);
         return convertEntityToDto(userEntity);
     }
-    
-    
+
     private UserDto convertEntityToDto(UserEntity userEntity){
         return UserDto.builder()
         				.userId(userEntity.getUserId())
