@@ -21,18 +21,18 @@ import java.util.List;
 @Builder
 public class CreatePostDto {
 
-    @MustExistUserId
-    @Min(value = 1, message = "posterId cannot be minus.")
-    @NotNull(message = "Not enough post data. posterId cannot be null.")
-    private Long posterId;          // 모집글에 대한 작성자 아이디
+//    @MustExistUserId
+//    @Min(value = 1, message = "posterId cannot be minus.")
+//    @NotNull(message = "Not enough post data. posterId cannot be null.")
+//    private Long posterId;          // 모집글에 대한 작성자 아이디
 
-    //TODO: 이 부분 입력시에는 빼고 posterId로만 대체 가능?
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
-    private String posterEmail;       // 모집글에 대한 작성자 이메일
-
-    //TODO: 이 부분 입력시에는 빼고 posterId로만 대체 가능?
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
-    private String posterNickName;
+//    //TODO: 이 부분 입력시에는 빼고 posterId로만 대체 가능?
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
+//    private String posterEmail;       // 모집글에 대한 작성자 이메일
+//
+//    //TODO: 이 부분 입력시에는 빼고 posterId로만 대체 가능?
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
+//    private String posterNickName;
 
     @NotNull(message = "Not enough post data. title cannot be null.")
     private String title;

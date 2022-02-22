@@ -4,10 +4,15 @@ import { combineReducers } from 'redux';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {
   authenticationReducer,
   AuthenticationReducerType,
 } from './authentication/authenticationReducer';
+=======
+import { AuthenticationReducerType } from './login/authenticationReducer';
+import { loginReducer } from './login/loginSlice';
+>>>>>>> dev
 =======
 import { AuthenticationReducerType } from './login/authenticationReducer';
 import { loginReducer } from './login/loginSlice';
@@ -34,7 +39,11 @@ const rootReducer = combineReducers({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   loginForm: authenticationReducer,
+=======
+  loginForm: loginReducer,
+>>>>>>> dev
 =======
   loginForm: loginReducer,
 >>>>>>> dev

@@ -1,7 +1,7 @@
 package everyone.delivery.demo.security;
 
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
-import everyone.delivery.demo.common.exception.error.CommonError;
+import everyone.delivery.demo.common.exception.error.JwtError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +17,11 @@ public class ExceptionController {
 
 	@GetMapping(value = "/EmptyJWTToken")
 	public void entrypointException() {
-		throw new LogicalRuntimeException(CommonError.NOT_INCLUDE_JWT_TOKEN);
+		throw new LogicalRuntimeException(JwtError.INVALID_JWT_TOKEN);
 	}
 	
 	@GetMapping(value = "/accessdenied")
 	public void accessdeniedException() {
-		throw new LogicalRuntimeException(CommonError.UNAUTHORIZED_JWT_TOKEN);
+		throw new LogicalRuntimeException(JwtError.UNAUTHORIZED_JWT_TOKEN);
 	}
 }

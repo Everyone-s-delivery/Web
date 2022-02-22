@@ -18,10 +18,8 @@ import java.util.List;
 @Builder
 public class UpdatePostDto {
 
-    @NotNull(message = "Not enough post data. title cannot be null.")
     private String title;
 
-    @NotNull(message = "Not enough post data. description cannot be null.")
     private String description;
 
     private List<String> addresses;

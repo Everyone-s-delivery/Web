@@ -6,6 +6,7 @@ import everyone.delivery.demo.security.user.dtos.UpdateUserDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -68,8 +69,6 @@ public class CustomUserDetailService implements UserDetailsService {
 		return convertEntityToDto(userEntity);
 	}
 
-
-	
 	/**
 	 * {userId}에 해당하는 사용자 수정
 	 * @param updateUserDto
@@ -94,7 +93,10 @@ public class CustomUserDetailService implements UserDetailsService {
 		return userEntity.toDTO();
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 	/**
 	 * {userId}에 해당하는 사용자 삭제
 	 * @param userId
@@ -111,14 +113,12 @@ public class CustomUserDetailService implements UserDetailsService {
 		return userDto;
 	}
 
-
     public UserDetails loadUserByUsername(String email) {
         Optional<UserEntity> userEntityOp = userRepository.findByEmail(email);
 		UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(userEntityOp);
-        return convertEntityToDto(userEntity);
+        return convertEntityToDto(userEntityOp.get());
     }
-    
-    
+
     private UserDto convertEntityToDto(UserEntity userEntity){
         return UserDto.builder()
         				.userId(userEntity.getUserId())

@@ -1,5 +1,6 @@
 package everyone.delivery.demo.security.JWT;
 
+import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.security.user.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

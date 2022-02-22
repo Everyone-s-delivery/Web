@@ -5,17 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import java.util.EnumSet;
-
-/***
- * 미리 정의해 둔 에러들
- */
+@Getter
 @AllArgsConstructor
-public enum CommonError implements RestError{
-
-    INVALID_DATA(HttpStatus.BAD_REQUEST,"요청 오류 입니다.(의미상 오류: api 스팩은 맞지만 논리상 안맞는 요청)"),
-    BAD_REQUEST(HttpStatus.BAD_REQUEST, "요청 오류 입니다.(형식상 오류: api 스팩에 안맞는 요청)"),
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류 입니다.");
+public enum PostError implements RestError{
+    NO_AUTHORITY_TO_MODIFY(HttpStatus.BAD_REQUEST, "요청한 사용자는 작성자가 아닙니다. 글 수정 권한이 없습니다."),
+    NOT_FOUND_POST(HttpStatus.BAD_REQUEST, "요청한 아이디에 해당하는 글이 존재하지 않습니다.");
 
     private HttpStatus httpStatus;
     private String errorMsg;

@@ -62,6 +62,10 @@ public class UserDto implements UserDetails {
                             .build();
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)	//직렬화 과정에서 제외시킨다는 의미
+    public boolean isAdmin(){
+        return roles.contains(UserRole.ROLE_ADMIN);
+    }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)	//직렬화 과정에서 제외시킨다는 의미
     @Override
