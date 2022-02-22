@@ -1,8 +1,10 @@
 package everyone.delivery.demo.security.JWT;
 
+import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,8 +34,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 			throws IOException, ServletException {
 		String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 		if (token != null && jwtTokenProvider.validateToken(token)) {
-			Authentication auth = jwtTokenProvider.getAuthentication(token);
-			SecurityContextHolder.getContext().setAuthentication(auth);
+			try{
+				Authentication auth = jwtTokenProvider.getAuthentication(token);
+				SecurityContextHolder.getContext().setAuthentication(auth);
+			}catch (LogicalRuntimeException ex){
+				filterChain.doFilter(request, response);
+				return;
+			}
 		}
 		filterChain.doFilter(request, response);
 	}

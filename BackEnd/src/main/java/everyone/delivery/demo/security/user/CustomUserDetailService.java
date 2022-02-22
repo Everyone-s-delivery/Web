@@ -6,6 +6,7 @@ import everyone.delivery.demo.security.user.dtos.UpdateUserDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -111,7 +112,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) {
         Optional<UserEntity> userEntityOp = userRepository.findByEmail(email);
 		UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(userEntityOp);
-        return convertEntityToDto(userEntity);
+        return convertEntityToDto(userEntityOp.get());
     }
 
     private UserDto convertEntityToDto(UserEntity userEntity){

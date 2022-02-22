@@ -87,7 +87,11 @@ public class PostService {
      */
     @Transactional
     public PostDetailDto create(Long tokenUserId, CreatePostDto createPostDto){
-        PostEntity postEntity = convertDTOToEntity(tokenUserId, createPostDto);
+        Optional<UserEntity> userEntityOp = userRepository.findByUserId(tokenUserId);
+        UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(
+                UserError.INVALID_USER_ID, userEntityOp,"invalid tokenUserId. tokenUserId: {}", tokenUserId);
+
+        PostEntity postEntity = convertDTOToEntity(userEntity, createPostDto);
         postEntity = postRepository.save(postEntity);
         return postEntity.toDto();
     }
@@ -162,11 +166,7 @@ public class PostService {
                 .build();
     }
 
-    public PostEntity convertDTOToEntity(Long tokenUserId, CreatePostDto createPostDto){
-        Optional<UserEntity> userEntityOp = userRepository.findByUserId(tokenUserId);
-        UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(
-                UserError.INVALID_USER_ID, userEntityOp,"invalid tokenUserId. tokenUserId: {}", tokenUserId);
-
+    public PostEntity convertDTOToEntity(UserEntity userEntity, CreatePostDto createPostDto){
         return PostEntity.builder()
                 .poster(userEntity)
                 .title(createPostDto.getTitle())
