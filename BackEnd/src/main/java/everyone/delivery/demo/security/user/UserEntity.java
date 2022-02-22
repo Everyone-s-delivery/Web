@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -43,7 +44,7 @@ public class UserEntity {
     // 참고: https://gunju-ko.github.io/jpa/2019/06/15/JPA-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EC%9E%85%EB%AC%B8-chapter09.-%EA%B0%92-%EC%BB%AC%EB%A0%89%EC%85%98-%EB%A7%A4%ED%95%91.html
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)    //이넘 값을 그대로 디비에 저장
-    private List<UserRole> roles;
+    private Set<UserRole> roles;
 
     @Column(length = 300, nullable = false)
     private String address;

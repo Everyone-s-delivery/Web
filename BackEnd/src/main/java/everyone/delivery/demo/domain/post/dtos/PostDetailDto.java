@@ -17,6 +17,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -45,7 +46,7 @@ public class PostDetailDto {
     @NotNull(message = "Not enough post data. description cannot be null.")
     private String description;
 
-    private List<String> addresses;
+    private Set<String> addresses;
 
     private List<PostCommentDto> comments;
 

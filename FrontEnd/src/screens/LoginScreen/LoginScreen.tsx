@@ -14,6 +14,9 @@ import { ScrollPageWrapper } from '@src/components/@styled/layout';
 import KakaoLogin from '@src/components/SocialLogin/KakaoLogin';
 import { LoginData } from '@src/model/model';
 <<<<<<< HEAD
+import { loginActions } from '@src/redux/login/loginSlice';
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -30,6 +33,7 @@ import { loginActions } from '@src/redux/login/loginSlice';
 =======
 import { loginActions } from '@src/redux/login/loginSlice';
 >>>>>>> dev
+>>>>>>> 7f319b30
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
