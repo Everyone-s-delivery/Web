@@ -1,12 +1,9 @@
 package everyone.delivery.demo.domain.post;
 
 import everyone.delivery.demo.common.exception.ExceptionUtils;
-<<<<<<< HEAD
-=======
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.common.exception.error.PostError;
 import everyone.delivery.demo.common.exception.error.UserError;
->>>>>>> dev
 import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
 import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
@@ -17,10 +14,7 @@ import everyone.delivery.demo.domain.postComment.PostCommentService;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
 import everyone.delivery.demo.security.user.UserRepository;
-<<<<<<< HEAD
-=======
 import everyone.delivery.demo.security.user.dtos.UserDto;
->>>>>>> dev
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.ListUtils;
@@ -92,17 +86,12 @@ public class PostService {
      * @return
      */
     @Transactional
-<<<<<<< HEAD
-    public PostDetailDto create(CreatePostDto createPostDto){
-        PostEntity postEntity = convertDTOToEntity(createPostDto);
-=======
     public PostDetailDto create(Long tokenUserId, CreatePostDto createPostDto){
         Optional<UserEntity> userEntityOp = userRepository.findByUserId(tokenUserId);
         UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(
                 UserError.INVALID_USER_ID, userEntityOp,"invalid tokenUserId. tokenUserId: {}", tokenUserId);
 
         PostEntity postEntity = convertDTOToEntity(userEntity, createPostDto);
->>>>>>> dev
         postEntity = postRepository.save(postEntity);
         return postEntity.toDto();
     }
@@ -115,11 +104,7 @@ public class PostService {
      * @return
      */
     @Transactional
-<<<<<<< HEAD
-    public PostDetailDto update(Long postId, UpdatePostDto updatePostDto){
-=======
     public PostDetailDto update(UserDto tokenUserDto, Long postId, UpdatePostDto updatePostDto){
->>>>>>> dev
         Optional<PostEntity> postEntityOp = postRepository.findById(postId);
         PostEntity postEntity = ExceptionUtils
                 .ifNullThrowElseReturnVal(PostError.NOT_FOUND_POST, postEntityOp, "postEntity is null. postId: {}", postId);

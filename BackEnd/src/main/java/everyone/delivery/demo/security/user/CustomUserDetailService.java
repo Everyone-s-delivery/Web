@@ -22,10 +22,10 @@ import java.util.Optional;
 public class CustomUserDetailService implements UserDetailsService {
 
 	@Autowired
-    private UserRepository userRepository;
-	
+	private UserRepository userRepository;
+
 	@Autowired
-    private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * 전체 사용자 리스트 리턴
@@ -37,10 +37,10 @@ public class CustomUserDetailService implements UserDetailsService {
 		List<UserDto> userDtoList = new ArrayList<>();
 		for(UserEntity userEntity : userEntityList)
 			userDtoList.add(this.convertEntityToDto(userEntity));
-        
+
 		return userDtoList;
 	}
-	
+
 	/**
 	 * {userId}에 해당하는 사용자 리턴
 	 * @param userId
@@ -93,10 +93,6 @@ public class CustomUserDetailService implements UserDetailsService {
 		return userEntity.toDTO();
 	}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
 	/**
 	 * {userId}에 해당하는 사용자 삭제
 	 * @param userId
@@ -113,22 +109,22 @@ public class CustomUserDetailService implements UserDetailsService {
 		return userDto;
 	}
 
-    public UserDetails loadUserByUsername(String email) {
-        Optional<UserEntity> userEntityOp = userRepository.findByEmail(email);
+	public UserDetails loadUserByUsername(String email) {
+		Optional<UserEntity> userEntityOp = userRepository.findByEmail(email);
 		UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(userEntityOp);
-        return convertEntityToDto(userEntityOp.get());
-    }
+		return convertEntityToDto(userEntityOp.get());
+	}
 
-    private UserDto convertEntityToDto(UserEntity userEntity){
-        return UserDto.builder()
-        				.userId(userEntity.getUserId())
-        				.email(userEntity.getEmail())
-						.nickName(userEntity.getNickName())
-        				.password(userEntity.getPassword())
-        				.roles(userEntity.getRoles())
-						.address(userEntity.getAddress())
-        				.regDate(userEntity.getRegDate())
-						.updateDate(userEntity.getUpdateDate())
-        				.build();
-    }
+	private UserDto convertEntityToDto(UserEntity userEntity){
+		return UserDto.builder()
+				.userId(userEntity.getUserId())
+				.email(userEntity.getEmail())
+				.nickName(userEntity.getNickName())
+				.password(userEntity.getPassword())
+				.roles(userEntity.getRoles())
+				.address(userEntity.getAddress())
+				.regDate(userEntity.getRegDate())
+				.updateDate(userEntity.getUpdateDate())
+				.build();
+	}
 }
