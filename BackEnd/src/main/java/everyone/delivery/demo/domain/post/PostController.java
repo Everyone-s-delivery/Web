@@ -40,8 +40,7 @@ public class PostController {
 
 
     @PostMapping("/page")
-    @ApiOperation(value = "글 리스트 조회(페이징)", notes = "글 리스트를 조회할 수 있습니다. 검색조건에 따른 페이징을 할 수 있습니다." +
-            "offset ~ limit+1 방식으로 무한 스크롤 구현합니다.")
+    @ApiOperation(value = "글 리스트 조회(페이징)", notes = "https://keen-derby-c16.notion.site/8e4275bef5984761b6977d60a83fb996")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
