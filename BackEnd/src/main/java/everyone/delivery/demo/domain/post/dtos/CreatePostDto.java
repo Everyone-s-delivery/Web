@@ -12,6 +12,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+
 /***
  * 모집 글 생성 api에서 데이터 받기 위한 DTO
  */
@@ -40,5 +42,5 @@ public class CreatePostDto {
     @NotNull(message = "Not enough post data. description cannot be null.")
     private String description;
 
-    private List<String> addresses;
+    private Set<String> addresses;
 }

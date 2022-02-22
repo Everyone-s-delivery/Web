@@ -83,15 +83,21 @@ public class PostService {
      * 등록
      * basicPostDto 로 받은 덧글 정보를 디비에 등록
      * @param createPostDto
+     * @param tokenUserId
      * @return
      */
     @Transactional
     public PostDetailDto create(Long tokenUserId, CreatePostDto createPostDto){
         Optional<UserEntity> userEntityOp = userRepository.findByUserId(tokenUserId);
-        UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(
-                UserError.INVALID_USER_ID, userEntityOp,"invalid tokenUserId. tokenUserId: {}", tokenUserId);
 
-        PostEntity postEntity = convertDTOToEntity(userEntity, createPostDto);
+        /***
+         * tokenUserId가 넘어왔다는 것은 요청 token 에 해당하는 사용자는 존재한다는 것이 보장됨
+         * 따라서 userEntityOp 에 대한 null 검증이 필요 없다.
+         */
+//        UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(
+//                UserError.INVALID_USER_ID, userEntityOp,"invalid tokenUserId. tokenUserId: {}", tokenUserId);
+
+        PostEntity postEntity = convertDTOToEntity(userEntityOp.get(), createPostDto);
         postEntity = postRepository.save(postEntity);
         return postEntity.toDto();
     }
@@ -130,18 +136,18 @@ public class PostService {
      * @return
      */
     @Transactional
-    public Long delete(UserDto tokenUserDto, Long postId){
+    public PostDetailDto delete(UserDto tokenUserDto, Long postId){
         Optional<PostEntity> postEntityOp = postRepository.findById(postId);
-        ExceptionUtils.ifNullThrowElseReturnVal(PostError.NOT_FOUND_POST,
+        PostEntity postEntity = ExceptionUtils.ifNullThrowElseReturnVal(PostError.NOT_FOUND_POST,
                 postEntityOp,"postEntity is null. postId: {}", postId);
         if(!tokenUserDto.isAdmin() && postEntityOp.get().getPoster().getUserId() != tokenUserDto.getUserId()){
             //관리자도 아니고, 작성한 사람도 아닌 경우
             log.error("requested user is not the author. do not have permission to modify. tokenUserId: {}", tokenUserDto.getUserId());
-            throw new LogicalRuntimeException(PostError.NO_AUTHORITY_TO_MODIFY);
+            throw new LogicalRuntimeException(PostError.NO_AUTHORITY_TO_DELETE);
         }
 
         postRepository.deleteById(postId);
-        return postId;
+        return postEntity.toDto();
     }
 
 

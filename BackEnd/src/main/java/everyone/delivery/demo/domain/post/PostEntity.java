@@ -14,6 +14,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -46,8 +47,8 @@ public class PostEntity {
     @Column(nullable = false)
     private String description;
 
-    @ElementCollection
-    private List<String> addresses;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> addresses;
 
     @OneToMany(fetch = LAZY, cascade = CascadeType.ALL) // postEntity에 딸려있는 comment는 postEntity에 전파된다.
     @JoinColumn(name="post_id")

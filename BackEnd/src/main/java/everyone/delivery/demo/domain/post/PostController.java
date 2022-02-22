@@ -84,8 +84,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    @ApiOperation(value = "기존 모집 글 삭제",
-            notes = "기존 덧글을 삭제합니다.")
+    @ApiOperation(value = "글 삭제",
+            notes = "https://keen-derby-c16.notion.site/b4681203c9d047e0a700ca9f4b5a0070")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
