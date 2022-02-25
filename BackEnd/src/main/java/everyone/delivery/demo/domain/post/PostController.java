@@ -30,7 +30,7 @@ public class PostController {
 
 
     @GetMapping("")
-    @ApiOperation(value = "글 리스트 조회", notes = "https://keen-derby-c16.notion.site/e7c2f28d960445c7a84a8dc8ac15412f")
+    @ApiOperation(value = "글 리스트 조회~", notes = "https://keen-derby-c16.notion.site/e7c2f28d960445c7a84a8dc8ac15412f")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
