@@ -16,7 +16,9 @@ public enum UserError implements RestError{
 
     INVALID_USER_ID(HttpStatus.BAD_REQUEST, "올바른 사용자 아이디가 아닙니다. 사용자 아이디를 확인해 주세요."),
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "올바른 비밀번호가 아닙니다. 비밀번호를 확인해 주세요."),
-    INVALID_EMAIL(HttpStatus.BAD_REQUEST, "올바른 이메일이 아닙니다. 이메일을 확인해 주세요.");
+    INVALID_EMAIL(HttpStatus.BAD_REQUEST, "올바른 이메일이 아닙니다. 이메일을 확인해 주세요."),
+
+    NOT_FOUND_USER(HttpStatus.BAD_REQUEST, "요청한 아이디에 해당하는 사용자가 존재하지 않습니다.");
 
     private HttpStatus httpStatus;
     private String errorMsg;

@@ -16,9 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -38,7 +36,8 @@ public class SignService {
      */
     public TokenResult signin(String email, String password) {
         Optional<UserEntity> findUserEntityOp = userRepository.findByEmail(email);
-        UserEntity findUserEntity = ExceptionUtils.ifNullThrowElseReturnVal(findUserEntityOp,"login fail, check email. email: {}", email);
+        UserEntity findUserEntity = ExceptionUtils.ifNullThrowElseReturnVal(
+                UserError.INVALID_USER_ID, findUserEntityOp,"login fail, check email. email: {}", email);
 
         if (!passwordEncoder.matches(password, findUserEntity.getPassword())){
             log.error("login fail, check password. password: {}", password);
@@ -55,10 +54,12 @@ public class SignService {
      * @return
      */
     public UserDto signup(CreateUserDto createUserDto) {
-        List<UserRole> roles = new ArrayList<>();
+        Set<UserRole> roles = new HashSet<>();
         roles.add(UserRole.ROLE_PARTICIPANTS);
         roles.add(UserRole.ROLE_RECRUITER);
         if(createUserDto.getEmail().equals("admin@admin.com"))
+            roles.add(UserRole.ROLE_ADMIN);
+        if(createUserDto.getEmail().equals("admin1@admin1"))
             roles.add(UserRole.ROLE_ADMIN);
 
         UserEntity userEntity = convertDTOToEntity(createUserDto,roles);
@@ -67,7 +68,7 @@ public class SignService {
         return userEntity.toDTO();
     }
 
-    public UserEntity convertDTOToEntity(CreateUserDto basicUserDto, List<UserRole> roles){
+    public UserEntity convertDTOToEntity(CreateUserDto basicUserDto, Set<UserRole> roles){
         return UserEntity.builder()
                 .email(basicUserDto.getEmail())
                 .nickName(basicUserDto.getNickName())
@@ -75,5 +76,4 @@ public class SignService {
                 .address(basicUserDto.getAddress())
                 .roles(roles).build();
     }
-
 }

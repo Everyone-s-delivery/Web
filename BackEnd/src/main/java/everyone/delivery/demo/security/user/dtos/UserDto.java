@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -43,7 +44,7 @@ public class UserDto implements UserDetails {
     @NotNull(message = "Not enough user data.")
     private String address;
 
-    private List<UserRole> roles;
+    private Set<UserRole> roles;
 
     private LocalDateTime regDate;
 
@@ -62,6 +63,10 @@ public class UserDto implements UserDetails {
                             .build();
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)	//직렬화 과정에서 제외시킨다는 의미
+    public boolean isAdmin(){
+        return roles.contains(UserRole.ROLE_ADMIN);
+    }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)	//직렬화 과정에서 제외시킨다는 의미
     @Override

@@ -1,18 +1,14 @@
 package everyone.delivery.demo.domain.postComment;
 
 import everyone.delivery.demo.common.exception.ExceptionUtils;
-import everyone.delivery.demo.common.exception.LogicalRuntimeException;
-import everyone.delivery.demo.common.exception.error.CommonError;
 import everyone.delivery.demo.domain.post.PostEntity;
-import everyone.delivery.demo.domain.post.PostRepository;
+import everyone.delivery.demo.domain.post.repository.PostRepository;
 import everyone.delivery.demo.domain.postComment.dtos.CreatePostCommentDto;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
 import everyone.delivery.demo.security.user.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

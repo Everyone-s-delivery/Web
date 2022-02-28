@@ -1,8 +1,7 @@
+import { ActionType, SignupData } from '@src/model/model';
+import { createApiCall, MethodType, signupRoute } from '@src/services/Api';
+import { setCookie } from '@src/utils/cookies';
 import { call, fork, put, takeLatest } from 'redux-saga/effects';
-
-import { ActionType, SignupData } from 'src/model/model';
-import { createApiCall, MethodType, signupRoute } from 'src/services/Api';
-import { setCookie } from 'src/utils/cookies';
 
 // signup
 function* signupSaga({ payload }: { payload: SignupData }): Generator<any> {

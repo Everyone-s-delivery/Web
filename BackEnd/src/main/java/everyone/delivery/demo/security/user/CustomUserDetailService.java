@@ -1,10 +1,12 @@
 package everyone.delivery.demo.security.user;
 import everyone.delivery.demo.common.exception.ExceptionUtils;
+import everyone.delivery.demo.common.exception.error.UserError;
 import everyone.delivery.demo.security.user.dtos.CreateUserDto;
 import everyone.delivery.demo.security.user.dtos.UpdateUserDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,10 +22,10 @@ import java.util.Optional;
 public class CustomUserDetailService implements UserDetailsService {
 
 	@Autowired
-    private UserRepository userRepository;
-	
+	private UserRepository userRepository;
+
 	@Autowired
-    private PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * 전체 사용자 리스트 리턴
@@ -35,10 +37,10 @@ public class CustomUserDetailService implements UserDetailsService {
 		List<UserDto> userDtoList = new ArrayList<>();
 		for(UserEntity userEntity : userEntityList)
 			userDtoList.add(this.convertEntityToDto(userEntity));
-        
+
 		return userDtoList;
 	}
-	
+
 	/**
 	 * {userId}에 해당하는 사용자 리턴
 	 * @param userId
@@ -47,7 +49,10 @@ public class CustomUserDetailService implements UserDetailsService {
 	public UserDto getById(Long userId) {
 		Optional<UserEntity> userEntityOp = userRepository.findByUserId(userId);
 		UserEntity userEntity = ExceptionUtils
-				.ifNullThrowElseReturnVal(userEntityOp, "There is no corresponding information for userId. userId: {}",userId);
+				.ifNullThrowElseReturnVal(
+						UserError.NOT_FOUND_USER,
+						userEntityOp,
+						"There is no corresponding information for userId. userId: {}",userId);
 
 		return convertEntityToDto(userEntity);
 	}
@@ -64,8 +69,6 @@ public class CustomUserDetailService implements UserDetailsService {
 		return convertEntityToDto(userEntity);
 	}
 
-
-	
 	/**
 	 * {userId}에 해당하는 사용자 수정
 	 * @param updateUserDto
@@ -74,49 +77,54 @@ public class CustomUserDetailService implements UserDetailsService {
 	public UserDto update(Long userId, UpdateUserDto updateUserDto) {
 		Optional<UserEntity> userEntityOp = userRepository.findByUserId(userId);
 		UserEntity userEntity = ExceptionUtils
-				.ifNullThrowElseReturnVal(userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
+				.ifNullThrowElseReturnVal(UserError.NOT_FOUND_USER,
+						userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
 
-		userEntity.setEmail(updateUserDto.getEmail());
-		userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-		userEntity.setNickName(updateUserDto.getNickName());
-		userEntity.setAddress(updateUserDto.getAddress());
+		if(updateUserDto.getEmail() != null)
+			userEntity.setEmail(updateUserDto.getEmail());
+		if(updateUserDto.getPassword() != null)
+			userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+		if(updateUserDto.getNickName() != null)
+			userEntity.setNickName(updateUserDto.getNickName());
+		if(updateUserDto.getAddress() != null)
+			userEntity.setAddress(updateUserDto.getAddress());
+
 		userEntity = userRepository.save(userEntity);
 		return userEntity.toDTO();
 	}
-	
-	
+
 	/**
 	 * {userId}에 해당하는 사용자 삭제
 	 * @param userId
 	 * @return
 	 * **/
 	@Transactional
-	public Long delete(Long userId) {
+	public UserDto delete(Long userId) {
 		Optional<UserEntity> userEntityOp = userRepository.findByUserId(userId);
 		ExceptionUtils
-				.ifNullThrowElseReturnVal(userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
+				.ifNullThrowElseReturnVal(UserError.NOT_FOUND_USER,
+						userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
+		UserDto userDto = userEntityOp.get().toDTO();
 		userRepository.deleteByUserId(userId);
-		return userId;
+		return userDto;
 	}
 
-
-    public UserDetails loadUserByUsername(String email) {
-        Optional<UserEntity> userEntityOp = userRepository.findByEmail(email);
+	public UserDetails loadUserByUsername(String email) {
+		Optional<UserEntity> userEntityOp = userRepository.findByEmail(email);
 		UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(userEntityOp);
-        return convertEntityToDto(userEntity);
-    }
-    
-    
-    private UserDto convertEntityToDto(UserEntity userEntity){
-        return UserDto.builder()
-        				.userId(userEntity.getUserId())
-        				.email(userEntity.getEmail())
-						.nickName(userEntity.getNickName())
-        				.password(userEntity.getPassword())
-        				.roles(userEntity.getRoles())
-						.address(userEntity.getAddress())
-        				.regDate(userEntity.getRegDate())
-						.updateDate(userEntity.getUpdateDate())
-        				.build();
-    }
+		return convertEntityToDto(userEntityOp.get());
+	}
+
+	private UserDto convertEntityToDto(UserEntity userEntity){
+		return UserDto.builder()
+				.userId(userEntity.getUserId())
+				.email(userEntity.getEmail())
+				.nickName(userEntity.getNickName())
+				.password(userEntity.getPassword())
+				.roles(userEntity.getRoles())
+				.address(userEntity.getAddress())
+				.regDate(userEntity.getRegDate())
+				.updateDate(userEntity.getUpdateDate())
+				.build();
+	}
 }

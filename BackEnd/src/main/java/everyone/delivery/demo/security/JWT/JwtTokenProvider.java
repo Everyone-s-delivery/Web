@@ -1,5 +1,6 @@
 package everyone.delivery.demo.security.JWT;
 
+import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.security.user.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -16,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 참고 링크: https://daddyprogrammer.org/post/636/springboot2-springsecurity-authentication-authorization/
@@ -41,9 +40,9 @@ public class JwtTokenProvider {
     }
 
     // Jwt 토큰 생성
-    public String createToken(String userPk, List<UserRole> roles) {
+    public String createToken(String userPk, Set<UserRole> roles) {
         Claims claims = Jwts.claims().setSubject(userPk);
-        claims.put("roles", roles);
+        claims.put("roles", new ArrayList<>(roles));
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 데이터

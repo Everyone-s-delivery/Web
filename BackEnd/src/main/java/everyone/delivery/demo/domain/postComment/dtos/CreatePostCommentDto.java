@@ -22,10 +22,10 @@ public class CreatePostCommentDto {
     @NotNull(message = "Not enough comment data. commenterId cannot be null.")
     private Long commenterId;
 
-    @NotNull(message = "Not enough comment data. commenterEmail cannot be null.")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
     private String commenterEmail;
 
-    @NotNull(message = "Not enough comment data. commenterNickName cannot be null.")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
     private String commenterNickName;
 
     @NotNull(message = "Not enough comment data. postId cannot be null.")

@@ -1,6 +1,7 @@
 package everyone.delivery.demo.common.exception;
 
 import everyone.delivery.demo.common.exception.error.CommonError;
+import everyone.delivery.demo.common.exception.error.RestError;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
@@ -22,6 +23,13 @@ public class ExceptionUtils<T> {
         return optionalT.orElseThrow(()->{
             log.error(logMsg, logParam);
             return new LogicalRuntimeException(CommonError.INVALID_DATA);
+        });
+    }
+
+    public static <T> T ifNullThrowElseReturnVal(RestError error, Optional<T> optionalT, String logMsg, Object logParam){
+        return optionalT.orElseThrow(()->{
+            log.error(logMsg, logParam);
+            return new LogicalRuntimeException(error);
         });
     }
 

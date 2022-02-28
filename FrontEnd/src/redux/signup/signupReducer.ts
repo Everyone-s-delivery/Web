@@ -1,4 +1,5 @@
-import { Action, ActionType, SignupData } from 'src/model/model';
+import { Action, ActionType, SignupData } from '@src/model/model';
+
 import createReducer from '../createReducer';
 
 export interface SignupReducerType extends SignupData {

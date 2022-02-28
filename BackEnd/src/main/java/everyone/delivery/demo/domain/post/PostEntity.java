@@ -1,6 +1,6 @@
 package everyone.delivery.demo.domain.post;
 
-import everyone.delivery.demo.domain.post.dtos.PostDto;
+import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
@@ -14,6 +14,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -31,6 +32,10 @@ public class PostEntity {
     @GeneratedValue(strategy= GenerationType.SEQUENCE , generator="postTable_SEQ_GENERATOR")
     private Long postId;
 
+    /***
+     * > poster 에 해당하는 사용자가 삭제될 때 해당 comment 도 삭제되는게 맞나?
+     * > 우선 삭제되는 것으로 구현
+     */
     @ManyToOne
     @JoinColumn(name="user_id")
     private UserEntity poster;
@@ -42,8 +47,8 @@ public class PostEntity {
     @Column(nullable = false)
     private String description;
 
-    @ElementCollection
-    private List<String> addresses;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> addresses;
 
     @OneToMany(fetch = LAZY, cascade = CascadeType.ALL) // postEntity에 딸려있는 comment는 postEntity에 전파된다.
     @JoinColumn(name="post_id")
@@ -56,13 +61,13 @@ public class PostEntity {
     @LastModifiedDate
     private LocalDateTime updateDate;	//수정일자
 
-    public PostDto toDto(){
+    public PostDetailDto toDto(){
         List<PostCommentDto> postCommentDtos = new ArrayList<>();
         for(PostCommentEntity postCommentEntity: ListUtils.emptyIfNull(this.comments)){
             postCommentDtos.add(postCommentEntity.toDto());
         }
 
-        return PostDto.builder()
+        return PostDetailDto.builder()
                 .postId(this.postId)
                 .posterId(this.poster.getUserId())
                 .posterEmail(this.poster.getEmail())

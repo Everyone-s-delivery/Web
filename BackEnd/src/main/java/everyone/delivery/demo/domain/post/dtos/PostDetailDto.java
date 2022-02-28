@@ -17,12 +17,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDto {
+public class PostDetailDto {
 
     private Long postId;
 
@@ -31,10 +32,12 @@ public class PostDto {
     @NotNull(message = "Not enough post data. posterId cannot be null.")
     private Long posterId;          // 모집글에 대한 작성자 아이디
 
-    @NotNull(message = "Not enough post data. posterEmail cannot be null.")
+    //TODO: 이 부분 입력시에는 빼고 posterId로만 대체 가능?
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
     private String posterEmail;       // 모집글에 대한 작성자 이메일
 
-    @NotNull(message = "Not enough post data. posterNickName cannot be null.")
+    //TODO: 이 부분 입력시에는 빼고 posterId로만 대체 가능?
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)  //역직렬화(json to object) 과정에서 제외
     private String posterNickName;
 
     @NotNull(message = "Not enough post data. title cannot be null.")
@@ -43,7 +46,7 @@ public class PostDto {
     @NotNull(message = "Not enough post data. description cannot be null.")
     private String description;
 
-    private List<String> addresses;
+    private Set<String> addresses;
 
     private List<PostCommentDto> comments;
 

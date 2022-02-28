@@ -1,7 +1,7 @@
+import { ActionType, LoginData } from '@src/model/model';
+import { createApiCall, loginRoute, MethodType } from '@src/services/Api';
 import { call, fork, put, takeLatest } from 'redux-saga/effects';
 
-import { ActionType, LoginData } from 'src/model/model';
-import { createApiCall, loginRoute, MethodType } from 'src/services/Api';
 import { setCookie } from '../../utils/cookies';
 
 // login

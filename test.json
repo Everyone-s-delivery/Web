@@ -1,0 +1,96 @@
+
+
+
+
+
+
+
+
+
+
+
+{
+   "approvalNo":"202202100116307244fdf0c6194425848ee73aa13e140f",
+   "approvalType":"DECRYPT",
+   "userId":"admin",
+   "fileUuid":"d256f3e6bce94b33abd0c80df6424276",
+   "fileType":1151,
+   "fileName":"FED5.xlsx",
+   "contentId":"6C20D9AB89434B059B0B1075E28A94D6",
+   "contentName":"암호화 해제 신청.xlsx",
+   "filePath":"\\d256f3e6bce94b33abd0c80df6424276",
+   "fileSize":11984,
+   "dsdCode":"0100000000000101",
+   "expiredTs":1660007790459,
+   "downloadCount":3,
+   "allowDownloadCount":5,
+   "updatedTs":1644455790528,
+   "error":null,
+   "code":"a223d88bfbd64e4f8e365551ed115551",
+   "stepScope":0,
+   "contentInfo":{
+      "fileUuid":"d256f3e6bce94b33abd0c80df6424276",
+      "fileType":1151,
+      "cpId":"0100000000000101",
+      "contentId":"6C20D9AB89434B059B0B1075E28A94D6",
+      "contentName":"암호화 해제 신청.xlsx",
+      "curContentName":"FED5.xlsx",
+      "traceInfos":{
+         "nodeCount":1,
+         "node1":{
+            "userCode":"allman",
+            "traceId":"CDE0B301DB494AD1B2CE1D30F4F9FA7E",
+            "dsd":"0100000000000101",
+            "logTime":"2020-09-24T04:36:34Z",
+            "pID":"1"
+         },
+         "node2":{
+            "userCode":"allman",
+            "traceId":"CDE0B301DB494AD1B2CE1D30F4F9FA7E",
+            "dsd":"0100000000000101",
+            "logTime":"2020-09-24T04:36:34Z",
+            "pID":"1"
+         },
+         "node3":{
+            "userCode":"allman",
+            "traceId":"CDE0B301DB494AD1B2CE1D30F4F9FA7E",
+            "dsd":"0100000000000101",
+            "logTime":"2020-09-24T04:36:34Z",
+            "pID":"1"
+         },
+         "node4":{
+            "userCode":"allman",
+            "traceId":"CDE0B301DB494AD1B2CE1D30F4F9FA7E",
+            "dsd":"0100000000000101",
+            "logTime":"2020-09-24T04:36:34Z",
+            "pID":"1"
+         },
+         "node5":{
+            "userCode":"allman",
+            "traceId":"CDE0B301DB494AD1B2CE1D30F4F9FA7E",
+            "dsd":"0100000000000101",
+            "logTime":"2020-09-24T04:36:34Z",
+            "pID":"1"
+         }
+      },
+      "writerId":"allman",
+      "writerName":"올맨",
+      "writerDeptCode":"1af2cb83db514d77a83cee9507f86c9c",
+      "writerDeptName":"종근테스트부서",
+      "ownerId":"allman",
+      "ownerName":"올맨",
+      "ownerDeptCode":"1af2cb83db514d77a83cee9507f86c9c",
+      "ownerDeptName":"종근테스트부서",
+      "documentClassName":"종근부서-열람",
+      "documentClassCode":"a223d88bfbd64e4f8e365551ed115551",
+      "traceInfo":"{\"node1\":{\"dsd\":\"0100000000000101\",\"logTime\":\"2020-09-24T04:36:34Z\",\"pID\":1,\"traceId\":\"CDE0B301DB494AD1B2CE1D30F4F9FA7E\",\"userCode\":\"allman\"},\"node2\":{\"dsd\":\"0100000000000101\",\"logTime\":\"2020-09-24T04:36:34Z\",\"pID\":1,\"traceId\":\"CDE0B301DB494AD1B2CE1D30F4F9FA7E\",\"userCode\":\"allman\"},\"node3\":{\"dsd\":\"0100000000000101\",\"logTime\":\"2020-09-24T04:36:34Z\",\"pID\":1,\"traceId\":\"CDE0B301DB494AD1B2CE1D30F4F9FA7E\",\"userCode\":\"allman\"},\"node4\":{\"dsd\":\"0100000000000101\",\"logTime\":\"2020-09-24T04:36:34Z\",\"pID\":1,\"traceId\":\"CDE0B301DB494AD1B2CE1D30F4F9FA7E\",\"userCode\":\"allman\"},\"node5\":{\"dsd\":\"0100000000000101\",\"logTime\":\"2020-09-24T04:36:34Z\",\"pID\":1,\"traceId\":\"CDE0B301DB494AD1B2CE1D30F4F9FA7E\",\"userCode\":\"allman\"},\"nodeCount\":1}"
+   },
+   "fileTypeDetail":{
+      "fileType":1151,
+      "typeName":"FSN",
+      "typeFullName":"FED5_FSN",
+      "updatedTs":1638512372044
+   },
+   "fileTypeEx":"FED5_FSN",
+   "decryptSuccess":true
+}

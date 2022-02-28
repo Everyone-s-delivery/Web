@@ -1,4 +1,5 @@
-import { Action, ActionType, LoginData } from 'src/model/model';
+import { Action, ActionType, LoginData } from '@src/model/model';
+
 import createReducer from '../createReducer';
 
 export interface AuthenticationReducerType extends LoginData {

@@ -22,19 +22,19 @@ import javax.validation.constraints.NotNull;
 public class UpdateUserDto {
 
     @NotOverlappedEmail(message = "invalid user data. email dose not duplicated")
-    @NotNull(message = "Not enough user data. email cannot be null.")
+//    @NotNull(message = "Not enough user data. email cannot be null.")
     @Email(message = "invalid email form.")
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message = "Not enough user data.")
+//    @NotNull(message = "Not enough user data.")
     private String password;
 
     @NotOverlappedNickName(message = "invalid user data. nickName dose not duplicated")
-    @NotNull(message = "Not enough user data. nickName cannot be null.")
+//    @NotNull(message = "Not enough user data. nickName cannot be null.")
     private String nickName;
 
-    @NotNull(message = "Not enough user data.")
+//    @NotNull(message = "Not enough user data.")
     private String address;
 
     public UserEntity toEntity(){

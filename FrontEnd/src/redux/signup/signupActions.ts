@@ -1,4 +1,4 @@
-import { ActionType, SignupData } from 'src/model/model';
+import { ActionType, SignupData } from '@src/model/model';
 
 export const signupAction = (payload: SignupData) => {
   return {
