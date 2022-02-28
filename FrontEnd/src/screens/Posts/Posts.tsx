@@ -13,12 +13,12 @@ const Posts = () => {
     <ScrollPageWrapper>
       <Container>
         <ContentWrapper>
-          <PostList
+          {/* <PostList
             users={results}
             isFetchingNextPage={isFetchingNextPage}
             onIntersect={handleIntersect}
             queryKey={[QUERY.GET_POSTS, { username }]}
-          />
+          /> */}
         </ContentWrapper>
       </Container>
     </ScrollPageWrapper>
