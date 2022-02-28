@@ -11,7 +11,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <BrowserRouter>
+      <BrowserRouter basename="/Web">
         <Routes>
           <Route path="/" element={<LoginScreen />}></Route>
           <Route path="/login" element={<LoginScreen />}></Route>

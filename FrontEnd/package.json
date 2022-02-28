@@ -89,10 +89,10 @@
   },
   "homepage": "http://everyone-s-delivery.github.io/Web",
   "scripts": {
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "start": "SET NODE_ENV=development&& webpack serve --config ./config2/webpack/webpack.dev.js",
-    "build": "node scripts/build.js",
+    "build": "SET NODE_ENV=development&& tsc && webpack --config ./config2/webpack/webpack.dev.js",
     "test": "node scripts/test.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
