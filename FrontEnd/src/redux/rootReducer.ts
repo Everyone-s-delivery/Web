@@ -1,8 +1,7 @@
 import { routerReducer, RouterState } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
-import { AuthenticationReducerType } from './login/authenticationReducer';
-import { loginReducer } from './login/loginSlice';
+import { AuthenticationReducerType, loginReducer } from './login/loginSlice';
 import { postsReducer, PostsReducerType } from './posts/postsReducer';
 import { signupReducer, SignupReducerType } from './signup/signupReducer';
 

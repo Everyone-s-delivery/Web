@@ -13,27 +13,7 @@ import { LoginIcon } from '@src/components/@Icons';
 import { ScrollPageWrapper } from '@src/components/@styled/layout';
 import KakaoLogin from '@src/components/SocialLogin/KakaoLogin';
 import { LoginData } from '@src/model/model';
-<<<<<<< HEAD
 import { loginActions } from '@src/redux/login/loginSlice';
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { loginUserAction } from '@src/redux/authentication/authenticationActions';
-=======
-import { loginActions } from '@src/redux/login/loginSlice';
->>>>>>> dev
-=======
-import { loginActions } from '@src/redux/login/loginSlice';
->>>>>>> dev
-=======
-import { loginActions } from '@src/redux/login/loginSlice';
->>>>>>> dev
-=======
-import { loginActions } from '@src/redux/login/loginSlice';
->>>>>>> dev
->>>>>>> 7f319b30
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
