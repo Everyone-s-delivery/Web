@@ -1,6 +1,7 @@
 package everyone.delivery.demo.domain.post;
 
 import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
+import everyone.delivery.demo.domain.post.dtos.PostDto;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 
 @SequenceGenerator(name = "postTable_SEQ_GENERATOR", sequenceName = "postTable_SEQ", initialValue = 1, allocationSize = 1)
@@ -61,12 +63,15 @@ public class PostEntity {
     @LastModifiedDate
     private LocalDateTime updateDate;	//수정일자
 
-    public PostDetailDto toDto(){
+    /***
+     * > 글 entity 단건에 대해서는 글에 딸린 덧글 까지 보여주기
+     * @return
+     */
+    public PostDetailDto toDetailDto(){
         List<PostCommentDto> postCommentDtos = new ArrayList<>();
         for(PostCommentEntity postCommentEntity: ListUtils.emptyIfNull(this.comments)){
             postCommentDtos.add(postCommentEntity.toDto());
         }
-
         return PostDetailDto.builder()
                 .postId(this.postId)
                 .posterId(this.poster.getUserId())
@@ -76,6 +81,20 @@ public class PostEntity {
                 .description(this.description)
                 .addresses(this.addresses)
                 .comments(postCommentDtos)
+                .regDate(this.regDate)
+                .updateDate(this.updateDate)
+                .build();
+    }
+
+    public PostDto toDto(){
+        return PostDto.builder()
+                .postId(this.postId)
+                .posterId(this.poster.getUserId())
+                .posterEmail(this.poster.getEmail())
+                .posterNickName(this.poster.getNickName())
+                .title(this.title)
+                .description(this.description)
+                .addresses(this.addresses)
                 .regDate(this.regDate)
                 .updateDate(this.updateDate)
                 .build();

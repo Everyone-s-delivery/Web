@@ -4,10 +4,7 @@ import everyone.delivery.demo.common.exception.ExceptionUtils;
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.common.exception.error.PostError;
 import everyone.delivery.demo.common.exception.error.UserError;
-import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
-import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
-import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
-import everyone.delivery.demo.domain.post.dtos.UpdatePostDto;
+import everyone.delivery.demo.domain.post.dtos.*;
 import everyone.delivery.demo.domain.post.repository.PostRepository;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.domain.postComment.PostCommentService;
@@ -41,9 +38,9 @@ public class PostService {
      * 추후 검색조건 추가 필요
      * @return
      */
-    public List<PostDetailDto> getList(){
+    public List<PostDto> getList(){
         List<PostEntity> postEntities = postRepository.findAll();
-        List<PostDetailDto> postDtos = new ArrayList<>();
+        List<PostDto> postDtos = new ArrayList<>();
         for(PostEntity postEntity: postEntities){
             postDtos.add(postEntity.toDto());
         }
@@ -55,19 +52,18 @@ public class PostService {
      * 검색조건과 페이징을 통한 post 조회
      * @return
      */
-    public List<PostDetailDto> getPagedList(PostSearchDto postSearchDto){
+    public List<PostDto> getPagedList(PostSearchDto postSearchDto){
         Slice<PostEntity> postEntitySlice = postRepository.getPagedList(postSearchDto);
 
-        List<PostDetailDto> postDtoList = new ArrayList<>();
+        List<PostDto> postDtoList = new ArrayList<>();
         for(PostEntity postEntity: ListUtils.emptyIfNull(postEntitySlice.getContent())){
             postDtoList.add(postEntity.toDto());
         }
-
         return postDtoList;
     }
 
     /***
-     * 조회
+     * 상세 조회
      * postId에 해당하는 post 조회
      * @param postId
      * @return
@@ -76,12 +72,12 @@ public class PostService {
         Optional<PostEntity> postEntityOp = postRepository.findById(postId);
         PostEntity postEntity = ExceptionUtils
                 .ifNullThrowElseReturnVal(postEntityOp,"postEntity is null. postId: {}",postId);
-        return postEntity.toDto();
+        return postEntity.toDetailDto();
     }
 
     /***
      * 등록
-     * basicPostDto 로 받은 덧글 정보를 디비에 등록
+     * basicPostDto 로 받은 글 정보를 디비에 등록
      * @param createPostDto
      * @param tokenUserId
      * @return
@@ -99,7 +95,7 @@ public class PostService {
 
         PostEntity postEntity = convertDTOToEntity(userEntityOp.get(), createPostDto);
         postEntity = postRepository.save(postEntity);
-        return postEntity.toDto();
+        return postEntity.toDetailDto();
     }
 
     /***
@@ -125,7 +121,7 @@ public class PostService {
         postEntity.setDescription(updatePostDto.getDescription());
         postEntity.setAddresses(updatePostDto.getAddresses());
         postEntity = postRepository.save(postEntity);
-        return postEntity.toDto();
+        return postEntity.toDetailDto();
     }
 
     /***
@@ -147,7 +143,7 @@ public class PostService {
         }
 
         postRepository.deleteById(postId);
-        return postEntity.toDto();
+        return postEntity.toDetailDto();
     }
 
 
