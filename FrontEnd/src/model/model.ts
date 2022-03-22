@@ -29,6 +29,7 @@ export enum ActionType {
   SIGNUP = 'action/SIGNUP',
   SIGNUP_SUCCESS = 'action/SIGNUP_SUCCESS',
   SIGNUP_ERROR = 'action/SIGNUP_ERROR',
+  LISTING_REQUEST = 'LISTING_REQUEST',
 }
 
 export interface Action<T> {
