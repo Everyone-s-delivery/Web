@@ -37,13 +37,13 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
 
     private OrderSpecifier getOrderSpecifier(PostSearchDto postSearchDto){
         if(postSearchDto.getKeyColumn().equals(KeyColumn.REG_DATE)){
-            if(postSearchDto.isASC())
+            if(postSearchDto.isAsc())
                 return postEntity.regDate.asc();
             else
                 return postEntity.regDate.desc();
         }
         else {
-            if(postSearchDto.isASC())
+            if(postSearchDto.isAsc())
                 return postEntity.updateDate.asc();
             else
                 return postEntity.updateDate.desc();
