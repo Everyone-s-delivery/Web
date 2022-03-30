@@ -1,6 +1,6 @@
 package everyone.delivery.demo.domain.post.dtos;
 
-import everyone.delivery.demo.common.request.PagingRequestDto;
+import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

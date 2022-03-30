@@ -4,6 +4,7 @@ import everyone.delivery.demo.common.exception.ExceptionUtils;
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.common.exception.error.PostError;
 import everyone.delivery.demo.common.exception.error.UserError;
+import everyone.delivery.demo.common.response.dto.PagingResponseDto;
 import everyone.delivery.demo.domain.post.dtos.*;
 import everyone.delivery.demo.domain.post.repository.PostRepository;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
@@ -54,7 +55,6 @@ public class PostService {
      */
     public List<PostDto> getPagedList(PostSearchDto postSearchDto){
         Slice<PostEntity> postEntitySlice = postRepository.getPagedList(postSearchDto);
-
         List<PostDto> postDtoList = new ArrayList<>();
         for(PostEntity postEntity: ListUtils.emptyIfNull(postEntitySlice.getContent())){
             postDtoList.add(postEntity.toDto());
