@@ -1,4 +1,4 @@
-package everyone.delivery.demo.common.request;
+package everyone.delivery.demo.common.request.dto;
 
 import lombok.Data;
 

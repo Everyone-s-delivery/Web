@@ -24,14 +24,3 @@
 - 운영 환경으로 빠르게 올린 후 환경 구축 후에 코드를 보강할 것인가
     - 후자를 선택
     
-
-
-
-
-# 99999. 레퍼런스
-
-### 1.  spring security
-* https://daddyprogrammer.org/post/636/springboot2-springsecurity-authentication-authorization/
-
-### 2.  JPA
-* 
