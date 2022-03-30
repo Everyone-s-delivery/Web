@@ -1,6 +1,7 @@
 package everyone.delivery.demo.domain.post.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import everyone.delivery.demo.common.response.dto.PagingResponseDto;
 import everyone.delivery.demo.common.validation.annotaion.MustExistUserId;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDto {
+public class PostDto{
 
     private Long postId;
 

@@ -2,6 +2,7 @@ package everyone.delivery.demo.domain.post;
 
 import everyone.delivery.demo.common.response.ResponseUtils;
 import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
+import everyone.delivery.demo.domain.post.dtos.PostDto;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
 import everyone.delivery.demo.domain.post.dtos.UpdatePostDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Validated
 @Api(tags = {"* 모집 글 API(사용자[모집자 또는 참여자] 권한)"})
@@ -45,8 +47,8 @@ public class PostController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
     public ResponseEntity getPagedList(@Valid @RequestBody PostSearchDto postSearchDto){
-
-        return ResponseUtils.out(postService.getPagedList(postSearchDto));
+        List<PostDto> postDtoList = postService.getPagedList(postSearchDto);
+        return ResponseUtils.out(postDtoList, postSearchDto);
     }
 
 
