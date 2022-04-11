@@ -19,8 +19,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "postCommentTable")
 @Builder
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class PostCommentEntity {
@@ -45,6 +44,14 @@ public class PostCommentEntity {
 
     @LastModifiedDate
     private LocalDateTime updateDate;	//수정일자
+
+    /***
+     * > 덧글 수정 메소드
+     * @param comment
+     */
+    public void changeComment(String comment){
+        this.comment = comment;
+    }
 
     public PostCommentDto toDto(){
         return PostCommentDto.builder()

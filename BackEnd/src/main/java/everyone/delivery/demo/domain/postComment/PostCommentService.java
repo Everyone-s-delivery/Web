@@ -62,7 +62,7 @@ public class PostCommentService {
         Optional<PostCommentEntity> postCommentEntityOp = postCommentRepository.findById(postCommentId);
         PostCommentEntity postCommentEntity = ExceptionUtils
                 .ifNullThrowElseReturnVal(postCommentEntityOp,"postCommentEntity is null. postCommentId: {}", postCommentId );
-        postCommentEntity.setComment(comment);
+        postCommentEntity.changeComment(comment);
         postCommentEntity = postCommentRepository.save(postCommentEntity);
 
         return postCommentEntity.toDto();
