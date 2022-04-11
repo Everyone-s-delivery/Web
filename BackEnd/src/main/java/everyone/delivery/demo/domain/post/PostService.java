@@ -116,10 +116,7 @@ public class PostService {
             log.error("requested user is not the author. do not have permission to modify. tokenUserId: {}", tokenUserDto.getUserId());
             throw new LogicalRuntimeException(PostError.NO_AUTHORITY_TO_MODIFY);
         }
-
-        postEntity.setTitle(updatePostDto.getTitle());
-        postEntity.setDescription(updatePostDto.getDescription());
-        postEntity.setAddresses(updatePostDto.getAddresses());
+        postEntity.changeBasicInfo(updatePostDto.getTitle(),updatePostDto.getDescription(),updatePostDto.getAddresses());
         postEntity = postRepository.save(postEntity);
         return postEntity.toDetailDto();
     }

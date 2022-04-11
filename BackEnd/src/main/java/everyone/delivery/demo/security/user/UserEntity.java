@@ -22,8 +22,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "userTable")
 @Builder
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class UserEntity {
@@ -68,6 +67,21 @@ public class UserEntity {
     @OneToMany(fetch = LAZY, cascade = CascadeType.ALL) // userEntity 에 딸려있는 comment 는 userEntity 에 전파된다.
     @JoinColumn(name="user_id")
     private List<PostCommentEntity> comments;
+
+    /***
+     * > 회원 기본 정보 수정
+     * > 파라미터가 null 이면 기존 entity 값을 그대로 사용하고 null 이 아니면 update
+     * @param email
+     * @param password
+     * @param nickName
+     * @param address
+     */
+    public void changeBasicInfo(String email, String password, String nickName, String address){
+        this.email = (email != null) ? email : null;
+        this.password = (password != null) ? password : null;
+        this.nickName = (nickName != null) ? nickName : null;
+        this.address = (address != null) ? address : null;
+    }
 
     public UserDto toDTO(){
         return UserDto.builder()
