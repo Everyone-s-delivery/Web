@@ -80,15 +80,8 @@ public class CustomUserDetailService implements UserDetailsService {
 				.ifNullThrowElseReturnVal(UserError.NOT_FOUND_USER,
 						userEntityOp,"There is no corresponding information for userId. userId: {}", userId);
 
-		if(updateUserDto.getEmail() != null)
-			userEntity.setEmail(updateUserDto.getEmail());
-		if(updateUserDto.getPassword() != null)
-			userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-		if(updateUserDto.getNickName() != null)
-			userEntity.setNickName(updateUserDto.getNickName());
-		if(updateUserDto.getAddress() != null)
-			userEntity.setAddress(updateUserDto.getAddress());
-
+		userEntity.changeBasicInfo(
+				updateUserDto.getEmail(), passwordEncoder.encode(updateUserDto.getPassword()),updateUserDto.getNickName(),updateUserDto.getAddress());
 		userEntity = userRepository.save(userEntity);
 		return userEntity.toDTO();
 	}
