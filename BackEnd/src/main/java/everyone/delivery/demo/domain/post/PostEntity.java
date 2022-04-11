@@ -25,8 +25,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name = "postTable")
 @Builder
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class PostEntity {
@@ -62,6 +61,18 @@ public class PostEntity {
 
     @LastModifiedDate
     private LocalDateTime updateDate;	//수정일자
+
+    /***
+     * > 게시글 기본 정보 수정 메소드
+     * @param title
+     * @param description
+     * @param addresses
+     */
+    public void changeBasicInfo(String title, String description, Set<String> addresses){
+        this.title = title;
+        this.description = description;
+        this.addresses = addresses;
+    }
 
     /***
      * > 글 entity 단건에 대해서는 글에 딸린 덧글 까지 보여주기
