@@ -33,6 +33,7 @@ build/
 .vscode/
 
 img/**
+logs/**
 
 ### test scope db secrets ###
 src/test/resources/application.properties
