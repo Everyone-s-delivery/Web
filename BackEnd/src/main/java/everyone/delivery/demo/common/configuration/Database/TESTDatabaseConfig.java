@@ -7,7 +7,7 @@ import org.springframework.context.annotation.*;
 import javax.sql.DataSource;
 
 @Configuration
-@Profile("test")
+@Profile("local")
 public class TESTDatabaseConfig {
 
 	@Bean
