@@ -1,3 +1,4 @@
+import { PostsResponse } from '@src/@types';
 import { LOCAL_STORAGE_KEY, REQUEST_URL } from '@src/constants';
 import APPLICATION_ERROR_CODE from '@src/constants/applicationErrorCode';
 import { getLocalStorageItem } from '@src/utils/localStorage';
@@ -68,8 +69,24 @@ const API = {
   signup: <T>(data: T) => {
     return request({ method: 'POST', url: REQUEST_URL.SIGNUP, data });
   },
-  posts: <T>(): Promise<T> => {
-    return request({ method: 'GET', url: REQUEST_URL.POSTS });
+  posts: (page?: number): Promise<PostsResponse> => {
+    return page
+      ? request({
+          method: 'POST',
+          url: `${REQUEST_URL.POSTS}/${page}`,
+          data: {
+            addresses: ['string'],
+            endDate: '2022-03-22T11:43:28.044Z',
+            keyColumn: 'REG_DATE',
+            limit: 2,
+            offset: 0,
+            orderBy: 'ASC',
+            posterIdList: [1],
+            startDate: '2022-03-22T11:43:28.044Z',
+            title: 'string',
+          },
+        })
+      : request({ method: 'GET', url: REQUEST_URL.POSTS });
   },
 };
 export default API;
