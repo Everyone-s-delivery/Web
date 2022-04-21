@@ -24,7 +24,9 @@ export const GlobalStyle = createGlobalStyle`
   ${normalize}
 
   html,
-  body,
+  body {
+    font-size: 62.5%;
+  }
   #root {
     margin: 0;
     padding: 0;
@@ -96,6 +98,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
 `;
