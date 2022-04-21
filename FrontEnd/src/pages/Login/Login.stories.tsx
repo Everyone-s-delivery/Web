@@ -1,10 +1,10 @@
 import { Meta, Story } from '@storybook/react';
 
-import LoginScreen from './LoginScreen';
+import Login from './Login';
 
 export default {
   title: 'Pages/LoginScreen',
-  component: LoginScreen,
+  component: Login,
   parameters: {
     docs: {
       description: {
@@ -14,6 +14,6 @@ export default {
   },
 } as Meta;
 
-const Template: Story = (args) => <LoginScreen {...args} />;
+const Template: Story = (args) => <Login {...args} />;
 
 export const DefaultLogin = Template.bind({});
