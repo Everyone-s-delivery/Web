@@ -3,10 +3,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyle, theme } from './App.style';
-import Footer from './components/Footer';
-import LoginScreen from './screens/LoginScreen/LoginScreen';
-import Posts from './screens/Posts/Posts';
-import SignupScreen from './screens/Signup/Signup';
+import Login from './pages/Login/Login';
+import Posts from './pages/Posts';
+import SignUp from './pages/SignUp/SignUp';
 
 const App = () => {
   return (
@@ -14,12 +13,12 @@ const App = () => {
       <GlobalStyle />
       <BrowserRouter basename="/Web">
         <Routes>
-          <Route path="/" element={<LoginScreen />}></Route>
-          <Route path="/login" element={<LoginScreen />}></Route>
-          <Route path="/posts" element={<Posts />}></Route>
-          <Route path="/signup" element={<SignupScreen />}></Route>
+          <Route index element={<Login />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="posts/*" element={<Posts />} />
+          <Route path="/signup" element={<SignUp />}></Route>
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
     </ThemeProvider>
   );
