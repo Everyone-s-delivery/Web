@@ -21,7 +21,6 @@ const isNoAuthorizationRequired = (path: string) => {
 const request = async (config: AxiosRequestConfig) => {
   try {
     const response = await axios(config);
-
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
@@ -53,7 +52,8 @@ axios.interceptors.request.use(
       const token = getLocalStorageItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
 
       if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
+        // config.headers.Authorization = `Bearer ${token}`;
+        config.headers['X-AUTH-TOKEN'] = token;
       }
     }
 
@@ -73,7 +73,7 @@ const API = {
     return page
       ? request({
           method: 'POST',
-          url: `${REQUEST_URL.POSTS}/${page}`,
+          url: `${REQUEST_URL.POSTS}`,
           data: {
             addresses: ['string'],
             endDate: '2022-03-22T11:43:28.044Z',
