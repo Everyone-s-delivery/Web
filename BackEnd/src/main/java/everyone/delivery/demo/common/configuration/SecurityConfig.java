@@ -7,6 +7,7 @@ import everyone.delivery.demo.security.JWT.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -55,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/test",
 						"/test/**")
 				.permitAll() // 누구나 접근가능
+				.antMatchers(HttpMethod.GET,"/posts", "/posts/**").permitAll()
 				.antMatchers("/users","/users/*").hasRole("ADMIN")
 				.anyRequest().hasAnyRole("PARTICIPANTS", "RECRUITER", "ADMIN") // 그외 나머지 요청은 모두 인증된 회원(사용자[참여자 또는 모집자] + 관리자)만 접근 가능
 				.and()

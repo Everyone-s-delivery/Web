@@ -30,33 +30,15 @@ public class PostController {
 
     private final PostService postService;
 
-
     @GetMapping("")
-    @ApiOperation(value = "글 리스트 조회", notes = "https://keen-derby-c16.notion.site/e7c2f28d960445c7a84a8dc8ac15412f")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
-    })
-    public ResponseEntity getAllList(){
-        return ResponseUtils.out(postService.getList());
-    }
-
-
-    @PostMapping("/page")
     @ApiOperation(value = "글 리스트 조회(페이징)", notes = "https://keen-derby-c16.notion.site/8e4275bef5984761b6977d60a83fb996")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
-    })
     public ResponseEntity getPagedList(@Valid @RequestBody PostSearchDto postSearchDto){
         List<PostDto> postDtoList = postService.getPagedList(postSearchDto);
         return ResponseUtils.out(postDtoList, postSearchDto);
     }
 
-
     @GetMapping("{postId}")
     @ApiOperation(value = "글 개별 조회", notes = "postId에 해당하는 글을 조회할 수 있습니다.")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
-    })
     public ResponseEntity getById(@PathVariable @Min(value = 1, message = "postId cannot be minus.")Long postId){
         return ResponseUtils.out(postService.getById(postId));
     }
@@ -64,7 +46,7 @@ public class PostController {
     @PostMapping("")
     @ApiOperation(value = "글 등록", notes = "https://keen-derby-c16.notion.site/a139eabf352a4ad0a3a157965fc41cd2")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
     public ResponseEntity create(
             @AuthenticationPrincipal UserDto tokenUserDto,
@@ -75,7 +57,7 @@ public class PostController {
     @PutMapping("{postId}")
     @ApiOperation(value = "글 수정", notes = "https://keen-derby-c16.notion.site/6b0b77a8e3484edea921ec4643969717")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
     public ResponseEntity update(
             @AuthenticationPrincipal UserDto tokenUserDto,
@@ -88,7 +70,7 @@ public class PostController {
     @ApiOperation(value = "글 삭제",
             notes = "https://keen-derby-c16.notion.site/b4681203c9d047e0a700ca9f4b5a0070")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
     })
     public ResponseEntity delete(
             @AuthenticationPrincipal UserDto tokenUserDto,
