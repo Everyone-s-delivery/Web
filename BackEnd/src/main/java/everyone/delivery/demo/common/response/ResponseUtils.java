@@ -40,7 +40,7 @@ public class ResponseUtils {
     }
 
     /***
-     * RestError만 들어오면 실패 응답
+     * RestError 만 들어오면 실패 응답
      * @param restError
      * @return
      */
@@ -49,7 +49,7 @@ public class ResponseUtils {
     }
 
     /***
-     * Response가 들어오면 객체를 까서 성공 & 실패를 판단 후 적절한 응답
+     * Response 가 들어오면 객체를 까서 성공 & 실패를 판단 후 적절한 응답
      * @param response
      * @return
      */
@@ -64,7 +64,7 @@ public class ResponseUtils {
     }
 
     /***
-     * data -> 성공 형태의 Response로 변환
+     * data -> 성공 형태의 Response 로 변환
      * @param data
      * @param <T>
      * @return

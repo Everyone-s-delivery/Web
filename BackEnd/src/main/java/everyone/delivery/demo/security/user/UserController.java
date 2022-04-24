@@ -32,7 +32,7 @@ public class UserController {
 	@GetMapping("")
 	@ApiOperation(value = "사용자 목록 조회", notes = "https://keen-derby-c16.notion.site/de5f0ef8401c4be9bba6c10331e171f2")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = false, dataType = "String", paramType = "header")
+		@ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(관리자 토큰)", required = false, dataType = "String", paramType = "header")
 	})
 	public ResponseEntity getList(){
 		return ResponseUtils.out(customUserDetailService.getList());
@@ -48,7 +48,7 @@ public class UserController {
 	@ApiOperation(value = "사용자 상세 조회",
 	notes = "https://keen-derby-c16.notion.site/7cae9a5156334737b109527d2dc22133")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header"),
+		@ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header"),
 		@ApiImplicitParam(name = "userId",value = "사용자 번호(1 이상의 값)", example = "1" )
 	})
 	public ResponseEntity get(@PathVariable @Min(value = 1, message = "userId cannot be minus.") Long userId) {
@@ -63,7 +63,7 @@ public class UserController {
 //	@PostMapping("")
 //	@ApiOperation(value = "신규 사용자 등록", notes = "신규 사용자를 등록합니다.")
 //	@ApiImplicitParams({
-//		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = false, dataType = "String", paramType = "header")
+//		@ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(관리자 토큰)", required = false, dataType = "String", paramType = "header")
 //	})
 //	public SingleResult<Long> save(@RequestBody BasicUserDto userDto) {
 //		return responseService.getSingleResult(customUserDetailService.save(userDto));
@@ -79,7 +79,7 @@ public class UserController {
 	@ApiOperation(value = "기존 사용자 수정", 
 	notes = "https://keen-derby-c16.notion.site/180410d5424242c8aa08ddc11834040a")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header")
+		@ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header")
 	})
 	public ResponseEntity update(@PathVariable @Min(value = 1, message = "userId cannot be minus.") Long userId,
 								 @Valid @RequestBody UpdateUserDto updateUserDto) {
@@ -95,7 +95,7 @@ public class UserController {
 	@ApiOperation(value = "기존 사용자 삭제", 
 	notes = "https://keen-derby-c16.notion.site/a28a3b684eec44c09176232ef7066b06")
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header")
+		@ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(관리자 토큰)", required = true, dataType = "String", paramType = "header")
 	})
 	public ResponseEntity delete(@PathVariable @Min(value = 1, message = "userId cannot be minus.") Long userId) {
 		return ResponseUtils.out(customUserDetailService.delete(userId));

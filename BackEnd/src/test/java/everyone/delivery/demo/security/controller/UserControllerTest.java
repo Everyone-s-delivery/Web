@@ -114,10 +114,10 @@ public class UserControllerTest {
 
 	@Test
 	public void getListTest() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/users").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users").header("Authorization", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andDo(print());
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/users").header("X-AUTH-TOKEN", testUserToken)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users").header("Authorization", testUserToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().is3xxRedirection()).andDo(print());
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/users").accept(MediaType.APPLICATION_JSON))
@@ -127,55 +127,55 @@ public class UserControllerTest {
 	@Test
 	public void getTest() throws Exception {
 		// 정상 요청
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/2").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/2").header("Authorization", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json")).andDo(print())
 				.andExpect(jsonPath("$.userId").value("2"));
 
 		// 음수 값을 같는 게시글 번호로 요청
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/-1").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/-1").header("Authorization", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
 				.andExpect(content().contentType("application/json"))
 				.andExpect(jsonPath("$.errorCode").value("BAD_REQUEST"));
 
 		// 없는 게시글 번호로 요청
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/99999").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/99999").header("Authorization", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
 				.andExpect(content().contentType("application/json"))
 				.andExpect(jsonPath("$.errorCode").value("INVALID_DATA"));
 
 		// 사용자 토큰으로 요청
-		mockMvc.perform(MockMvcRequestBuilders.get("/users/2").header("X-AUTH-TOKEN", testUserToken)
+		mockMvc.perform(MockMvcRequestBuilders.get("/users/2").header("Authorization", testUserToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().is3xxRedirection()).andDo(print());
 	}
 
 	@Test
 	public void updateTest() throws Exception {
 		// 정상 요청
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/3").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.put("/users/3").header("Authorization", testAdminToken)
 				.content(jsonUserNormal).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andDo(print());
 
 		// 이상 요청 => user path로 음수를 넘긴 경우
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/-11").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.put("/users/-11").header("Authorization", testAdminToken)
 				.content(jsonUserNormal).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest())
 				.andDo(print());
 
 		// 이상 요청 => user path로 없는 게시글 번호를 넘긴 경우
-		mockMvc.perform(MockMvcRequestBuilders.put("/users/9999").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.put("/users/9999").header("Authorization", testAdminToken)
 				.content(jsonUserNormal).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest());
 	}
 	
 	@Test
 	public void deleteTest() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.delete("/users/3").header("X-AUTH-TOKEN", testUserToken)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/users/3").header("Authorization", testUserToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().is3xxRedirection())
 				.andDo(print());
 		
-		mockMvc.perform(MockMvcRequestBuilders.delete("/users/3").header("X-AUTH-TOKEN", testAdminToken)
+		mockMvc.perform(MockMvcRequestBuilders.delete("/users/3").header("Authorization", testAdminToken)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().string("3"));
 	}

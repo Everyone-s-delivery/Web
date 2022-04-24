@@ -66,9 +66,13 @@ public class JwtTokenProvider {
         return obj.getSubject();
     }
 
-    // Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"
+    // Request의 Header에서 token 파싱 : "Authorization: jwt토큰"
     public String resolveToken(HttpServletRequest req) {
-        return req.getHeader("X-AUTH-TOKEN");
+        String authorization = req.getHeader("Authorization");
+        if(authorization == null)
+            return null;
+        String bearerToken[] = authorization.split(" ");
+        return (bearerToken.length == 2 && bearerToken[0].equals("Bearer") ) ? bearerToken[1] : null;
     }
 
     // Jwt 토큰의 유효성 + 만료일자 확인
