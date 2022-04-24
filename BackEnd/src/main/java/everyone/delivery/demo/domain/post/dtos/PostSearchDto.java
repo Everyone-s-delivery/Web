@@ -1,5 +1,6 @@
 package everyone.delivery.demo.domain.post.dtos;
 
+import everyone.delivery.demo.common.request.dto.KeyColumn;
 import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +20,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostSearchDto extends PagingRequestDto {
+public class PostSearchDto{
 
     //TODO: List Validation check: 리스트의 모든 값이 0 이상이여야 함
     private List<Long> posterIdList;    // 검색조건: 작성자 아이디 리스트(IN 검색)
@@ -29,13 +30,4 @@ public class PostSearchDto extends PagingRequestDto {
     private LocalDateTime startDate;    // 검색조건: 시작 기간
     @NotNull
     private LocalDateTime endDate;      // 검색조건: 끝 기간
-    @NotNull
-    private KeyColumn keyColumn;        // 페이징 조건: 정렬 key
-
-    /***
-     * > 정렬 조건을 enum 으로
-     */
-    public static enum KeyColumn{
-        REG_DATE, UPDATE_DATE;
-    }
 }
