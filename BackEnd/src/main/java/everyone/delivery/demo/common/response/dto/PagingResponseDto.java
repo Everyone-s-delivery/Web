@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /***
  * > 페이징 응답의 공통 부분을 추출

@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 		if (token != null && jwtTokenProvider.validateToken(token)) {
 			try{
 				Authentication auth = jwtTokenProvider.getAuthentication(token);
-				SecurityContextHolder.getContext().setAuthentication(auth);
+				SecurityContextHolder.getContext().setAuthentication(auth);	//auth 객체가 잘 setting 되어야 인증이 잘 된것임
 			}catch (LogicalRuntimeException ex){
 				filterChain.doFilter(request, response);
 				return;
