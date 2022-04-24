@@ -4,6 +4,9 @@ import everyone.delivery.demo.common.exception.ExceptionUtils;
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.common.exception.error.PostError;
 import everyone.delivery.demo.common.exception.error.UserError;
+import everyone.delivery.demo.common.request.dto.KeyColumn;
+import everyone.delivery.demo.common.request.dto.OrderBy;
+import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import everyone.delivery.demo.common.response.dto.PagingResponseDto;
 import everyone.delivery.demo.domain.post.dtos.*;
 import everyone.delivery.demo.domain.post.repository.PostRepository;
@@ -53,8 +56,12 @@ public class PostService {
      * 검색조건과 페이징을 통한 post 조회
      * @return
      */
-    public List<PostDto> getPagedList(PostSearchDto postSearchDto){
-        Slice<PostEntity> postEntitySlice = postRepository.getPagedList(postSearchDto);
+    public List<PostDto> getPagedList(
+            PostSearchDto searchOption,
+            PagingRequestDto pagingRequestDto
+    ){
+        Slice<PostEntity> postEntitySlice =
+                postRepository.getPagedList(searchOption, pagingRequestDto);
         List<PostDto> postDtoList = new ArrayList<>();
         for(PostEntity postEntity: ListUtils.emptyIfNull(postEntitySlice.getContent())){
             postDtoList.add(postEntity.toDto());
