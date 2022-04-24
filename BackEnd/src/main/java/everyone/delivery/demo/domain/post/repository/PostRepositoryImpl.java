@@ -4,9 +4,11 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import everyone.delivery.demo.common.request.dto.KeyColumn;
+import everyone.delivery.demo.common.request.dto.OrderBy;
+import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import everyone.delivery.demo.domain.post.PostEntity;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
-import everyone.delivery.demo.domain.post.dtos.PostSearchDto.KeyColumn;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.data.domain.*;
@@ -22,35 +24,36 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-
     @Override
-    public Slice<PostEntity> getPagedList(PostSearchDto postSearchDto) {
+    public Slice<PostEntity> getPagedList(PostSearchDto postSearchDto, PagingRequestDto pagingRequestDto) {
         QueryResults<?> queryResults = jpaQueryFactory.from(postEntity)
-                .where(getWhereBuilder(postSearchDto))
-                .orderBy(getOrderSpecifier(postSearchDto))
-                .offset(postSearchDto.getOffset())
-                .limit(postSearchDto.getLimit() + 1)
+                .where(getWhereBuilder(postSearchDto, pagingRequestDto.getKeyColumn()))
+                .orderBy(getOrderSpecifier(pagingRequestDto))
+                .offset(pagingRequestDto.getOffset())
+                .limit(pagingRequestDto.getLimit() + 1)
                 .fetchResults();
-
-        return new SliceImpl(queryResults.getResults(),PageRequest.of(postSearchDto.getOffset(),postSearchDto.getLimit()),true);
+        return new SliceImpl(queryResults.getResults(),PageRequest.of(pagingRequestDto.getOffset(),pagingRequestDto.getLimit()),true);
     }
 
-    private OrderSpecifier getOrderSpecifier(PostSearchDto postSearchDto){
-        if(postSearchDto.getKeyColumn().equals(KeyColumn.REG_DATE)){
-            if(postSearchDto.isAsc())
+    private OrderSpecifier getOrderSpecifier(PagingRequestDto pagingRequestDto){
+        KeyColumn keyColumn = pagingRequestDto.getKeyColumn();
+        OrderBy orderBy = pagingRequestDto.getOrderBy();
+
+        if(keyColumn.equals(KeyColumn.REG_DATE)){
+            if(orderBy.isAsc())
                 return postEntity.regDate.asc();
             else
                 return postEntity.regDate.desc();
         }
         else {
-            if(postSearchDto.isAsc())
+            if(orderBy.isAsc())
                 return postEntity.updateDate.asc();
             else
                 return postEntity.updateDate.desc();
         }
     }
 
-    private BooleanBuilder getWhereBuilder(PostSearchDto postSearchDto){
+    private BooleanBuilder getWhereBuilder(PostSearchDto postSearchDto, KeyColumn keyColumn){
         BooleanBuilder builder = new BooleanBuilder();
         for(Long posterId :ListUtils.emptyIfNull(postSearchDto.getPosterIdList())){
             builder.or(postEntity.postId.eq(posterId));
@@ -64,7 +67,7 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
             builder.or(postEntity.addresses.contains(address));
         }
 
-        if(postSearchDto.getKeyColumn().equals(KeyColumn.REG_DATE)){
+        if(keyColumn.equals(KeyColumn.REG_DATE)){
             if (!StringUtils.isEmpty(postSearchDto.getStartDate())) {
                 builder.and(postEntity.regDate.goe(postSearchDto.getStartDate()));
             }

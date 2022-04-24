@@ -1,5 +1,8 @@
 package everyone.delivery.demo.domain.post;
 
+import everyone.delivery.demo.common.request.dto.KeyColumn;
+import everyone.delivery.demo.common.request.dto.OrderBy;
+import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import everyone.delivery.demo.common.response.ResponseUtils;
 import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
 import everyone.delivery.demo.domain.post.dtos.PostDto;
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Validated
@@ -30,11 +36,33 @@ public class PostController {
 
     private final PostService postService;
 
+//    @PostMapping("/page")
+//    @ApiOperation(value = "글 리스트 조회(페이징)", notes = "https://keen-derby-c16.notion.site/8e4275bef5984761b6977d60a83fb996")
+//    public ResponseEntity getPagedList(@Valid @RequestBody PostSearchDto postSearchDto){
+//        List<PostDto> postDtoList = postService.getPagedList(postSearchDto);
+//        return ResponseUtils.out(postDtoList, postSearchDto);
+//    }
+
     @GetMapping("")
     @ApiOperation(value = "글 리스트 조회(페이징)", notes = "https://keen-derby-c16.notion.site/8e4275bef5984761b6977d60a83fb996")
-    public ResponseEntity getPagedList(@Valid @RequestBody PostSearchDto postSearchDto){
-        List<PostDto> postDtoList = postService.getPagedList(postSearchDto);
-        return ResponseUtils.out(postDtoList, postSearchDto);
+    public ResponseEntity getPagedList(
+            @ApiParam(value = "검색조건: 작성자 아이디 리스트(IN 검색)") @RequestParam(value = "search.posterIdList", required = false) List<Long> posterIdList,
+            @ApiParam(value = "검색조건: 글 제목") @RequestParam(value = "search.title", required = false) String title,
+            @ApiParam(value = "검색조건: 주소 리스트(IN 검색)") @RequestParam(value = "search.addresses",required = false) List<String> addresses,
+            @ApiParam(value = "검색조건: 시작 기간") @RequestParam("search.startDate") LocalDateTime startDate,
+            @ApiParam(value = "검색조건: 끝 기간") @RequestParam("search.endDate") LocalDateTime endDate,
+            @ApiParam(value = "정렬 키") @RequestParam(value = "keyColumn", defaultValue = "UPDATE_DATE") KeyColumn keyColumn,
+            @ApiParam(value = "정렬 방향") @RequestParam(value = "orderBy", defaultValue = "DESC") OrderBy orderBy,
+            @ApiParam(value = "페이지 번호", required = true) @RequestParam("page") @NotNull @Min(value = 1) Integer page,
+            @ApiParam(value = "페이지 크기", required = true) @RequestParam("pageSize") @Min(value = 1) Integer pageSize
+    ){
+        PostSearchDto searchOption = new PostSearchDto(posterIdList, title, addresses, startDate, endDate);
+        Integer offset = (page - 1) * pageSize + 1;
+        Integer limit = pageSize;
+        PagingRequestDto pagingRequestDto = new PagingRequestDto(offset,limit,orderBy,keyColumn);
+
+        List<PostDto> postDtoList = postService.getPagedList(searchOption,pagingRequestDto);
+        return ResponseUtils.out(postDtoList, pagingRequestDto);
     }
 
     @GetMapping("{postId}")
