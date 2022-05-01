@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import everyone.delivery.demo.common.request.dto.KeyColumn;
 import everyone.delivery.demo.common.request.dto.OrderBy;
 import everyone.delivery.demo.common.request.dto.PagingRequestDto;
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.domain.post.PostEntity;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
 import lombok.RequiredArgsConstructor;
@@ -70,17 +71,17 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
 
         if(keyColumn.equals(KeyColumn.REG_DATE)){
             if (!StringUtils.isEmpty(postSearchDto.getStartDate())) {
-                builder.and(postEntity.regDate.goe(postSearchDto.getStartDate()));
+                builder.and(postEntity.regDate.goe(TimeUtils.longToLocalDateTime(postSearchDto.getStartDate())));
             }
             if (!StringUtils.isEmpty(postSearchDto.getEndDate())) {
-                builder.and(postEntity.regDate.loe(postSearchDto.getEndDate()));
+                builder.and(postEntity.regDate.loe(TimeUtils.longToLocalDateTime(postSearchDto.getEndDate())));
             }
         }else {
             if (!StringUtils.isEmpty(postSearchDto.getStartDate())) {
-                builder.and(postEntity.updateDate.goe(postSearchDto.getStartDate()));
+                builder.and(postEntity.updateDate.goe(TimeUtils.longToLocalDateTime(postSearchDto.getStartDate())));
             }
             if (!StringUtils.isEmpty(postSearchDto.getEndDate())) {
-                builder.and(postEntity.updateDate.loe(postSearchDto.getEndDate()));
+                builder.and(postEntity.updateDate.loe(TimeUtils.longToLocalDateTime(postSearchDto.getEndDate())));
             }
         }
         return builder;

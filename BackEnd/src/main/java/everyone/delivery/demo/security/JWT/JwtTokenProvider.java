@@ -62,7 +62,6 @@ public class JwtTokenProvider {
     // Jwt 토큰에서 회원 구별 정보 추출
     public String getUserPk(String token) {
         Claims obj = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-
         return obj.getSubject();
     }
 

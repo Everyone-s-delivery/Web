@@ -1,6 +1,7 @@
 package everyone.delivery.demo.domain.postComment;
 
 import everyone.delivery.demo.common.exception.ExceptionUtils;
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.domain.post.PostEntity;
 import everyone.delivery.demo.domain.post.repository.PostRepository;
 import everyone.delivery.demo.domain.postComment.dtos.CreatePostCommentDto;
@@ -97,8 +98,8 @@ public class PostCommentService {
                 .commenter(userEntity)
                 .post(postEntity)
                 .comment(postCommentDto.getComment())
-                .regDate(postCommentDto.getRegDate())
-                .updateDate(postCommentDto.getUpdateDate())
+                .regDate(TimeUtils.longToLocalDateTime(postCommentDto.getRegDate()))
+                .updateDate(TimeUtils.longToLocalDateTime(postCommentDto.getUpdateDate()))
                 .build();
     }
 

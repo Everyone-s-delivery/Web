@@ -26,6 +26,8 @@ public class PostSearchDto{
     private List<Long> posterIdList;    // 검색조건: 작성자 아이디 리스트(IN 검색)
     private String title;               // 검색조건: 글 제목
     private List<String> addresses;     // 검색조건: 주소 리스트(IN 검색)
-    private LocalDateTime startDate;    // 검색조건: 시작 기간
-    private LocalDateTime endDate;      // 검색조건: 끝 기간
+    private Long startDate;    // 검색조건: 시작 기간
+    private Long endDate;      // 검색조건: 끝 기간
+
+
 }

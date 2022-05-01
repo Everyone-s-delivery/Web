@@ -46,8 +46,8 @@ public class PostCommentDto {
 
     //역직렬화(json to java object) 시 사용 안함 => 역직렬화 할때는 이 필드를 전혀 신경쓰지않고 값이 있든 없든 null 로 채우게된다.
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime regDate;		//등록일자
+    private Long regDate;		//등록일자
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime updateDate;	//수정일자
+    private Long updateDate;	//수정일자
 }

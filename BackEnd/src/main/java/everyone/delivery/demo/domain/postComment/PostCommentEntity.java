@@ -1,6 +1,7 @@
 package everyone.delivery.demo.domain.postComment;
 
 
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.domain.post.PostEntity;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import everyone.delivery.demo.security.user.UserEntity;
@@ -39,10 +40,11 @@ public class PostCommentEntity {
     private String comment;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "DATETIME(3) NOT NULL")
     private LocalDateTime regDate;		//등록일자
 
     @LastModifiedDate
+    @Column(columnDefinition = "DATETIME(3) NOT NULL")
     private LocalDateTime updateDate;	//수정일자
 
     /***
@@ -61,8 +63,8 @@ public class PostCommentEntity {
                 .commenterNickName(this.commenter.getNickName())
                 .postId(this.post.getPostId())
                 .comment(this.comment)
-                .regDate(this.regDate)
-                .updateDate(this.updateDate)
+                .regDate(TimeUtils.localDateTimeToLong(this.regDate))
+                .updateDate(TimeUtils.localDateTimeToLong(this.updateDate))
                 .build();
     }
 }

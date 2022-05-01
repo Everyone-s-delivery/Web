@@ -1,5 +1,6 @@
 package everyone.delivery.demo.domain.post;
 
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.domain.post.dtos.PostDetailDto;
 import everyone.delivery.demo.domain.post.dtos.PostDto;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
@@ -57,10 +58,11 @@ public class PostEntity {
     private List<PostCommentEntity> comments;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "DATETIME(3) NOT NULL")
     private LocalDateTime regDate;		//등록일자
 
     @LastModifiedDate
+    @Column(columnDefinition = "DATETIME(3) NOT NULL")
     private LocalDateTime updateDate;	//수정일자
 
     /***
@@ -93,8 +95,8 @@ public class PostEntity {
                 .description(this.description)
                 .addresses(this.addresses)
                 .comments(postCommentDtos)
-                .regDate(this.regDate)
-                .updateDate(this.updateDate)
+                .regDate(TimeUtils.localDateTimeToLong(this.regDate))
+                .updateDate(TimeUtils.localDateTimeToLong(this.updateDate))
                 .build();
     }
 
@@ -107,8 +109,8 @@ public class PostEntity {
                 .title(this.title)
                 .description(this.description)
                 .addresses(this.addresses)
-                .regDate(this.regDate)
-                .updateDate(this.updateDate)
+                .regDate(TimeUtils.localDateTimeToLong(this.regDate))
+                .updateDate(TimeUtils.localDateTimeToLong(this.updateDate))
                 .build();
     }
 }
