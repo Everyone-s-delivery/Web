@@ -49,9 +49,9 @@ public class PostController {
             @ApiParam(value = "검색조건: 작성자 아이디 리스트(IN 검색)") @RequestParam(value = "search.posterIdList", required = false) List<Long> posterIdList,
             @ApiParam(value = "검색조건: 글 제목") @RequestParam(value = "search.title", required = false) String title,
             @ApiParam(value = "검색조건: 주소 리스트(IN 검색)") @RequestParam(value = "search.addresses",required = false) List<String> addresses,
-            @ApiParam(value = "검색조건: 시작 기간") @RequestParam("search.startDate") LocalDateTime startDate,
-            @ApiParam(value = "검색조건: 끝 기간") @RequestParam("search.endDate") LocalDateTime endDate,
-            @ApiParam(value = "정렬 키") @RequestParam(value = "keyColumn", defaultValue = "UPDATE_DATE") KeyColumn keyColumn,
+            @ApiParam(value = "검색조건: 시작 기간") @RequestParam(value = "search.startDate",required = false) LocalDateTime startDate,
+            @ApiParam(value = "검색조건: 끝 기간") @RequestParam(value = "search.endDate",required = false) LocalDateTime endDate,
+            @ApiParam(value = "정렬 키") @RequestParam(value = "keyColumn", defaultValue = "REG_DATE") KeyColumn keyColumn,
             @ApiParam(value = "정렬 방향") @RequestParam(value = "orderBy", defaultValue = "DESC") OrderBy orderBy,
             @ApiParam(value = "페이지 번호", required = true) @RequestParam("page") @NotNull @Min(value = 1) Integer page,
             @ApiParam(value = "페이지 크기", required = true) @RequestParam("pageSize") @Min(value = 1) Integer pageSize

@@ -24,6 +24,7 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
+
     @Override
     public Slice<PostEntity> getPagedList(PostSearchDto postSearchDto, PagingRequestDto pagingRequestDto) {
         QueryResults<?> queryResults = jpaQueryFactory.from(postEntity)
