@@ -57,10 +57,10 @@ public class PostService {
             PostSearchDto searchOption,
             PagingRequestDto pagingRequestDto
     ){
-        Slice<PostEntity> postEntitySlice =
+        List<PostEntity> postEntityList =
                 postRepository.getPagedList(searchOption, pagingRequestDto);
         List<PostDto> postDtoList = new ArrayList<>();
-        for(PostEntity postEntity: ListUtils.emptyIfNull(postEntitySlice.getContent())){
+        for(PostEntity postEntity: ListUtils.emptyIfNull(postEntityList)){
             postDtoList.add(postEntity.toDto());
         }
         return postDtoList;

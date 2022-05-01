@@ -17,6 +17,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 
+import java.sql.Time;
+import java.util.List;
+
 import static everyone.delivery.demo.domain.post.QPostEntity.postEntity;
 
 @Repository
@@ -25,16 +28,14 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-
     @Override
-    public Slice<PostEntity> getPagedList(PostSearchDto postSearchDto, PagingRequestDto pagingRequestDto) {
+    public List<PostEntity> getPagedList(PostSearchDto postSearchDto, PagingRequestDto pagingRequestDto) {
         QueryResults<?> queryResults = jpaQueryFactory.from(postEntity)
-                .where(getWhereBuilder(postSearchDto, pagingRequestDto.getKeyColumn()))
+                .where(getWhereBuilder(postSearchDto, pagingRequestDto))
                 .orderBy(getOrderSpecifier(pagingRequestDto))
-                .offset(pagingRequestDto.getOffset())
-                .limit(pagingRequestDto.getLimit() + 1)
+                .limit(pagingRequestDto.getFetchSize() + 1)
                 .fetchResults();
-        return new SliceImpl(queryResults.getResults(),PageRequest.of(pagingRequestDto.getOffset(),pagingRequestDto.getLimit()),true);
+        return (List<PostEntity>) queryResults.getResults();
     }
 
     private OrderSpecifier getOrderSpecifier(PagingRequestDto pagingRequestDto){
@@ -55,7 +56,7 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
         }
     }
 
-    private BooleanBuilder getWhereBuilder(PostSearchDto postSearchDto, KeyColumn keyColumn){
+    private BooleanBuilder getWhereBuilder(PostSearchDto postSearchDto, PagingRequestDto pagingRequestDto){
         BooleanBuilder builder = new BooleanBuilder();
         for(Long posterId :ListUtils.emptyIfNull(postSearchDto.getPosterIdList())){
             builder.or(postEntity.postId.eq(posterId));
@@ -68,20 +69,25 @@ public class PostRepositoryImpl implements PostQueryDSLRepository {
         for(String address :ListUtils.emptyIfNull(postSearchDto.getAddresses())){
             builder.or(postEntity.addresses.contains(address));
         }
+        KeyColumn keyColumn = pagingRequestDto.getKeyColumn();
+        Long timeCursor = pagingRequestDto.getCursor();
+        OrderBy orderBy = pagingRequestDto.getOrderBy();
 
-        if(keyColumn.equals(KeyColumn.REG_DATE)){
-            if (!StringUtils.isEmpty(postSearchDto.getStartDate())) {
-                builder.and(postEntity.regDate.goe(TimeUtils.longToLocalDateTime(postSearchDto.getStartDate())));
-            }
-            if (!StringUtils.isEmpty(postSearchDto.getEndDate())) {
-                builder.and(postEntity.regDate.loe(TimeUtils.longToLocalDateTime(postSearchDto.getEndDate())));
-            }
-        }else {
-            if (!StringUtils.isEmpty(postSearchDto.getStartDate())) {
-                builder.and(postEntity.updateDate.goe(TimeUtils.longToLocalDateTime(postSearchDto.getStartDate())));
-            }
-            if (!StringUtils.isEmpty(postSearchDto.getEndDate())) {
-                builder.and(postEntity.updateDate.loe(TimeUtils.longToLocalDateTime(postSearchDto.getEndDate())));
+        if(timeCursor != null){
+            if(keyColumn.equals(KeyColumn.REG_DATE)){
+                if(orderBy.isAsc()){
+                    builder.and(postEntity.regDate.goe(TimeUtils.longToLocalDateTime(timeCursor)));
+                }
+                else{
+                    builder.and(postEntity.regDate.loe(TimeUtils.longToLocalDateTime(timeCursor)));
+                }
+            }else {
+                if(orderBy.isAsc()){
+                    builder.and(postEntity.updateDate.goe(TimeUtils.longToLocalDateTime(timeCursor)));
+                }
+                else{
+                    builder.and(postEntity.updateDate.loe(TimeUtils.longToLocalDateTime(timeCursor)));
+                }
             }
         }
         return builder;

@@ -36,30 +36,19 @@ public class PostController {
 
     private final PostService postService;
 
-//    @PostMapping("/page")
-//    @ApiOperation(value = "글 리스트 조회(페이징)", notes = "https://keen-derby-c16.notion.site/8e4275bef5984761b6977d60a83fb996")
-//    public ResponseEntity getPagedList(@Valid @RequestBody PostSearchDto postSearchDto){
-//        List<PostDto> postDtoList = postService.getPagedList(postSearchDto);
-//        return ResponseUtils.out(postDtoList, postSearchDto);
-//    }
-
     @GetMapping("")
     @ApiOperation(value = "글 리스트 조회(페이징)", notes = "https://keen-derby-c16.notion.site/8e4275bef5984761b6977d60a83fb996")
     public ResponseEntity getPagedList(
             @ApiParam(value = "검색조건: 작성자 아이디 리스트(IN 검색)") @RequestParam(value = "search.posterIdList", required = false) List<Long> posterIdList,
             @ApiParam(value = "검색조건: 글 제목") @RequestParam(value = "search.title", required = false) String title,
             @ApiParam(value = "검색조건: 주소 리스트(IN 검색)") @RequestParam(value = "search.addresses",required = false) List<String> addresses,
-            @ApiParam(value = "검색조건: 시작 기간") @RequestParam(value = "search.startDate",required = false) Long startDate,
-            @ApiParam(value = "검색조건: 끝 기간") @RequestParam(value = "search.endDate",required = false) Long endDate,
-            @ApiParam(value = "정렬 키") @RequestParam(value = "keyColumn", defaultValue = "REG_DATE",required = false) KeyColumn keyColumn,
-            @ApiParam(value = "정렬 방향") @RequestParam(value = "orderBy", defaultValue = "DESC",required = false) OrderBy orderBy,
-            @ApiParam(value = "페이지 크기", required = true) @RequestParam(value = "pageSize", defaultValue = "5",required = false) @Min(value = 1) Integer pageSize,
-            @ApiParam(value = "페이지 번호", required = true) @RequestParam("page") @NotNull @Min(value = 1) Integer page
+            @ApiParam(value = "정렬 키: [REG_DATE or UPDATE_DATE]") @RequestParam(value = "keyColumn", defaultValue = "REG_DATE",required = false) KeyColumn keyColumn,
+            @ApiParam(value = "정렬 방향: [DESC or ASC]") @RequestParam(value = "orderBy", defaultValue = "DESC",required = false) OrderBy orderBy,
+            @ApiParam(value = "페치 크기") @RequestParam(value = "fetchSize", defaultValue = "5",required = false) @Min(value = 1) Integer fetchSize,
+            @ApiParam(value = "커서: [keyColumn & orderBy & 검색조건] 에 의존적") @RequestParam(value =  "cursor", required = false) Long timeCursor
     ){
-        PostSearchDto searchOption = new PostSearchDto(posterIdList, title, addresses, startDate, endDate);
-        Integer offset = (page - 1) * pageSize + 1;
-        Integer limit = pageSize;
-        PagingRequestDto pagingRequestDto = new PagingRequestDto(offset,limit,orderBy,keyColumn);
+        PostSearchDto searchOption = new PostSearchDto(posterIdList, title, addresses);
+        PagingRequestDto pagingRequestDto = new PagingRequestDto(timeCursor,fetchSize,orderBy,keyColumn);
 
         List<PostDto> postDtoList = postService.getPagedList(searchOption,pagingRequestDto);
         return ResponseUtils.out(postDtoList, pagingRequestDto);
