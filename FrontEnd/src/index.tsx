@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import ReduxRoot from './redux/rootRedux';
 import reportWebVitals from './reportWebVitals';
 
+import './index.css';
+
 ReactDOM.render(<ReduxRoot />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function

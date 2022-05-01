@@ -24,6 +24,11 @@ module.exports = {
         },
       },
       {
+        test: /.css?$/,
+        exclude: [],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
         test: /\.(png|jpg|jpeg|svg|gif)$/,
         type: 'asset/resource',
       },

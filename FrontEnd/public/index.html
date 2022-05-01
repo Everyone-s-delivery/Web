@@ -8,7 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="description" content="Web site created using create-react-app" />
+  
+  <% if (process.env.NODE_ENV !== 'development') { %>
   <base href="https://everyone-s-delivery.github.io/Web/">    
+  <% } %>
   <title>모두의 배달</title>
 </head>
 
