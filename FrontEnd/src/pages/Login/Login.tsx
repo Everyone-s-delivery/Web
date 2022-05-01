@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -14,10 +14,11 @@ import { ScrollPageWrapper } from '@src/components/@styled/layout';
 import KakaoLogin from '@src/components/SocialLogin/KakaoLogin';
 import { LoginData } from '@src/model/model';
 import { loginActions } from '@src/redux/login/loginSlice';
+import { useRootState } from '@src/utils/useRootState';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { Container } from './LoginScreen.style';
+import { Container } from './Login.style';
 
 type State = {
   email: string;
@@ -26,7 +27,7 @@ type State = {
   message: string;
 };
 
-const LoginScreen = () => {
+const Login = () => {
   const [state, setState] = useState<State>({
     email: '',
     loading: false,
@@ -36,6 +37,16 @@ const LoginScreen = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const { payload } = useRootState((state) => state.loginForm);
+
+  useEffect(() => {
+    if (payload) {
+      const { token, userId } = payload;
+      if (token && userId) {
+        navigate('/posts');
+      }
+    }
+  }, [payload, dispatch]);
 
   const validationSchema = () => {
     return Yup.object().shape({
@@ -55,7 +66,6 @@ const LoginScreen = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values: LoginData) => {
-      alert(JSON.stringify(values, null, 2));
       handleLogin(values);
     },
   });
@@ -147,4 +157,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default Login;

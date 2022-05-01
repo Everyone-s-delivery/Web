@@ -1,13 +1,13 @@
 import { fireEvent, screen } from '@testing-library/react';
 
 import { customRender } from 'src/tests/customRenderer';
-import SignupScreen from './Signup';
+import SignUp from './SignUp';
 
 import '@testing-library/jest-dom';
 
 describe('사용자는 회원가입 페이지에서 정보를 입력하고 가입할 수 있다.', () => {
   beforeEach(async () => {
-    customRender({ initialEntries: ['/signup'], children: <SignupScreen /> });
+    customRender({ initialEntries: ['/signup'], children: <SignUp /> });
   });
 
   it('사용자는 로그인 페이지에서 회원가입 버튼을 클릭할 수 있다.', async () => {

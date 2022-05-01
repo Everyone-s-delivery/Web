@@ -1,10 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import serviceWorker from './mocks/browser';
 import ReduxRoot from './redux/rootRedux';
 import reportWebVitals from './reportWebVitals';
 
 import './index.css';
+
+if (process.env.NODE_ENV === 'development') {
+  serviceWorker.start({ onUnhandledRequest: 'bypass' });
+}
 
 ReactDOM.render(<ReduxRoot />, document.getElementById('root'));
 

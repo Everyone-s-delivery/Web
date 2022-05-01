@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from 'react-query';
-import { ErrorResponse, Post, PostsResponse } from '@src/@types';
+import { ErrorResponse, Post } from '@src/@types';
 import { QUERY } from '@src/constants/queries';
 import { AxiosError } from 'axios';
 

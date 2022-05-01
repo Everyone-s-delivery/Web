@@ -12,7 +12,7 @@ import { signupAction } from '@src/redux/signup/signupActions';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-const SignupScreen = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
   const validationSchema: Yup.SchemaOf<SignupData> = Yup.object().shape({
     email: Yup.string()
@@ -126,4 +126,4 @@ const SignupScreen = () => {
   );
 };
 
-export default SignupScreen;
+export default SignUp;
