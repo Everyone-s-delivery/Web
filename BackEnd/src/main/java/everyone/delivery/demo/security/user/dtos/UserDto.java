@@ -1,6 +1,7 @@
 package everyone.delivery.demo.security.user.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.common.validation.annotaion.NotOverlappedEmail;
 import everyone.delivery.demo.security.user.UserEntity;
 import everyone.delivery.demo.security.user.UserRole;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,9 +48,9 @@ public class UserDto implements UserDetails {
 
     private Set<UserRole> roles;
 
-    private LocalDateTime regDate;
+    private Long regDate;
 
-    private LocalDateTime updateDate;
+    private Long updateDate;
 
     public UserEntity toEntity(){
         return UserEntity.builder()
@@ -58,8 +60,8 @@ public class UserDto implements UserDetails {
                             .password(password)
                             .roles(roles)
                             .address(address)
-                            .regDate(regDate)
-                            .updateDate(updateDate)
+                            .regDate(TimeUtils.longToLocalDateTime(regDate))
+                            .updateDate(TimeUtils.longToLocalDateTime(updateDate))
                             .build();
     }
 

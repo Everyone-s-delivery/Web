@@ -2,6 +2,7 @@ package everyone.delivery.demo.security.user;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.domain.post.PostEntity;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.security.user.dtos.UserDto;
@@ -49,10 +50,11 @@ public class UserEntity {
     private String address;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column(updatable = false, columnDefinition = "DATETIME(3) NOT NULL")
 	private LocalDateTime regDate;		//등록일자
 
     @LastModifiedDate
+    @Column(columnDefinition = "DATETIME(3) NOT NULL")
     private LocalDateTime updateDate;	//수정일자
 
     /***
@@ -91,8 +93,8 @@ public class UserEntity {
                 .password(password)
                 .roles(roles)
                 .address(address)
-                .regDate(regDate)
-                .updateDate(updateDate)
+                .regDate(TimeUtils.localDateTimeToLong(regDate))
+                .updateDate(TimeUtils.localDateTimeToLong(updateDate))
                 .build();
     }
 }

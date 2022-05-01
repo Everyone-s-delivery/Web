@@ -1,6 +1,7 @@
 package everyone.delivery.demo.security.user;
 import everyone.delivery.demo.common.exception.ExceptionUtils;
 import everyone.delivery.demo.common.exception.error.UserError;
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.security.user.dtos.CreateUserDto;
 import everyone.delivery.demo.security.user.dtos.UpdateUserDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
@@ -116,8 +117,8 @@ public class CustomUserDetailService implements UserDetailsService {
 				.password(userEntity.getPassword())
 				.roles(userEntity.getRoles())
 				.address(userEntity.getAddress())
-				.regDate(userEntity.getRegDate())
-				.updateDate(userEntity.getUpdateDate())
+				.regDate(TimeUtils.localDateTimeToLong(userEntity.getRegDate()))
+				.updateDate(TimeUtils.localDateTimeToLong(userEntity.getUpdateDate()))
 				.build();
 	}
 }
