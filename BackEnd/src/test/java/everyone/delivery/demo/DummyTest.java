@@ -1,21 +1,20 @@
 package everyone.delivery.demo;
 
 
-import io.swagger.models.auth.In;
+import everyone.delivery.demo.common.utils.TimeUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalDateTime;
 
+@Slf4j
 public class DummyTest {
 
-//    public static void main(String[] args) {
-//        Collection<Integer> list = new ArrayList<>();
-//        list.add(1);
-//        list.add(2);
-//        list.add(3);
-//
-//        list.remove();
-//        System.out.println(list);
-//    }
+    @Test
+    public void TimeTest() {
+        long beforeTime = System.currentTimeMillis();
+        LocalDateTime localDateTime = TimeUtils.longToLocalDateTime(beforeTime);
+        long afterTime = TimeUtils.localDateTimeToLong(localDateTime);
+        System.out.println(beforeTime == afterTime);
+    }
 }

@@ -29,7 +29,7 @@ public class ResponseUtils {
      */
     public static <T> ResponseEntity out(Collection pagingData, PagingRequestDto pagingRequestDto){
         PagingResponseDto result;
-        if(pagingData.size() == pagingRequestDto.getLimit() + 1){
+        if(pagingData.size() == pagingRequestDto.getFetchSize() + 1){
             pagingData.remove(pagingData.toArray()[pagingData.size()-1]);
             result = PagingResponseDto.builder().next(true).data(pagingData).build();
         }

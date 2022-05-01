@@ -13,19 +13,20 @@ import javax.validation.constraints.NotNull;
  * > 이렇게 사용하면 상속받는 클래스는 검색 조건만 선언하면 됨
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class PagingRequestDto {
 
-    @Min(value = 0, message = "offset cannot be minus.")
-    @NotNull
-    private Integer offset;             // 페이징 조건: 시작 위치
-    @Min(value = 1, message = "limit cannot be minus.")
-    @NotNull
-    private Integer limit;              // 페이징 조건: 갯수
-    @NotNull
+    private Long cursor;                // 페이징 조건: 커서
+    private Integer fetchSize;          // 페이징 조건: 페치 사이즈
     private OrderBy orderBy;            // 페이징 조건: 오름차순, 내림차순
     private KeyColumn keyColumn;        // 페이징 조건: 정렬 키
+
+    public PagingRequestDto(Long cursor, Integer fetchSize, OrderBy orderBy, KeyColumn keyColumn) {
+        this.cursor = cursor;
+        this.fetchSize = fetchSize;
+        this.orderBy = orderBy;
+        this.keyColumn = keyColumn;
+    }
 
     /***
      * > 정렬 조건이 ASC 이면 true

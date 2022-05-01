@@ -3,11 +3,8 @@ package everyone.delivery.demo.domain.post;
 import everyone.delivery.demo.common.exception.ExceptionUtils;
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.common.exception.error.PostError;
-import everyone.delivery.demo.common.exception.error.UserError;
-import everyone.delivery.demo.common.request.dto.KeyColumn;
-import everyone.delivery.demo.common.request.dto.OrderBy;
 import everyone.delivery.demo.common.request.dto.PagingRequestDto;
-import everyone.delivery.demo.common.response.dto.PagingResponseDto;
+import everyone.delivery.demo.common.utils.TimeUtils;
 import everyone.delivery.demo.domain.post.dtos.*;
 import everyone.delivery.demo.domain.post.repository.PostRepository;
 import everyone.delivery.demo.domain.postComment.PostCommentEntity;
@@ -60,10 +57,10 @@ public class PostService {
             PostSearchDto searchOption,
             PagingRequestDto pagingRequestDto
     ){
-        Slice<PostEntity> postEntitySlice =
+        List<PostEntity> postEntityList =
                 postRepository.getPagedList(searchOption, pagingRequestDto);
         List<PostDto> postDtoList = new ArrayList<>();
-        for(PostEntity postEntity: ListUtils.emptyIfNull(postEntitySlice.getContent())){
+        for(PostEntity postEntity: ListUtils.emptyIfNull(postEntityList)){
             postDtoList.add(postEntity.toDto());
         }
         return postDtoList;
@@ -167,8 +164,8 @@ public class PostService {
                 .description(postDto.getDescription())
                 .addresses(postDto.getAddresses())
                 .comments(commentEntities)
-                .regDate(postDto.getRegDate())
-                .updateDate(postDto.getUpdateDate())
+                .regDate(TimeUtils.longToLocalDateTime(postDto.getRegDate()))
+                .updateDate(TimeUtils.longToLocalDateTime(postDto.getUpdateDate()))
                 .build();
     }
 
