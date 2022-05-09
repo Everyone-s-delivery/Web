@@ -16,8 +16,8 @@ interface PostListProps {
 const PostList = ({ posts }: PostListProps) => {
   return (
     <div>
-      {posts.map((post) => (
-        <Post key={post.id} {...post} />
+      {posts.map((post, i) => (
+        <Post key={post.id + i} {...post} />
       ))}
     </div>
   );

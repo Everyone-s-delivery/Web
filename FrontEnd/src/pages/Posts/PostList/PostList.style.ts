@@ -1,5 +1,5 @@
+import styled from '@emotion/styled';
 import { Page } from '@src/components/@styled/layout';
-import styled from 'styled-components';
 
 export const Container = styled(Page)<React.CSSProperties>`
   background-color: ${({ theme }) => theme.color.white};

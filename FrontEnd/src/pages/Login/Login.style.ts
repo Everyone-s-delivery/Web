@@ -1,5 +1,5 @@
+import styled from '@emotion/styled';
 import { Page } from '@src/components/@styled/layout';
-import styled from 'styled-components';
 
 export const Container = styled(Page)`
   display: flex;
