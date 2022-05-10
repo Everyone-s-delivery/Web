@@ -18,19 +18,19 @@ interface LoginFormValue {
 }
 
 const Login = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const { payload } = useRootState((state) => state.loginForm);
+  // const dispatch = useDispatch();
+  // const { payload } = useRootState((state) => state.loginForm);
 
-  useEffect(() => {
-    if (payload) {
-      const { token, userId } = payload;
-      if (token && userId) {
-        navigate('/posts');
-      }
-    }
-  }, [payload, dispatch]);
+  // useEffect(() => {
+  //   if (payload) {
+  //     const { token, userId } = payload;
+  //     if (token && userId) {
+  //       navigate('/posts');
+  //     }
+  //   }
+  // }, [payload, dispatch]);
 
   const validationSchema = () => {
     return Yup.object().shape({
@@ -45,7 +45,7 @@ const Login = () => {
 
   const handleLogin = (formValue: LoginFormValue) => {
     const { email, password } = formValue;
-    dispatch(loginActions.login({ email, password }));
+    // dispatch(loginActions.login({ email, password }));
   };
 
   return (

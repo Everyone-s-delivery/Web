@@ -12,15 +12,12 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Global styles={globalStyle} />
-      <BrowserRouter basename="/">
-        <Routes>
-          <Route index element={<Login />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="posts/*" element={<Posts />} />
-          <Route path="/signup" element={<SignUp />}></Route>
-        </Routes>
-        {/* <Footer /> */}
-      </BrowserRouter>
+      <Routes>
+        <Route index element={<Login />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="posts/*" element={<Posts />} />
+        <Route path="/signup" element={<SignUp />}></Route>
+      </Routes>
     </ThemeProvider>
   );
 };
