@@ -1,10 +1,9 @@
-import { PostsResponse } from '@src/@types';
 import { LOCAL_STORAGE_KEY, REQUEST_URL } from '@src/constants';
 import APPLICATION_ERROR_CODE from '@src/constants/applicationErrorCode';
 import { getLocalStorageItem } from '@src/utils/localStorage';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
-axios.defaults.baseURL = 'http://127.0.0.1:5050/'; //process.env.REACT_APP_
+axios.defaults.baseURL = 'http://15.165.151.207:8000'; // 'http://127.0.0.1:5050/';
 
 const STATUS_CODE = {
   INTERNAL_SERVER_ERROR: 500,
@@ -62,13 +61,12 @@ axios.interceptors.request.use(
 );
 
 const API = {
-  login: <T>(data: T) => {
-    return request({ method: 'POST', url: REQUEST_URL.LOGIN, data });
-  },
+  login: (data: LoginRequestBody): Promise<LoginResponseBody> =>
+    request({ method: 'POST', url: REQUEST_URL.LOGIN, data }),
   signup: <T>(data: T) => {
     return request({ method: 'POST', url: REQUEST_URL.SIGNUP, data });
   },
-  posts: (page?: number): Promise<PostsResponse> => {
+  posts: (page?: number): Promise<void> => {
     return request({
       method: 'GET',
       url: REQUEST_URL.POSTS,
