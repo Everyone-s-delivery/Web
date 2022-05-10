@@ -16,6 +16,8 @@ declare module '@emotion/react' {
       separatorColor: string;
       yellow: string;
       white: string;
+      olive: string;
+      cafeYellow: string;
     };
   }
 }

@@ -14,5 +14,7 @@ export const theme = {
     separatorColor: '#a4a4a45b',
     yellow: '#ffe812',
     white: '#ffffff',
+    olive: '#5C6E58',
+    cafeYellow: '#F2D349',
   },
 };
