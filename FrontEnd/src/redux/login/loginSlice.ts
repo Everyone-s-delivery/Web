@@ -3,12 +3,11 @@ import { LoginData, LoginSuccess } from '@src/model/model';
 
 export interface AuthenticationReducerType {
   loading: boolean;
-  payload?: string | LoginSuccess;
-  error: boolean;
+  payload?: LoginSuccess;
+  error?: string;
 }
 const initialState: AuthenticationReducerType = {
   loading: false,
-  error: false,
 };
 
 export const loginSlice = createSlice({
@@ -20,8 +19,7 @@ export const loginSlice = createSlice({
     },
     loginFailure: (state: AuthenticationReducerType, action: PayloadAction<string>) => {
       state.loading = false;
-      state.error = true;
-      state.payload = action.payload;
+      state.error = action.payload;
     },
     loginSuccess: (state: AuthenticationReducerType, action: PayloadAction<LoginSuccess>) => {
       state.loading = false;

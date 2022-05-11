@@ -59,6 +59,7 @@
     "react-bootstrap": "^2.1.1",
     "react-dev-utils": "^12.0.0",
     "react-dom": "^17.0.2",
+    "react-infinite-scroll-hook": "^4.0.3",
     "react-query": "^3.34.12",
     "react-redux": "^7.2.6",
     "react-refresh": "^0.11.0",
@@ -144,6 +145,7 @@
     "eslint-plugin-react": "^7.28.0",
     "file-loader": "^6.2.0",
     "gh-pages": "^3.2.3",
+    "msw": "^0.39.2",
     "postcss": "^8.4.12",
     "styled-normalize": "^8.0.7",
     "tailwindcss": "^3.0.24",
@@ -209,5 +211,8 @@
   },
   "resolutions": {
     "styled-components": "^5"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
