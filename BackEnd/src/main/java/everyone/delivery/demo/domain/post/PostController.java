@@ -45,10 +45,10 @@ public class PostController {
             @ApiParam(value = "정렬 키: [REG_DATE or UPDATE_DATE]") @RequestParam(value = "keyColumn", defaultValue = "REG_DATE",required = false) KeyColumn keyColumn,
             @ApiParam(value = "정렬 방향: [DESC or ASC]") @RequestParam(value = "orderBy", defaultValue = "DESC",required = false) OrderBy orderBy,
             @ApiParam(value = "페치 크기") @RequestParam(value = "fetchSize", defaultValue = "5",required = false) @Min(value = 1) Integer fetchSize,
-            @ApiParam(value = "커서: [keyColumn & orderBy & 검색조건] 에 의존적") @RequestParam(value =  "cursor", required = false) Long timeCursor
+            @ApiParam(value = "커서: [keyColumn & orderBy & 검색조건] 에 의존적") @RequestParam(value =  "startTimestamp", required = false) Long startTimestamp
     ){
         PostSearchDto searchOption = new PostSearchDto(posterIdList, title, addresses);
-        PagingRequestDto pagingRequestDto = new PagingRequestDto(timeCursor,fetchSize,orderBy,keyColumn);
+        PagingRequestDto pagingRequestDto = new PagingRequestDto(startTimestamp,fetchSize,orderBy,keyColumn);
 
         List<PostDto> postDtoList = postService.getPagedList(searchOption,pagingRequestDto);
         return ResponseUtils.out(postDtoList, pagingRequestDto);
