@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 const KAKAO_BUTTON_COLOR = '#fee500';
 const KakaoLoginButton = styled.button<React.CSSProperties>`

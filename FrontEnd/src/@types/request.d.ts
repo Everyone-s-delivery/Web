@@ -5,6 +5,11 @@ declare global {
     'search.startDate': string;
     'search.endDate': string;
   }
+
+  interface LoginRequestBody {
+    email: string;
+    password: string;
+  }
 }
 
 export {};
