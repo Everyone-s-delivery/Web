@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
@@ -73,13 +74,12 @@ public class PostController {
             @Valid @RequestBody @ApiParam(value = "모집 글 정보를 갖는 객체", required = true) CreatePostDto createPostDto) throws IOException {
         String thumbnailKey = createPostDto.getThumbnailKey();
         if(thumbnailKey != null){
-
             Resource resource = fileService.getImg(thumbnailKey, ImageType.ORIGINAL).getKey();
             /***
              * > TODO: 이미지를 256 x 256 이하로 변환하는 작업이 있어야 함
              */
-
-            fileService.saveImg(resource.getInputStream(), resource.getFilename(), fileConfiguration.getPath() + "/thumbnail");
+            BufferedImage resizeImg = fileService.resizeToThumbnailImg(resource.getInputStream());
+            fileService.saveImg(resizeImg, resource.getFilename(), fileConfiguration.getPath() + "/thumbnail");
         }
         return ResponseUtils.out(postService.create(tokenUserDto.getUserId(), createPostDto));
     }

@@ -12,6 +12,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -34,13 +37,50 @@ public class ImgService {
 
     private final ImgConfiguration imgConfiguration;
 
+    private int[] getThumbnailSpace(int originalWidth, int originalHeight){
+        if(originalWidth < originalHeight){
+            double diff = (double)(originalHeight - 256) * ((double)originalWidth / (double)originalHeight);
+            return new int[]{originalWidth - (int)diff,256};
+        }else if(originalWidth > originalHeight){
+            double diff = (double)(originalWidth - 256) * ((double)originalHeight / (double)originalWidth);
+            return new int[]{256 ,originalHeight - (int)diff};
+        }else
+            return new int[]{256,256};
+    }
 
+    /***
+     *
+     * @param inputStream       변경을 원하는 이미지 inputStream
+     * @return
+     * @throws IOException
+     */
+    public BufferedImage resizeToThumbnailImg(InputStream inputStream)
+            throws IOException {
+        BufferedImage inputImage = ImageIO.read(inputStream);
+        int originalWidth = inputImage.getWidth();
+        int originalHeight = inputImage.getHeight();
+        if(originalWidth <= 256 && originalHeight <= 256){
+            return inputImage;
+        }
+
+        int[] space = getThumbnailSpace(originalWidth, originalHeight);
+        int width = space[0];
+        int height = space[1];
+        Image resizeImage = inputImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage outputImage = new BufferedImage(width, height, inputImage.getType());
+
+        Graphics2D graphics2D = outputImage.createGraphics();
+        graphics2D.drawImage(resizeImage, 0, 0, width, height, null);
+        graphics2D.dispose();
+
+        return outputImage;
+    }
 
     /***
      *
      * @param inputStream       저장할 파일 스트림
      * @param serverFileName    저장할 파일 이름
-     * @param saveDirLocation      저장할 파일 경로
+     * @param saveDirLocation   저장할 파일 경로
      * @return
      * @throws IOException
      */
@@ -52,6 +92,24 @@ public class ImgService {
 
         //file uuid가 고유하기 때문에 사실상 덮어쓸 일이 없음(파일은 수정의 개념이 없고 추가 삭제에 대한 개념만 있음)
         Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        return serverFileName;
+    }
+
+    /***
+     *
+     * @param bufferedImage     저장할 파일 스트림
+     * @param serverFileName    저장할 파일 이름
+     * @param saveDirLocation   저장할 파일 경로
+     * @return
+     * @throws IOException
+     */
+    public String saveImg(BufferedImage bufferedImage, String serverFileName, String saveDirLocation) throws IOException {
+        Path fileDirectoryPath = Paths.get(saveDirLocation).toAbsolutePath().normalize();
+        if(Files.notExists(fileDirectoryPath))
+            Files.createDirectories(fileDirectoryPath);
+        Path filePath = fileDirectoryPath.resolve(serverFileName).normalize();
+
+        ImageIO.write(bufferedImage, FilenameUtils.getExtension(serverFileName), filePath.toFile());
         return serverFileName;
     }
 
