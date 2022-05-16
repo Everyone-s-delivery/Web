@@ -27,4 +27,6 @@ public class CreatePostDto {
     private String description;
 
     private Set<String> addresses;
+    
+    private String thumbnailKey;
 }

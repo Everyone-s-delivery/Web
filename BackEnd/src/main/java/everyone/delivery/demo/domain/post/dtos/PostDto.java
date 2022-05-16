@@ -38,6 +38,8 @@ public class PostDto{
     @NotNull(message = "Not enough post data. description cannot be null.")
     private String description;
 
+    private String thumbnailKey;
+
     private Set<String> addresses;
 
     //역직렬화(json to java object) 시 사용 안함 => 역직렬화 할때는 이 필드를 전혀 신경쓰지않고 값이 있든 없든 null 로 채우게된다.

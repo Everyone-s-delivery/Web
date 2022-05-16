@@ -51,6 +51,14 @@ public class PostEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> addresses;
 
+    /***
+     * > 서버의 썸네일 key 값
+     * > {originServerSrc}/thumbnail 을 통해 서버의 썸네일 이미지에 접근 가능
+     * > null 이면 UI 에서 기본 이미지를 사용한다는 의미
+     */
+    @Column(length = 300)
+    private String thumbnailKey;
+
     @OneToMany(fetch = LAZY, cascade = CascadeType.ALL) // postEntity에 딸려있는 comment는 postEntity에 전파된다.
     @JoinColumn(name="post_id")
     private List<PostCommentEntity> comments;
@@ -92,6 +100,7 @@ public class PostEntity {
                 .title(this.title)
                 .description(this.description)
                 .addresses(this.addresses)
+                .thumbnailKey(thumbnailKey)
                 .comments(postCommentDtos)
                 .regDate(TimeUtils.localDateTimeToLong(this.regDate))
                 .updateDate(TimeUtils.localDateTimeToLong(this.updateDate))
@@ -107,6 +116,7 @@ public class PostEntity {
                 .title(this.title)
                 .description(this.description)
                 .addresses(this.addresses)
+                .thumbnailKey(thumbnailKey)
                 .regDate(TimeUtils.localDateTimeToLong(this.regDate))
                 .updateDate(TimeUtils.localDateTimeToLong(this.updateDate))
                 .build();

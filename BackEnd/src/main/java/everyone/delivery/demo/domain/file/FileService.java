@@ -4,15 +4,16 @@ import everyone.delivery.demo.common.configuration.FileConfiguration;
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.common.exception.error.CommonError;
 import everyone.delivery.demo.common.exception.error.FileError;
+import everyone.delivery.demo.domain.file.enums.ImageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -34,40 +35,48 @@ public class FileService {
 
     private final FileConfiguration fileConfiguration;
 
-    public String saveMultipartFile(MultipartFile mpFiles) throws IOException {
-        String fileExtension = FilenameUtils.getExtension( mpFiles.getOriginalFilename());
-        if(!isImg(fileExtension)){
-            log.error("It's not an image file. fileExtension: {}", fileExtension);
-            throw new LogicalRuntimeException(FileError.NOT_IMAGE_EXTENSION);
-        }
-
-        String fileUuid = UUID.randomUUID().toString();
-        String serverFileName = fileUuid + "." + fileExtension;
-
-        Path fileDirectoryPath = Paths.get(fileConfiguration.getPath()).toAbsolutePath().normalize();
+    /***
+     *
+     * @param inputStream       저장할 파일 스트림
+     * @param serverFileName    저장할 파일 이름
+     * @param saveDirLocation      저장할 파일 경로
+     * @return
+     * @throws IOException
+     */
+    public String saveFile(InputStream inputStream, String serverFileName, String saveDirLocation) throws IOException {
+        Path fileDirectoryPath = Paths.get(saveDirLocation).toAbsolutePath().normalize();
         if(Files.notExists(fileDirectoryPath))
             Files.createDirectories(fileDirectoryPath);
         Path filePath = fileDirectoryPath.resolve(serverFileName).normalize();
 
         //file uuid가 고유하기 때문에 사실상 덮어쓸 일이 없음(파일은 수정의 개념이 없고 추가 삭제에 대한 개념만 있음)
-        Files.copy(mpFiles.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         return serverFileName;
     }
 
-    public AbstractMap.SimpleEntry<Resource, String> getFile(String serverFileName){
+    /***
+     *
+     * @param serverFileName    다운로드 할 서버 파일 이름
+     * @param imgType           이미지 타입
+     * @return
+     */
+    public AbstractMap.SimpleEntry<Resource, String> getFile(String serverFileName, ImageType imgType){
         String fileExtension = FilenameUtils.getExtension(serverFileName);
         if(!isImg(fileExtension)){
             log.error("It's not an image file. fileExtension: {}", fileExtension);
             throw new LogicalRuntimeException(FileError.NOT_IMAGE_EXTENSION);
         }
-        Path filePath = Paths.get(fileConfiguration.getPath()).toAbsolutePath().
+        String saveDirLocation = fileConfiguration.getPath();
+        if(imgType.isThumbnail())
+            saveDirLocation += "/thumbnail";
+
+        Path filePath = Paths.get(saveDirLocation).toAbsolutePath().
                 resolve(serverFileName).normalize();
 
         if(!Files.exists(filePath)){    // 없는 파일
             log.error("file does not exist! filePath: {}", filePath.toString());
             throw new LogicalRuntimeException(FileError.NOT_EXIST_FILE);
         }
-
         try{
             Resource resource = new UrlResource(filePath.toUri());
             String contentType = Files.probeContentType(Paths.get(resource.getFile().getAbsolutePath()));

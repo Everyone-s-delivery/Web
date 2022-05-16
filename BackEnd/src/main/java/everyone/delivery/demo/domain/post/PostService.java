@@ -80,7 +80,8 @@ public class PostService {
 
     /***
      * 등록
-     * basicPostDto 로 받은 글 정보를 디비에 등록
+     * > CreatePostDto 로 받은 글 정보를 디비에 등록
+     * > 썸네일 변환 및 저장
      * @param createPostDto
      * @param tokenUserId
      * @return
@@ -88,14 +89,6 @@ public class PostService {
     @Transactional
     public PostDetailDto create(Long tokenUserId, CreatePostDto createPostDto){
         Optional<UserEntity> userEntityOp = userRepository.findByUserId(tokenUserId);
-
-        /***
-         * tokenUserId가 넘어왔다는 것은 요청 token 에 해당하는 사용자는 존재한다는 것이 보장됨
-         * 따라서 userEntityOp 에 대한 null 검증이 필요 없다.
-         */
-//        UserEntity userEntity = ExceptionUtils.ifNullThrowElseReturnVal(
-//                UserError.INVALID_USER_ID, userEntityOp,"invalid tokenUserId. tokenUserId: {}", tokenUserId);
-
         PostEntity postEntity = convertDTOToEntity(userEntityOp.get(), createPostDto);
         postEntity = postRepository.save(postEntity);
         return postEntity.toDetailDto();
@@ -174,6 +167,7 @@ public class PostService {
                 .title(createPostDto.getTitle())
                 .description(createPostDto.getDescription())
                 .addresses(createPostDto.getAddresses())
+                .thumbnailKey(createPostDto.getThumbnailKey())
                 .build();
     }
 }
