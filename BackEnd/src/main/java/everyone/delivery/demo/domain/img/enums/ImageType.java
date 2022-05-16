@@ -1,4 +1,4 @@
-package everyone.delivery.demo.domain.file.enums;
+package everyone.delivery.demo.domain.img.enums;
 
 /***
  * > 이미지의 종류

@@ -1,8 +1,5 @@
 package everyone.delivery.demo.domain.post.dtos;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import everyone.delivery.demo.common.validation.annotaion.MustExistUserId;
-import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +24,6 @@ public class CreatePostDto {
     private String description;
 
     private Set<String> addresses;
-    
+
     private String thumbnailKey;
 }

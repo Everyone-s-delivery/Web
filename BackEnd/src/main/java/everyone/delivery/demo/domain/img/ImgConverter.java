@@ -1,15 +1,15 @@
-package everyone.delivery.demo.domain.file;
+package everyone.delivery.demo.domain.img;
 
-import everyone.delivery.demo.domain.file.enums.ImageType;
+import everyone.delivery.demo.domain.img.enums.ImageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 
 /***
- * > 파일 도메인에서 사용되는 컨버터
+ * > 이미지 도메인에서 사용되는 컨버터
  */
-public class FileConverter {
+public class ImgConverter {
 
     @Component
     @RequiredArgsConstructor

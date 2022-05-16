@@ -1,10 +1,10 @@
-package everyone.delivery.demo.domain.file;
+package everyone.delivery.demo.domain.img.service;
 
-import everyone.delivery.demo.common.configuration.FileConfiguration;
+import everyone.delivery.demo.common.configuration.ImgConfiguration;
 import everyone.delivery.demo.common.exception.LogicalRuntimeException;
 import everyone.delivery.demo.common.exception.error.CommonError;
 import everyone.delivery.demo.common.exception.error.FileError;
-import everyone.delivery.demo.domain.file.enums.ImageType;
+import everyone.delivery.demo.domain.img.enums.ImageType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -23,7 +23,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.AbstractMap;
 import java.util.Locale;
-import java.util.UUID;
 
 /***
  * 원본 파일 처리를 위한 서비스
@@ -31,9 +30,11 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class FileService {
+public class ImgService {
 
-    private final FileConfiguration fileConfiguration;
+    private final ImgConfiguration imgConfiguration;
+
+
 
     /***
      *
@@ -43,7 +44,7 @@ public class FileService {
      * @return
      * @throws IOException
      */
-    public String saveFile(InputStream inputStream, String serverFileName, String saveDirLocation) throws IOException {
+    public String saveImg(InputStream inputStream, String serverFileName, String saveDirLocation) throws IOException {
         Path fileDirectoryPath = Paths.get(saveDirLocation).toAbsolutePath().normalize();
         if(Files.notExists(fileDirectoryPath))
             Files.createDirectories(fileDirectoryPath);
@@ -60,13 +61,13 @@ public class FileService {
      * @param imgType           이미지 타입
      * @return
      */
-    public AbstractMap.SimpleEntry<Resource, String> getFile(String serverFileName, ImageType imgType){
+    public AbstractMap.SimpleEntry<Resource, String> getImg(String serverFileName, ImageType imgType){
         String fileExtension = FilenameUtils.getExtension(serverFileName);
         if(!isImg(fileExtension)){
             log.error("It's not an image file. fileExtension: {}", fileExtension);
             throw new LogicalRuntimeException(FileError.NOT_IMAGE_EXTENSION);
         }
-        String saveDirLocation = fileConfiguration.getPath();
+        String saveDirLocation = imgConfiguration.getPath();
         if(imgType.isThumbnail())
             saveDirLocation += "/thumbnail";
 
@@ -89,6 +90,7 @@ public class FileService {
             throw new LogicalRuntimeException(CommonError.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 

@@ -1,12 +1,12 @@
 package everyone.delivery.demo.domain.post;
 
-import everyone.delivery.demo.common.configuration.FileConfiguration;
+import everyone.delivery.demo.common.configuration.ImgConfiguration;
 import everyone.delivery.demo.common.request.dto.KeyColumn;
 import everyone.delivery.demo.common.request.dto.OrderBy;
 import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import everyone.delivery.demo.common.response.ResponseUtils;
-import everyone.delivery.demo.domain.file.FileService;
-import everyone.delivery.demo.domain.file.enums.ImageType;
+import everyone.delivery.demo.domain.img.service.ImgService;
+import everyone.delivery.demo.domain.img.enums.ImageType;
 import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
 import everyone.delivery.demo.domain.post.dtos.PostDto;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
@@ -35,8 +35,8 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final FileService fileService;
-    private final FileConfiguration fileConfiguration;
+    private final ImgService fileService;
+    private final ImgConfiguration fileConfiguration;
 
 
     @GetMapping("")
@@ -73,11 +73,13 @@ public class PostController {
             @Valid @RequestBody @ApiParam(value = "모집 글 정보를 갖는 객체", required = true) CreatePostDto createPostDto) throws IOException {
         String thumbnailKey = createPostDto.getThumbnailKey();
         if(thumbnailKey != null){
+
+            Resource resource = fileService.getImg(thumbnailKey, ImageType.ORIGINAL).getKey();
             /***
              * > TODO: 이미지를 256 x 256 이하로 변환하는 작업이 있어야 함
              */
-            Resource resource = fileService.getFile(thumbnailKey, ImageType.ORIGINAL).getKey();
-            fileService.saveFile(resource.getInputStream(), resource.getFilename(), fileConfiguration.getPath() + "/thumbnail");
+
+            fileService.saveImg(resource.getInputStream(), resource.getFilename(), fileConfiguration.getPath() + "/thumbnail");
         }
         return ResponseUtils.out(postService.create(tokenUserDto.getUserId(), createPostDto));
     }

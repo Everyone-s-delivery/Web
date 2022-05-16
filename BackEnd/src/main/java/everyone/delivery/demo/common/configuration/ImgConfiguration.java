@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySources;
 
 @Data
 @Configuration
-public class FileConfiguration {
+public class ImgConfiguration {
 
     @Value("${file.path}")
     private String path;
