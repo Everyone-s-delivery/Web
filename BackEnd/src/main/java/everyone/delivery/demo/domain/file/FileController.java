@@ -42,9 +42,6 @@ public class FileController {
 
     @GetMapping("/img/{serverFileName}")
     @ApiOperation(value = "이미지 파일 보기", notes = "서버에 업로드한 이미지 파일을 볼 수 있습니다.")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token(사용자 토큰)", required = true, dataType = "String", paramType = "header")
-    })
     public ResponseEntity display(
             @RequestHeader("User-Agent") String agent,
             @PathVariable String serverFileName){
