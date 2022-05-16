@@ -1,6 +1,5 @@
 package everyone.delivery.demo.domain.file;
 
-import everyone.delivery.demo.common.configuration.FileConfiguration;
 import everyone.delivery.demo.common.response.ResponseUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -29,7 +28,6 @@ import java.util.AbstractMap;
 public class FileController {
 
     private final FileService fileService;
-    private final FileConfiguration fileConfiguration;
 
     @PostMapping("/img")
     @ApiOperation(value = "이미지 파일 업로드", notes = "파일을 업로드 할 수 있습니다.")

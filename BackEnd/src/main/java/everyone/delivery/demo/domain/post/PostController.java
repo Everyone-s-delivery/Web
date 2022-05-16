@@ -10,20 +10,15 @@ import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
 import everyone.delivery.demo.domain.post.dtos.UpdatePostDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
 import io.swagger.annotations.*;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Validated

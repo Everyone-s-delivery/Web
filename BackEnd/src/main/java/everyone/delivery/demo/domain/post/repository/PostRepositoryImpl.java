@@ -12,12 +12,10 @@ import everyone.delivery.demo.domain.post.PostEntity;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.ListUtils;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 
-import java.sql.Time;
 import java.util.List;
 
 import static everyone.delivery.demo.domain.post.QPostEntity.postEntity;
