@@ -11,6 +11,7 @@ import java.util.EnumSet;
 @AllArgsConstructor
 public enum FileError implements RestError{
 
+    NOT_EXIST_FILE(HttpStatus.INTERNAL_SERVER_ERROR, "파일 처리 실패. 파일이 존재하지 않습니다."),
     NOT_IMAGE_EXTENSION(HttpStatus.BAD_REQUEST, "파일 처리 실패. 이미지 파일이 아닙니다.");
 
     private HttpStatus httpStatus;

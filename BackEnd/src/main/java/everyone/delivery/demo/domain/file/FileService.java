@@ -63,6 +63,11 @@ public class FileService {
         Path filePath = Paths.get(fileConfiguration.getPath()).toAbsolutePath().
                 resolve(serverFileName).normalize();
 
+        if(!Files.exists(filePath)){    // 없는 파일
+            log.error("file does not exist! filePath: {}", filePath.toString());
+            throw new LogicalRuntimeException(FileError.NOT_EXIST_FILE);
+        }
+
         try{
             Resource resource = new UrlResource(filePath.toUri());
             String contentType = Files.probeContentType(Paths.get(resource.getFile().getAbsolutePath()));
