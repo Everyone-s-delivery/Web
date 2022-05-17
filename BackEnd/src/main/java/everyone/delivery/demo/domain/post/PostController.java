@@ -1,29 +1,30 @@
 package everyone.delivery.demo.domain.post;
 
+import everyone.delivery.demo.common.configuration.ImgConfiguration;
 import everyone.delivery.demo.common.request.dto.KeyColumn;
 import everyone.delivery.demo.common.request.dto.OrderBy;
 import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import everyone.delivery.demo.common.response.ResponseUtils;
+import everyone.delivery.demo.domain.img.service.ImgService;
+import everyone.delivery.demo.domain.img.enums.ImageType;
 import everyone.delivery.demo.domain.post.dtos.CreatePostDto;
 import everyone.delivery.demo.domain.post.dtos.PostDto;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
 import everyone.delivery.demo.domain.post.dtos.UpdatePostDto;
 import everyone.delivery.demo.security.user.dtos.UserDto;
 import io.swagger.annotations.*;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 
 @Validated
@@ -35,6 +36,9 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final ImgService fileService;
+    private final ImgConfiguration fileConfiguration;
+
 
     @GetMapping("")
     @ApiOperation(value = "글 리스트 조회(페이징)", notes = "https://keen-derby-c16.notion.site/8e4275bef5984761b6977d60a83fb996")
@@ -67,7 +71,16 @@ public class PostController {
     })
     public ResponseEntity create(
             @AuthenticationPrincipal UserDto tokenUserDto,
-            @Valid @RequestBody @ApiParam(value = "모집 글 정보를 갖는 객체", required = true) CreatePostDto createPostDto){
+            @Valid @RequestBody @ApiParam(value = "모집 글 정보를 갖는 객체", required = true) CreatePostDto createPostDto) throws IOException {
+        String thumbnailKey = createPostDto.getThumbnailKey();
+        if(thumbnailKey != null){
+            Resource resource = fileService.getImg(thumbnailKey, ImageType.ORIGINAL).getKey();
+            /***
+             * > TODO: 이미지를 256 x 256 이하로 변환하는 작업이 있어야 함
+             */
+            BufferedImage resizeImg = fileService.resizeToThumbnailImg(resource.getInputStream());
+            fileService.saveImg(resizeImg, resource.getFilename(), fileConfiguration.getPath() + "/thumbnail");
+        }
         return ResponseUtils.out(postService.create(tokenUserDto.getUserId(), createPostDto));
     }
 

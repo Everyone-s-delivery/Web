@@ -1,13 +1,9 @@
 package everyone.delivery.demo.domain.post.dtos;
 
-import everyone.delivery.demo.common.request.dto.KeyColumn;
-import everyone.delivery.demo.common.request.dto.PagingRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /***

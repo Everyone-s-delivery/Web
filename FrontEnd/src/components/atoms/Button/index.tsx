@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import { ColorCode } from '@src/constants/color';
 import { TextSizeType } from '@src/constants/size';
 
-import { ButtonStyle } from './Button.style';
+import { ButtonStyle } from './style';
 
 export interface ButtonProps {
+  type?: 'button' | 'submit' | 'reset';
   innerText: string;
   buttonColor: ColorCode;
   textColor: ColorCode;
@@ -13,10 +14,13 @@ export interface ButtonProps {
   hasShadow?: boolean;
   hasFixedWidth?: boolean;
   onHover?: boolean;
-  handleClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  icon?: React.ReactElement;
+  width?: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
+  type = 'submit',
   innerText,
   buttonColor,
   textColor,
@@ -24,11 +28,14 @@ const Button: React.FC<ButtonProps> = ({
   hasBorder = false,
   hasShadow = false,
   hasFixedWidth = false,
-  handleClick,
+  icon,
+  width = '100%',
+  onClick,
   onHover = true,
 }) => {
   return (
     <ButtonStyle
+      type={type}
       buttonColor={buttonColor}
       textColor={textColor}
       textSize={textSize}
@@ -36,8 +43,10 @@ const Button: React.FC<ButtonProps> = ({
       hasShadow={hasShadow}
       hasFixedWidth={hasFixedWidth}
       onHover={onHover}
-      onClick={handleClick}
+      width={width}
+      onClick={onClick}
     >
+      {icon}
       {innerText}
     </ButtonStyle>
   );

@@ -1,9 +1,7 @@
 package everyone.delivery.demo.domain.post.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import everyone.delivery.demo.common.response.dto.PagingResponseDto;
 import everyone.delivery.demo.common.validation.annotaion.MustExistUserId;
-import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -41,6 +37,8 @@ public class PostDto{
 
     @NotNull(message = "Not enough post data. description cannot be null.")
     private String description;
+
+    private String thumbnailKey;
 
     private Set<String> addresses;
 

@@ -3,6 +3,10 @@ declare global {
     next: boolean;
     data: Post[];
   }
+  interface LoginResponseBody {
+    token: string;
+    userId: string;
+  }
 }
 
 export {};

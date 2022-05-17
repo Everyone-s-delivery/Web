@@ -1,7 +1,6 @@
 package everyone.delivery.demo.domain.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import everyone.delivery.demo.common.request.dto.OrderBy;
 import everyone.delivery.demo.domain.post.dtos.PostSearchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;

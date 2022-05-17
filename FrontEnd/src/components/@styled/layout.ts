@@ -1,16 +1,15 @@
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { LAYOUT, PAGE_WIDTH } from '@src/constants';
-import styled, { css } from 'styled-components';
 
 import { fadeIn } from './keyframes';
 import { setDesktopMediaQuery, setLaptopMediaQuery, setTabletMediaQuery } from './mediaQueries';
-import { customScrollbarCSS } from './scrollbar';
+
 export const ScrollPageWrapper = styled.div(
   ({ theme }) => css`
     width: 100%;
     height: 100%;
     overflow-y: scroll;
-
-    ${customScrollbarCSS(theme.color.tagItemColor)}
   `
 );
 

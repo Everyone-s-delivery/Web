@@ -12,6 +12,8 @@ export const COLOR = {
   YELLOW_800: '#b78700',
   YELLOW_900: '#9e7400',
   KAKAO_LOGIN: '#fee500',
+  OLIVE: '#5C6E58',
+  CAFE_YELLOW: '#F2D349',
 
   PURPLE_100: '#d6d0ea',
   PURPLE_200: '#c3badb',
@@ -44,7 +46,7 @@ export const COLOR = {
   GRAY_900: '#292929',
 };
 
-export type ColorCode = 'black' | 'white' | 'kakao';
+export type ColorCode = 'black' | 'white' | 'kakao' | 'olive' | 'cafe_yellow';
 
 export const getColorValueFromCode = (color: ColorCode): string => {
   switch (color) {
@@ -54,6 +56,10 @@ export const getColorValueFromCode = (color: ColorCode): string => {
       return COLOR.WHITE;
     case 'kakao':
       return COLOR.KAKAO_LOGIN;
+    case 'olive':
+      return COLOR.OLIVE;
+    case 'cafe_yellow':
+      return COLOR.CAFE_YELLOW;
     default:
       return COLOR.BLACK;
   }

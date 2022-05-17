@@ -1,28 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
-import normalize from 'styled-normalize';
+import { css } from '@emotion/react';
 
-export const theme = {
-  color: {
-    appBackgroundColor: '#ffffff',
-    primaryColor: '#fc3465',
-    darkerSecondaryColor: '#ffdede',
-    secondaryColor: '#fff0f0',
-    tertiaryColor: '#6d6d6d',
-    textColor: '#3d3d3d',
-    lighterTextColor: '#959595',
-    postBackgroundColor: '#f2f2f2',
-    borderColor: '#cfcfcf',
-    darkBorderColor: '#9f9f9f',
-    tagItemColor: '#ffc1c1',
-    separatorColor: '#a4a4a45b',
-    yellow: '#ffe812',
-    white: '#ffffff',
-  },
-};
-
-export const GlobalStyle = createGlobalStyle`
-  ${normalize}
-
+export const globalStyle = css`
   html,
   body {
     font-size: 62.5%;
@@ -40,7 +18,7 @@ export const GlobalStyle = createGlobalStyle`
     background-position: center;
     background-repeat: no-repeat;
   }
-   
+
   svg {
     display: block;
   }
@@ -78,7 +56,7 @@ export const GlobalStyle = createGlobalStyle`
     all: unset;
     color: #3f464d;
   }
-  
+
   a:link {
     text-decoration: none;
   }
@@ -93,7 +71,8 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  a, button {
+  a,
+  button {
     -webkit-tap-highlight-color: transparent;
   }
 
