@@ -1,13 +1,10 @@
 package everyone.delivery.demo.domain.post.dtos;
 
-import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 /***

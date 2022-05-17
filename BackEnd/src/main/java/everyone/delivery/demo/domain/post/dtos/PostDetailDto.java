@@ -2,20 +2,14 @@ package everyone.delivery.demo.domain.post.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import everyone.delivery.demo.common.validation.annotaion.MustExistUserId;
-import everyone.delivery.demo.domain.post.PostEntity;
-import everyone.delivery.demo.domain.postComment.PostCommentEntity;
 import everyone.delivery.demo.domain.postComment.dtos.PostCommentDto;
-import everyone.delivery.demo.security.user.UserEntity;
-import everyone.delivery.demo.security.user.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -47,6 +41,8 @@ public class PostDetailDto {
     private String description;
 
     private Set<String> addresses;
+
+    private String thumbnailKey;
 
     private List<PostCommentDto> comments;
 
