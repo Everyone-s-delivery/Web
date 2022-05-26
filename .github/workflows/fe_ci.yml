@@ -17,14 +17,20 @@ jobs:
       working-directory: ./Frontend
     steps:
       - name: Checkout code
+        env:
+          working-directory: ./Frontend
         uses: actions/checkout@v3
 
       - name: Install ESLint
-        run: |
+        env:
+          working-directory: ./Frontend
+        run:
           npm install eslint@8.14.0
           npm install @microsoft/eslint-formatter-sarif@2.1.7
 
       - name: Run ESLint
+        env:
+          working-directory: ./Frontend
         run: npx eslint .
           --config ./FrontEnd/.eslintrc
           --ext .ts,.tsx
