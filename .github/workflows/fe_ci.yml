@@ -9,7 +9,7 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: ./Frontend
+    working-directory: ../Frontend
 
 jobs:
   eslint:
@@ -29,7 +29,7 @@ jobs:
 
       - name: Run ESLint
         run: npx eslint .
-          --config ./Frontend/.eslintrc.js
+          --config .eslintrc.js
           --ext .ts,.tsx
   build:
     needs: eslint
