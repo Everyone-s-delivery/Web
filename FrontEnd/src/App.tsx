@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Global, ThemeProvider } from '@emotion/react';
 
 import { globalStyle } from './components/@styled/globalStyle';
