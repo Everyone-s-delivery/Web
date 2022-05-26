@@ -13,17 +13,12 @@ jobs:
     permissions:
       contents: read
       security-events: write
-    env:
-      working-directory: ./Frontend
     steps:
       - name: Checkout code
-        env:
-          working-directory: ./Frontend
         uses: actions/checkout@v3
 
       - name: Install ESLint
-        env:
-          working-directory: ./Frontend
+        working-directory: ./Frontend
         run:
           npm install eslint@8.14.0
           npm install @microsoft/eslint-formatter-sarif@2.1.7
@@ -37,26 +32,25 @@ jobs:
   build:
     needs: eslint
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./Frontend
     steps:
     - uses: actions/checkout@v3
     - uses: borales/actions-yarn@v2.3.0
       with:
+        working-directory: ./Frontend
         cmd: install # will run `yarn install` command
     - uses: borales/actions-yarn@v2.3.0
       with:
+        working-directory: ./Frontend
         cmd: build # will run `yarn build` command
   
   deploy:
     needs: [eslint, build]
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./Frontend
     steps:
       - uses: actions/checkout@v3
       - uses: nwtgck/actions-netlify@v1.2
         with:
+          working-directory: ./Frontend
           publish-dir: './dist'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
