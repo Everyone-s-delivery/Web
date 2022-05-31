@@ -19,7 +19,7 @@ jobs:
         cmd: --cwd FrontEnd build
   
   deploy:
-    needs: [eslint, build]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
