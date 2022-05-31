@@ -31,16 +31,17 @@ jobs:
   build:
     needs: eslint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./FrontEnd
     steps:
     - uses: actions/checkout@v3
     - uses: borales/actions-yarn@v2.3.0
       with:
-        working-directory: FrontEnd
-        cmd: install # will run `yarn install` command
+        cmd: --cwd FrontEnd install
     - uses: borales/actions-yarn@v2.3.0
       with:
-        working-directory: FrontEnd
-        cmd: build # will run `yarn build` command
+        cmd: --cwd FrontEnd build
   
   deploy:
     needs: [eslint, build]
