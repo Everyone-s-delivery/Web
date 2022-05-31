@@ -51,11 +51,11 @@ jobs:
       - uses: nwtgck/actions-netlify@v1.2
         with:
           working-directory: FrontEnd
-          publish-dir: './dist'
+          publish-dir: './FrontEnd/dist'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
-          enable-pull-request-comment: false
+          enable-pull-request-comment: true
           enable-commit-comment: true
           overwrites-pull-request-comment: true
         env:
