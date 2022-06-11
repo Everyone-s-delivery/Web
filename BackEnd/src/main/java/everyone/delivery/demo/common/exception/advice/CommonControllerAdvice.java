@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
-import javax.persistence.EntityResult;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
@@ -35,7 +34,7 @@ public class CommonControllerAdvice {
 
     @ExceptionHandler(LogicalRuntimeException.class)
     public ResponseEntity<?> logicalRuntimeExceptionHandler(LogicalRuntimeException ex) {
-        log.error("LogicalRuntimeException: ",  ex);
+        log.info("LogicalRuntimeException: {}",  ex.getRestError().getErrorMsg());
         return ResponseUtils.out(ex.getRestError());
     }
 
@@ -70,7 +69,7 @@ public class CommonControllerAdvice {
     protected ResponseEntity<?> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
         log.error("MethodArgumentNotValidException: ",  ex);
 
-        //TODO: 별도의 ConstraintValidator가 없을 경우 동작 방식 확인 필요
+        //TODO: 별도의 ConstraintValidator 가 없을 경우 동작 방식 확인 필요
         try {
             // 별도의 ConstraintValidator에서 발생한 검증 오류의 경우 넘어온 에러 객체로 응답
             ConstraintViolation<?> constraintViolation = ex.getBindingResult().getAllErrors().get(0).unwrap(ConstraintViolation.class);
