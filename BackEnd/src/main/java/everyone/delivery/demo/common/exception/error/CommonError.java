@@ -2,10 +2,8 @@ package everyone.delivery.demo.common.exception.error;
 
 import everyone.delivery.demo.common.response.ResponseError;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import java.util.EnumSet;
 
 /***
  * 미리 정의해 둔 에러들

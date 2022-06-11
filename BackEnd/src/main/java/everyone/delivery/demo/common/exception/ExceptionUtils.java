@@ -16,7 +16,7 @@ public class ExceptionUtils<T> {
      * @param logParam
      * @param <T>
      *
-     * optionalT 속에 null이 있으면 LogicalRuntimeException을 던지고 아니면 그 값을 리턴
+     * optionalT 속에 null이 있으면 LogicalRuntimeException 을 던지고 아니면 그 값을 리턴
      * @return
      */
     public static <T> T ifNullThrowElseReturnVal(Optional<T> optionalT, String logMsg, Object logParam){
@@ -43,7 +43,7 @@ public class ExceptionUtils<T> {
      * @param optionalT
      * @param logMsg
      * @param logParam
-     * optionalT 속에 값이 있으면 LogicalRuntimeException을 던진다.
+     * optionalT 속에 값이 있으면 LogicalRuntimeException 을 던진다.
      */
     public static void ifNotNullThrow(Optional<?> optionalT, String logMsg, Object logParam){
         if(optionalT.isPresent()){
